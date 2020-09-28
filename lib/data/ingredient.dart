@@ -1,7 +1,9 @@
-class Ingredient {
-  int amount;
-  String entity;
-  String ingredient;
+import '../data/ingredient_unit.dart';
 
-  Ingredient(this.amount,this.entity,this.ingredient);
+class Ingredient {
+  double amount = 0;
+  String unit = IngredientUnit.unitList[0];
+  String name = "";
+
+  Ingredient(this.amount, this.unit, this.name);
 }

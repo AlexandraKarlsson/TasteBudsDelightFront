@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/recipe/ingredients_tab.dart';
+import '../widgets/recipe/overview_tab.dart';
+
 class AddRecipe extends StatefulWidget {
   static const PATH = '/add_recipe';
 
@@ -10,13 +13,9 @@ class AddRecipe extends StatefulWidget {
 class _AddRecipeState extends State<AddRecipe> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Översikt',
-    ),
-    Text(
-      'Index 1: Ingredienser',
-    ),
+  static List<Widget> _widgetOptions = <Widget>[
+    OverviewTab(),
+    IngredientsTab(),
     Text(
       'Index 2: Beskriving',
     ),
@@ -33,14 +32,15 @@ class _AddRecipeState extends State<AddRecipe> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(title: Text('Skapa recept')),
       body: Container(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [          
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.red[400],
+        items: const <BottomNavigationBarItem> [          
           BottomNavigationBarItem(
             title: Text('Översikt'),
             icon: Icon(Icons.border_color),
@@ -62,8 +62,6 @@ class _AddRecipeState extends State<AddRecipe> {
             backgroundColor: Colors.black
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red[400],
         onTap: _onItemTapped,
       ),
     );
