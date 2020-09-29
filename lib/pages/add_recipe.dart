@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/recipe/steps_tab.dart';
 import '../widgets/recipe/ingredients_tab.dart';
 import '../widgets/recipe/overview_tab.dart';
 
@@ -16,9 +17,7 @@ class _AddRecipeState extends State<AddRecipe> {
   static List<Widget> _widgetOptions = <Widget>[
     OverviewTab(),
     IngredientsTab(),
-    Text(
-      'Index 2: Beskriving',
-    ),
+    StepsTab(),
     Text(
       'Index 3: Bild',
     ),

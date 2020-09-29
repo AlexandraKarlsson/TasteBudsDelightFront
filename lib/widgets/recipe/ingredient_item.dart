@@ -7,25 +7,16 @@ class IngredientItem extends StatelessWidget {
   final index;
   final Function delete;
 
-  IngredientItem(
-      this.delete, this.index, this.ingredient); // : super(key: index);
-
-  // const RecipeIngredientItem({
-  //   Key key,
-  //   @required this.ingredientData,
-  // }) : super(key: key);
+  IngredientItem(this.delete, this.index, this.ingredient);
 
   @override
   Widget build(BuildContext context) {
-    return //Container(child: Text(ingredientData.name));
-
-        Card(
+    return Card(
       elevation: 5,
       child: ListTile(
         leading: Icon(Icons.edit),
         title: Text(ingredient.name),
-        subtitle:
-            Text(ingredient.amount.toString() + ' ' + ingredient.unit),
+        subtitle: Text(ingredient.amount.toString() + ' ' + ingredient.unit),
         trailing: InkWell(
           child: Icon(Icons.delete),
           onTap: () {
@@ -35,10 +26,8 @@ class IngredientItem extends StatelessWidget {
         ),
         onTap: () {
           print('Edit ingredient ...');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EditIngredient(index)));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EditIngredient(index)));
         },
       ),
     );

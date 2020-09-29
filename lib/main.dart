@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'data/ingredients.dart';
 import 'data/overview.dart';
+import 'data/steps.dart';
 import 'pages/recipes_list.dart';
 import 'pages/add_recipe.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Overview>(create: (_) => Overview()),
         ChangeNotifierProvider<Ingredients>(create: (_) => Ingredients()),
+        ChangeNotifierProvider<Steps>(create: (_) => Steps()),
       ],
           child: MaterialApp(
         title: 'Smaklökarnas Frestelser',
