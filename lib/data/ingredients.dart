@@ -21,6 +21,23 @@ class Ingredients extends ChangeNotifier {
     notifyListeners();
   }
 
+  moveIngredientDown(itemSelected) {
+    Ingredient selectedIngredient = ingredientList.elementAt(itemSelected);
+    Ingredient belowIngredient = ingredientList.elementAt(itemSelected + 1);
+    ingredientList[itemSelected] = belowIngredient;
+    ingredientList[itemSelected + 1] = selectedIngredient;
+    notifyListeners();
+  }
+
+    moveIngredientUp(itemSelected) {
+    Ingredient selectedIngredient = ingredientList.elementAt(itemSelected);
+    Ingredient aboveIngredient = ingredientList.elementAt(itemSelected - 1);
+    ingredientList[itemSelected] = aboveIngredient;
+    ingredientList[itemSelected - 1] = selectedIngredient;
+    notifyListeners();
+  }
+
+
   setName(index, name) {
     ingredientList[index].name = name;
     notifyListeners();
@@ -36,4 +53,6 @@ class Ingredients extends ChangeNotifier {
     ingredientList[index].unit = unit;
     notifyListeners();
   }
+
+
 }

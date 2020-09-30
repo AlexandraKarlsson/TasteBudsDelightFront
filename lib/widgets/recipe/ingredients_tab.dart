@@ -20,6 +20,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
   }
 
   select(index) {
+    print('itemSelected=$itemSelected, index=$index');
     if (index == itemSelected) {
       setState(() {
         itemSelected = -1;
@@ -34,7 +35,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
   @override
   Widget build(BuildContext context) {
     Ingredients ingredients = Provider.of<Ingredients>(context);
-    //List<Ingredient> ingredientList = ingredients.ingredientList;
+    List<Ingredient> ingredientList = ingredients.ingredientList;
     return Column(
       children: <Widget>[
         Padding(
@@ -45,10 +46,10 @@ class _IngredientsTabState extends State<IngredientsTab> {
           child: Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: ingredients.ingredientList.length,
+              itemCount: ingredientList.length,
               itemBuilder: (BuildContext context, int index) {
-                return IngredientItem(itemSelected, index,
-                    ingredients.ingredientList[index], select, delete);
+                return IngredientItem(
+                    itemSelected, index, ingredientList[index], select, delete);
               },
             ),
           ),
@@ -64,7 +65,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                 Ingredient ingredient =
                     Ingredient(0, IngredientUnit.unitList[0], 'Ny ingrediens');
                 setState(() {
-                  ingredients.ingredientList.add(ingredient);
+                  ingredientList.add(ingredient);
                 });
               },
             ),
@@ -76,22 +77,29 @@ class _IngredientsTabState extends State<IngredientsTab> {
             IconButton(
               icon: Icon(Icons.arrow_upward),
               iconSize: 35,
-              onPressed: (ingredients.ingredientList.length <= 1) ||
-                      (itemSelected == 0)
+              onPressed: (ingredientList.length <= 1) || (itemSelected == 0)
                   ? null
                   : () {
                       print('Move ingredient up');
+                      ingredients.moveIngredientUp(itemSelected);
+                      setState(() {
+                        itemSelected = itemSelected - 1;
+                      });
                     },
             ),
             SizedBox(width: 7),
             IconButton(
               icon: Icon(Icons.arrow_downward),
               iconSize: 35,
-              onPressed: (ingredients.ingredientList.length <= 1) ||
-                      (itemSelected == ingredients.ingredientList.length - 1)
+              onPressed: (ingredientList.length <= 1) ||
+                      (itemSelected == ingredientList.length - 1)
                   ? null
                   : () {
                       print('Move ingredient down');
+                      ingredients.moveIngredientDown(itemSelected);
+                      setState(() {
+                        itemSelected = itemSelected + 1;
+                      });
                     },
             ),
           ],
@@ -100,4 +108,3 @@ class _IngredientsTabState extends State<IngredientsTab> {
     );
   }
 }
-
