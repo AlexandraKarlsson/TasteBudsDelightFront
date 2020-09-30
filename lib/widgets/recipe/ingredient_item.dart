@@ -5,16 +5,26 @@ import '../../data/ingredient.dart';
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;
   final index;
+  final itemSelected;
   final Function delete;
+  final Function select;
 
-  IngredientItem(this.delete, this.index, this.ingredient);
+  IngredientItem(this.itemSelected, this.index, this.ingredient,this.select, this.delete);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: index == itemSelected ? Colors.red[400] : Colors.white,
       elevation: 5,
       child: ListTile(
-        leading: Icon(Icons.edit),
+        leading: InkWell(
+          child: Icon(Icons.edit),
+          onTap: () {
+            print('Edit ingredient ...');
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => EditIngredient(index)));
+          },
+        ),
         title: Text(ingredient.name),
         subtitle: Text(ingredient.amount.toString() + ' ' + ingredient.unit),
         trailing: InkWell(
@@ -25,9 +35,7 @@ class IngredientItem extends StatelessWidget {
           },
         ),
         onTap: () {
-          print('Edit ingredient ...');
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EditIngredient(index)));
+          select(index);
         },
       ),
     );

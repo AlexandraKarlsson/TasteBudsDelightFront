@@ -12,17 +12,28 @@ class IngredientsTab extends StatefulWidget {
 }
 
 class _IngredientsTabState extends State<IngredientsTab> {
+  int itemSelected = -1;
 
   delete(index) {
-    Ingredients ingredients =
-        Provider.of<Ingredients>(context,listen: false);
-     ingredients.deleteIngredient(index);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
+    ingredients.deleteIngredient(index);
+  }
+
+  select(index) {
+    if (index == itemSelected) {
+      setState(() {
+        itemSelected = -1;
+      });
+    } else {
+      setState(() {
+        itemSelected = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Ingredients ingredients =
-        Provider.of<Ingredients>(context);
+    Ingredients ingredients = Provider.of<Ingredients>(context);
     return Column(
       children: <Widget>[
         Padding(
@@ -35,8 +46,8 @@ class _IngredientsTabState extends State<IngredientsTab> {
               padding: const EdgeInsets.all(8),
               itemCount: ingredients.ingredientList.length,
               itemBuilder: (BuildContext context, int index) {
-                return IngredientItem(
-                    delete, index, ingredients.ingredientList[index]);
+                return IngredientItem(itemSelected, index,
+                    ingredients.ingredientList[index], select, delete);
               },
             ),
           ),
@@ -60,7 +71,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget> [
+          children: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_upward),
               iconSize: 35,
@@ -68,7 +79,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                 print('Move ingredient up');
               },
             ),
-            SizedBox(width:7),
+            SizedBox(width: 7),
             IconButton(
               icon: Icon(Icons.arrow_downward),
               iconSize: 35,
@@ -76,7 +87,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
                 print('Move ingredient down');
               },
             ),
-
           ],
         ),
       ],
