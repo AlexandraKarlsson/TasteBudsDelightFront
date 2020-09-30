@@ -34,6 +34,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
   @override
   Widget build(BuildContext context) {
     Ingredients ingredients = Provider.of<Ingredients>(context);
+    //List<Ingredient> ingredientList = ingredients.ingredientList;
     return Column(
       children: <Widget>[
         Padding(
@@ -75,17 +76,23 @@ class _IngredientsTabState extends State<IngredientsTab> {
             IconButton(
               icon: Icon(Icons.arrow_upward),
               iconSize: 35,
-              onPressed: () {
-                print('Move ingredient up');
-              },
+              onPressed: (ingredients.ingredientList.length <= 1) ||
+                      (itemSelected == 0)
+                  ? null
+                  : () {
+                      print('Move ingredient up');
+                    },
             ),
             SizedBox(width: 7),
             IconButton(
               icon: Icon(Icons.arrow_downward),
               iconSize: 35,
-              onPressed: () {
-                print('Move ingredient down');
-              },
+              onPressed: (ingredients.ingredientList.length <= 1) ||
+                      (itemSelected == ingredients.ingredientList.length - 1)
+                  ? null
+                  : () {
+                      print('Move ingredient down');
+                    },
             ),
           ],
         ),
@@ -93,3 +100,4 @@ class _IngredientsTabState extends State<IngredientsTab> {
     );
   }
 }
+
