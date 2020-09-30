@@ -50,7 +50,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
               child: Icon(Icons.add),
               onPressed: () {
                 Ingredient ingredient =
-                    Ingredient(0, IngredientUnit.unitList[0], 'Ny indgrediens');
+                    Ingredient(0, IngredientUnit.unitList[0], 'Ny ingrediens');
                 setState(() {
                   ingredients.ingredientList.add(ingredient);
                 });
