@@ -58,6 +58,27 @@ class _IngredientsTabState extends State<IngredientsTab> {
             ),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget> [
+            IconButton(
+              icon: Icon(Icons.arrow_upward),
+              iconSize: 35,
+              onPressed: () {
+                print('Move ingredient up');
+              },
+            ),
+            SizedBox(width:7),
+            IconButton(
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 35,
+              onPressed: () {
+                print('Move ingredient down');
+              },
+            ),
+
+          ],
+        ),
       ],
     );
   }
