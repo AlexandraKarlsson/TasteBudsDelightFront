@@ -7,11 +7,13 @@ import '../../data/steps.dart';
 import '../../widgets/styles.dart';
 
 class StepsTab extends StatefulWidget {
+  
   @override
   _StepsTabState createState() => _StepsTabState();
 }
 
 class _StepsTabState extends State<StepsTab> {
+  int itemSelected = -1;
 
   delete(index) {
     Steps steps =
@@ -19,10 +21,24 @@ class _StepsTabState extends State<StepsTab> {
      steps.deleteStep(index);
   }
 
+  select(index) {
+    print('itemSelected=$itemSelected, index=$index');
+    if (index == itemSelected) {
+      setState(() {
+        itemSelected = -1;
+      });
+    } else {
+      setState(() {
+        itemSelected = index;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Steps steps =
         Provider.of<Steps>(context);
+    List<StepInfo> stepList = steps.stepList;
     return Column(
       children: <Widget>[
         Padding(
@@ -33,10 +49,10 @@ class _StepsTabState extends State<StepsTab> {
           child: Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: steps.stepList.length,
+              itemCount: stepList.length,
               itemBuilder: (BuildContext context, int index) {
                 return StepItem(
-                    delete, index, steps.stepList[index]);
+                    itemSelected, index, stepList[index], delete, select);
               },
             ),
           ),
@@ -52,11 +68,44 @@ class _StepsTabState extends State<StepsTab> {
                 StepInfo step =
                     StepInfo(1, 'Nytt steg');
                 setState(() {
-                  steps.stepList.add(step);
+                  stepList.add(step);
                 });
               },
             ),
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_upward),
+              iconSize: 35,
+              onPressed: (stepList.length <= 1) || (itemSelected == 0)
+                  ? null
+                  : () {
+                      print('Move step up');
+                      steps.moveStepUp(itemSelected);
+                      setState(() {
+                        itemSelected = itemSelected - 1;
+                      });
+                    },
+            ),
+            SizedBox(width: 7),
+            IconButton(
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 35,
+              onPressed: (stepList.length <= 1) ||
+                      (itemSelected == stepList.length - 1)
+                  ? null
+                  : () {
+                      print('Move step down');
+                      steps.moveStepDown(itemSelected);
+                      setState(() {
+                        itemSelected = itemSelected + 1;
+                      });
+                    },
+            ),
+          ],
         ),
       ],
     );

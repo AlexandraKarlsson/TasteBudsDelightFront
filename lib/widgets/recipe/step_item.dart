@@ -6,9 +6,11 @@ import '../../data/step_info.dart';
 class StepItem extends StatelessWidget {
   final StepInfo step;
   final index;
+  final itemSelected;
   final Function delete;
+  final Function select;
 
-  StepItem(this.delete, this.index, this.step);
+  StepItem(this.itemSelected, this.index, this.step, this.delete, this.select);
 
   @override
   Widget build(BuildContext context) {
