@@ -6,14 +6,15 @@ import 'step_info.dart';
 class Steps extends ChangeNotifier {
   List<StepInfo> stepList = [];
 
-  add(number, description) {
-    StepInfo step = StepInfo(number, description);
+  // TODO: orderNumber not needed when adding a new step, remove later?
+  add(orderNumber, description) {
+    StepInfo step = StepInfo(orderNumber, description);
     stepList.add(step);
     notifyListeners();
   }
 
-  setNumber(index, number) {
-    stepList[index].number = number;
+  setNumber(index, orderNumber) {
+    stepList[index].orderNumber = orderNumber;
     notifyListeners();
   }
 
@@ -37,8 +38,17 @@ class Steps extends ChangeNotifier {
     stepList[itemSelected - 1] = selectedStep;
     notifyListeners();
   }
+
   deleteStep(index) {
     stepList.removeAt(index);
     notifyListeners();
+  }
+
+  renumberOrder() {
+    int number = 1;
+    stepList.forEach((step) {
+      step.orderNumber = number;
+      number++;
+    });
   }
 }

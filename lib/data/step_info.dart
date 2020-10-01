@@ -1,6 +1,6 @@
 class StepInfo {
-  int number;
+  int orderNumber;
   String description;
   
-  StepInfo(this.number,this.description);
+  StepInfo(this.orderNumber,this.description);
 }

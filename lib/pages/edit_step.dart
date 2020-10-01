@@ -45,7 +45,7 @@ class _EditStepState extends State<EditStep> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
-            Text(step.number.toString()),
+            Text(step.orderNumber.toString()),
             SizedBox(
               width: 15,
             ),

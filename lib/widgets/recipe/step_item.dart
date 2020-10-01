@@ -25,7 +25,7 @@ class StepItem extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => EditStep(index)));
           },
         ),
-        title: Text(step.number.toString()),
+        title: Text((index+1).toString()),
         subtitle: Text(step.description),
         trailing: InkWell(
           child: Icon(Icons.delete),
