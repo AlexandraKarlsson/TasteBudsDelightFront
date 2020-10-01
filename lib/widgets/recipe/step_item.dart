@@ -15,9 +15,16 @@ class StepItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: index == itemSelected ? Colors.red[400] : Colors.white,
       elevation: 5,
       child: ListTile(
-        leading: Icon(Icons.edit),
+        leading: InkWell(
+          child: Icon(Icons.edit),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => EditStep(index)));
+          },
+        ),
         title: Text(step.number.toString()),
         subtitle: Text(step.description),
         trailing: InkWell(
@@ -27,8 +34,7 @@ class StepItem extends StatelessWidget {
           },
         ),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => EditStep(index)));
+          select(index);
         },
       ),
     );
