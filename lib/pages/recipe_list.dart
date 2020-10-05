@@ -3,18 +3,18 @@ import 'package:tastebudsdelightfront/pages/add_recipe.dart';
 
 const textStyle = TextStyle(fontSize: 25);
 
-class RecipesList extends StatefulWidget {
-  static const PATH = '/recipes_list';
+class RecipeList extends StatefulWidget {
+  static const PATH = '/recipe_list';
 
-  RecipesList({Key key, this.title}) : super(key: key);
+  RecipeList({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _RecipesListState createState() => _RecipesListState();
+  _RecipeListState createState() => _RecipeListState();
 }
 
-class _RecipesListState extends State<RecipesList> {
+class _RecipeListState extends State<RecipeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

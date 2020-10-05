@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/recipe/images_tab.dart';
 import '../widgets/recipe/steps_tab.dart';
 import '../widgets/recipe/ingredients_tab.dart';
 import '../widgets/recipe/overview_tab.dart';
@@ -18,9 +19,7 @@ class _AddRecipeState extends State<AddRecipe> {
     OverviewTab(),
     IngredientsTab(),
     StepsTab(),
-    Text(
-      'Index 3: Bild',
-    ),
+    ImagesTab(),
   ];
 
   void _onItemTapped(int index) {
@@ -32,7 +31,10 @@ class _AddRecipeState extends State<AddRecipe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Skapa recept')),
+      appBar: AppBar(title: Text('Skapa recept'),
+      actions: <Widget>[
+        IconButton(icon: Icon(Icons.check), onPressed: null)
+      ],),
       body: Container(
         child: _widgetOptions[_selectedIndex],
       ),

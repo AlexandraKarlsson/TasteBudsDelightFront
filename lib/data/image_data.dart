@@ -1,8 +1,8 @@
 import 'dart:io';
 
-class Image {
+class ImageData {
   final File file;
   final String name;
 
-  Image(this.file, this.name);
+  ImageData(this.file, this.name);
 }
