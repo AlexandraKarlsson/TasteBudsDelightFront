@@ -71,22 +71,22 @@ class _ImagesTabState extends State<ImagesTab> {
     );
   }
 
-  void _addImage(BuildContext context, images) async {
+  void _addImage(BuildContext context, Images images) async {
     Overview overview = Provider.of<Overview>(context, listen: false);
 
     dynamic _imageFile = await Navigator.pushNamed(context, AddImage.PATH);
-    // Navigator.push(context,
-    //                 MaterialPageRoute(builder: (context) => AddImage()));
-
     print('_imageFile = $_imageFile');
     String extention = _imageFile.path.split(".").last;
     //String namePrefix = homeArgs.homeType == HomeType.apartment ? 'apartment' : 'house';
     String imageName =
-        '${overview.title}_${images.imageList.length + 4}.$extention';
+        '${overview.title}_${images.imageList.length}.$extention';
     ImageData image = ImageData(_imageFile, imageName);
     // print('imageFile = ${image.file}, imageName = ${image.name}');
     images.addImage(image);
-    // _imageFiles.add(image);
+    
+    images.imageList.forEach((image) { 
+      print('file= ${image.file}, name=${image.name}');
+    });
   }
 
   // void _saveAllImages() {
