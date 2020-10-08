@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Overview extends ChangeNotifier {
   String title = "";
   String description = "";
+  int time = 0;
   bool isVegan = false;
   bool isVegetarian = false;
   bool isGlutenFree = false;
@@ -15,6 +16,11 @@ class Overview extends ChangeNotifier {
 
   setDescription(String description) {
     this.description = description;
+    notifyListeners();
+  }
+
+  setTime(int time) {
+    this.time = time;
     notifyListeners();
   }
 
