@@ -40,17 +40,7 @@ class _ImagesTabState extends State<ImagesTab> {
                       crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) {
                     return ImageItem(images.imageList[index]);
-                  })
-
-              /*
-            child: ListView.builder(
-              itemCount: images.imageList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ImageItem(images.imageList[index]);
-              },
-            ),
-            */
-              ),
+                  })),
         ),
         Container(
           padding: EdgeInsets.all(5.0),
@@ -83,8 +73,8 @@ class _ImagesTabState extends State<ImagesTab> {
     ImageData image = ImageData(_imageFile, imageName);
     // print('imageFile = ${image.file}, imageName = ${image.name}');
     images.addImage(image);
-    
-    images.imageList.forEach((image) { 
+
+    images.imageList.forEach((image) {
       print('file= ${image.file}, name=${image.name}');
     });
   }

@@ -13,6 +13,7 @@ class _OverviewTabState extends State<OverviewTab> {
   TextEditingController _titleController;
   TextEditingController _descriptionController;
   TextEditingController _timeController;
+  TextEditingController _portionsController;
   List<TextInputFormatter> inputFormat = <TextInputFormatter>[
     WhitelistingTextInputFormatter.digitsOnly,
   ];
@@ -25,6 +26,7 @@ class _OverviewTabState extends State<OverviewTab> {
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     _timeController = TextEditingController();
+    _portionsController = TextEditingController();
   }
 
   @override
@@ -38,6 +40,8 @@ class _OverviewTabState extends State<OverviewTab> {
       _descriptionController.text = _overviewData.description;
       _timeController.text =
           _overviewData.time == 0 ? '' : _overviewData.time.toString();
+      _portionsController.text =
+          _overviewData.portions == 0 ? '' : _overviewData.portions.toString();
     }
   }
 
@@ -68,6 +72,7 @@ class _OverviewTabState extends State<OverviewTab> {
                   print('_recipeOverviewData.title = ${_overviewData.title}');
                 },
               ),
+              SizedBox(height: 10,),
               TextField(
                 maxLines: 3,
                 controller: _descriptionController,
@@ -81,13 +86,14 @@ class _OverviewTabState extends State<OverviewTab> {
                       '_recipeOverviewData.description = ${_overviewData.description}');
                 },
               ),
+              SizedBox(height: 10,),
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: TextField(
+                    child: TextField(                      
                       controller: _timeController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: inputFormat,                      
+                      inputFormatters: inputFormat,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Tillagningstid',
@@ -101,9 +107,34 @@ class _OverviewTabState extends State<OverviewTab> {
                   ),
                   SizedBox(width: 15),
                   Text('minuter'),
-                  SizedBox(width: 30),
+                  SizedBox(width: 50),
                 ],
               ),
+              SizedBox(height: 10,),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _portionsController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: inputFormat,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Portioner',                  
+                      ),
+                      onChanged: (portions) {
+                        _overviewData.portions = int.parse(portions);
+                        print(
+                            '_recipeOverviewData.portions = ${_overviewData.portions}');
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Text('portioner'),
+                  SizedBox(width: 40),
+                ],
+              ),
+              SizedBox(height: 10,),
               CheckboxListTile(
                 title: Text('Veganskt'),
                 value: _overviewData.isVegan,
@@ -125,7 +156,6 @@ class _OverviewTabState extends State<OverviewTab> {
               CheckboxListTile(
                 title: Text('Glutenfri'),
                 value: _overviewData.isGlutenFree,
-                
                 onChanged: (isGlutenFree) {
                   _overviewData.setIsGlutenFree(isGlutenFree);
                   print(

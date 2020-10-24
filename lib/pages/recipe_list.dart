@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/recipes.dart';
 import 'package:tastebudsdelightfront/pages/add_recipe.dart';
+import '../widgets/styles.dart';
+import '../widgets/recipe/recipe_list_item.dart';
 
 const textStyle = TextStyle(fontSize: 25);
 
@@ -17,21 +21,31 @@ class RecipeList extends StatefulWidget {
 class _RecipeListState extends State<RecipeList> {
   @override
   Widget build(BuildContext context) {
+    Recipes recipes = Provider.of<Recipes>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child:
-          Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Recept 1',style: textStyle),
-            Text('Recept 2',style: textStyle),
-            Text('Recept 3',style: textStyle),
-          ],
+      body: Column(
+        children: <Widget>[
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Text('Bilder', style: optionStyle),
+          // ),
+          Container(
+            child: Expanded(
+              child: GridView.builder(
+                itemCount: recipes.recipeList.length,
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (BuildContext context, int index) {
+                  return RecipeListItem(recipes.recipeList[index]);
+                },
+              ),
             ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

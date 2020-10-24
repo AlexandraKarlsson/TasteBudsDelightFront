@@ -5,6 +5,14 @@ import 'ingredient.dart';
 class Ingredients extends ChangeNotifier {
   List<Ingredient> ingredientList = [];
 
+  static Ingredients clone(Ingredients ingredients) {
+    Ingredients newIngredients = Ingredients();
+    ingredients.ingredientList.forEach((ingredient) {
+      newIngredients.add(ingredient.amount, ingredient.unit, ingredient.name);
+     });
+     return newIngredients;
+  }
+
   add(double amount, String unit, String name) {
     Ingredient ingredient = Ingredient(amount, unit, name);
     ingredientList.add(ingredient);
@@ -53,6 +61,11 @@ class Ingredients extends ChangeNotifier {
     ingredientList[index].unit = unit;
     notifyListeners();
   }
+
+  clear() {
+    ingredientList = [];
+  }
+
 
 
 }
