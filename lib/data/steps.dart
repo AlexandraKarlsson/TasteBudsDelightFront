@@ -51,4 +51,8 @@ class Steps extends ChangeNotifier {
       number++;
     });
   }
+
+  clear() {
+    stepList = [];
+  }
 }

@@ -9,4 +9,8 @@ class Images extends ChangeNotifier {
     imageList.add(image);
     notifyListeners();
   }
+
+  clear() {
+    imageList = [];
+  }
 }

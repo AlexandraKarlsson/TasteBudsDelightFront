@@ -49,8 +49,8 @@ class _AddRecipeState extends State<AddRecipe> {
     // Clear all provider objects used for adding a recipe.
     overview.clear();
     ingredients.clear();
-    // steps.clear();
-    // images.clear();
+    steps.clear();
+    images.clear();
     Navigator.pop(context);
   }
 

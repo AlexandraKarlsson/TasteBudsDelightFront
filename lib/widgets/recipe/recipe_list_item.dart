@@ -10,7 +10,17 @@ class RecipeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Text(recipe.overview.title),
+      child: InkWell(
+        onTap: () {
+          // TODO: Add navigation to detailed page of the recipe.
+        },
+        child: Column(
+          children: <Widget>[
+            //Image.network(recipe.images.imageList[0].file),
+            Text(recipe.overview.title),
+          ],
+        ),
+      ),
     );
   }
 }

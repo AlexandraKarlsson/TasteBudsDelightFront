@@ -65,7 +65,4 @@ class Ingredients extends ChangeNotifier {
   clear() {
     ingredientList = [];
   }
-
-
-
 }

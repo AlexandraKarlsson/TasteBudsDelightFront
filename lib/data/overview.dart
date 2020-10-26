@@ -32,6 +32,7 @@ class Overview extends ChangeNotifier {
     title = "";
     description = "";
     time = 0;
+    portions = 0;
     isVegan = false;
     isVegetarian = false;
     isGlutenFree = false;
