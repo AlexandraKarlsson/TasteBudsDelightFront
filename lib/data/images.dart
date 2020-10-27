@@ -10,6 +10,14 @@ class Images extends ChangeNotifier {
     notifyListeners();
   }
 
+List listOfExtentions() {
+    List extentionList = [];
+    imageList.forEach((image) {
+      extentionList.add({'extention': image.extention});
+     });
+    return extentionList;
+  }
+
   clear() {
     imageList = [];
   }

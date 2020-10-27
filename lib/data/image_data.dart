@@ -2,7 +2,7 @@ import 'dart:io';
 
 class ImageData {
   final File file;
-  final String name;
+  final String extention;
 
-  ImageData(this.file, this.name);
+  ImageData(this.file, this.extention);
 }

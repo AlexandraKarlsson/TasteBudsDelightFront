@@ -9,8 +9,8 @@ class Ingredients extends ChangeNotifier {
     Ingredients newIngredients = Ingredients();
     ingredients.ingredientList.forEach((ingredient) {
       newIngredients.add(ingredient.amount, ingredient.unit, ingredient.name);
-     });
-     return newIngredients;
+    });
+    return newIngredients;
   }
 
   add(double amount, String unit, String name) {
@@ -37,14 +37,13 @@ class Ingredients extends ChangeNotifier {
     notifyListeners();
   }
 
-    moveIngredientUp(itemSelected) {
+  moveIngredientUp(itemSelected) {
     Ingredient selectedIngredient = ingredientList.elementAt(itemSelected);
     Ingredient aboveIngredient = ingredientList.elementAt(itemSelected - 1);
     ingredientList[itemSelected] = aboveIngredient;
     ingredientList[itemSelected - 1] = selectedIngredient;
     notifyListeners();
   }
-
 
   setName(index, name) {
     ingredientList[index].name = name;
@@ -60,6 +59,18 @@ class Ingredients extends ChangeNotifier {
     print('index = $index, unit = $unit');
     ingredientList[index].unit = unit;
     notifyListeners();
+  }
+
+  List listOfIngredients() {
+    List newIngredientsList = [];
+    ingredientList.forEach((ingredient) {
+      newIngredientsList.add({
+        'amount': ingredient.amount,
+        'unit': ingredient.unit,
+        'name': ingredient.name
+      });
+    });
+    return newIngredientsList;
   }
 
   clear() {

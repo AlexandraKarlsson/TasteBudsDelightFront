@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+
 import 'package:tastebudsdelightfront/data/images.dart';
 import 'package:tastebudsdelightfront/data/ingredient.dart';
 import 'package:tastebudsdelightfront/data/ingredients.dart';
@@ -36,22 +42,108 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
-  void _saveRecipe() {
-    // Create recipe and add in recipes.
-    Overview overview = Provider.of<Overview>(context,listen: false);
-    Ingredients ingredients = Provider.of<Ingredients>(context,listen: false);
-    Steps steps = Provider.of<Steps>(context,listen: false);
-    Images images = Provider.of<Images>(context,listen: false);
-    Recipes recipes = Provider.of<Recipes>(context,listen: false);
-    
-    recipes.add(Recipe(Overview.clone(overview), Ingredients.clone(ingredients), steps, images));
+  Future<Map<String, dynamic>> _saveRecipeData() async {
+    // Create post-data structure
+    Overview overview = Provider.of<Overview>(context, listen: false);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
+    Steps steps = Provider.of<Steps>(context, listen: false);
+    Images images = Provider.of<Images>(context, listen: false);
 
-    // Clear all provider objects used for adding a recipe.
+    final newRecipeData = {
+      "overview": {
+        "title": overview.title,
+        "description": overview.description,
+        "time": overview.time,
+        "portions": overview.portions,
+        "isvegan": overview.isVegan,
+        "isvegetarian": overview.isVegetarian,
+        "isglutenfree": overview.isGlutenFree,
+        "islactosefree": overview.isLactoseFree
+      },
+      "ingredients": ingredients.listOfIngredients(),
+      "steps": steps.listOfDescriptions(),
+      "images": images.listOfExtentions(),
+    };
+
+    // print('newRecipeData: $newRecipeData.');
+
+    const url = 'http://10.0.2.2:8000/tastebuds/recipe';
+    const headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+
+    var newRecipeDataJson = convert.jsonEncode(newRecipeData);
+    // print('newRecipeDataJson = $newRecipeDataJson');
+
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: newRecipeDataJson,
+    );
+    if (response.statusCode == 201) {
+      print('response ${response.body}');
+      var responseData =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
+      print('responseData = $responseData');
+      return responseData;
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return null;
+    }
+  }
+
+  Future<void> _uploadImages(List<dynamic> imageNames) async {
+    Images images = Provider.of<Images>(context, listen: false);
+
+    final String url = 'http://10.0.2.2:8010/image';
+    for (int i = 0; i < images.imageList.length; i++) {
+      File file = images.imageList[i].file;
+      String fileName = imageNames[i];
+      String base64Image = convert.base64Encode(file.readAsBytesSync());
+      //var headers = <String, String>{'x-auth': user.token};
+
+      http.post(
+        url,
+        //headers: headers,
+        body: {
+          "image": base64Image,
+          "name": fileName,
+        },
+      ).then((response) {
+        print(response.statusCode);
+        print('fileName = $fileName');
+      }).catchError((error) {
+        print('Upload image failed');
+        print(error);
+      });
+    }
+  }
+
+  void _saveRecipe() async {
+    // Post recipe to backend and recive list of imagenames and recipeid.
+    final recipeResponse = await _saveRecipeData();
+    if(recipeResponse != null) {
+        // Post image/s to imagestorage.
+      _uploadImages(recipeResponse['imageFileNames']);
+      // Clear all provider objects used for adding a recipe.
+    _clearProviderData();
+    Navigator.pop(context);
+    } else {
+      print('Save recipe failed!');
+    }
+    
+  }
+
+  _clearProviderData() {
+    Overview overview = Provider.of<Overview>(context, listen: false);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
+    Steps steps = Provider.of<Steps>(context, listen: false);
+    Images images = Provider.of<Images>(context, listen: false);
+
     overview.clear();
     ingredients.clear();
     steps.clear();
     images.clear();
-    Navigator.pop(context);
   }
 
   @override

@@ -52,6 +52,14 @@ class Steps extends ChangeNotifier {
     });
   }
 
+  List listOfDescriptions() {
+    List descriptionList = [];
+    stepList.forEach((step) {
+      descriptionList.add({'description': step.description});
+     });
+    return descriptionList;
+  }
+
   clear() {
     stepList = [];
   }

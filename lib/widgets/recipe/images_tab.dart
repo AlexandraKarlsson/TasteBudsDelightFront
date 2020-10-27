@@ -62,20 +62,15 @@ class _ImagesTabState extends State<ImagesTab> {
   }
 
   void _addImage(BuildContext context, Images images) async {
-    Overview overview = Provider.of<Overview>(context, listen: false);
-
     dynamic _imageFile = await Navigator.pushNamed(context, AddImage.PATH);
     print('_imageFile = $_imageFile');
     String extention = _imageFile.path.split(".").last;
-    //String namePrefix = homeArgs.homeType == HomeType.apartment ? 'apartment' : 'house';
-    String imageName =
-        '${overview.title}_${images.imageList.length}.$extention';
-    ImageData image = ImageData(_imageFile, imageName);
-    // print('imageFile = ${image.file}, imageName = ${image.name}');
+    
+    ImageData image = ImageData(_imageFile, extention);
     images.addImage(image);
 
     images.imageList.forEach((image) {
-      print('file= ${image.file}, name=${image.name}');
+      print('file= ${image.file}, name=${image.extention}');
     });
   }
 
@@ -111,23 +106,5 @@ class _ImagesTabState extends State<ImagesTab> {
   //   }
   // }
 
-  // Future<void> _uploadImage(ImageData image, User user) async {
-  //   final String url = 'http://10.0.2.2:8010/image';
-  //   String base64Image = convert.base64Encode(image.file.readAsBytesSync());
-  //   var headers = <String, String>{'x-auth': user.token};
 
-  //   http.post(
-  //     url,
-  //     headers: headers,
-  //     body: {
-  //       "image": base64Image,
-  //       "name": image.name,
-  //     },
-  //   ).then((response) {
-  //     print(response.statusCode);
-  //   }).catchError((error) {
-  //     print('Upload image failed');
-  //     print(error);
-  //   });
-  // }
 }
