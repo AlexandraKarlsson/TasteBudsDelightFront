@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/recipe.dart';
+import '../../data/recipe_item.dart';
 
 class RecipeListItem extends StatelessWidget {
-  final Recipe recipe;
+  final RecipeItem recipeItem;
 
-  const RecipeListItem(this.recipe);
+  const RecipeListItem(this.recipeItem);
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +13,23 @@ class RecipeListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           // TODO: Add navigation to detailed page of the recipe.
+          // Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (BuildContext context) => DetailedRecipeItem(home)));
         },
         child: Column(
           children: <Widget>[
-            //Image.network(recipe.images.imageList[0].file),
-            Text(recipe.overview.title),
+            Expanded(
+              child: Image.network(
+                  'http://10.0.2.2:8010/images/${recipeItem.imageFileName}'),
+            ),
+            Text(
+              recipeItem.title,
+              style: TextStyle(fontSize: 16),
+            ),
+            Text('${recipeItem.time.toString()} min'),
+            Text('${recipeItem.portions.toString()} portioner'),
           ],
         ),
       ),

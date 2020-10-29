@@ -5,6 +5,7 @@ import 'package:tastebudsdelightfront/data/recipes.dart';
 import 'data/images.dart';
 import 'data/ingredients.dart';
 import 'data/overview.dart';
+import 'data/recipe_items.dart';
 import 'data/steps.dart';
 import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Ingredients>(create: (_) => Ingredients()),
         ChangeNotifierProvider<Steps>(create: (_) => Steps()),
         ChangeNotifierProvider<Images>(create: (_) => Images()),
-        ChangeNotifierProvider<Recipes>(create: (_) => Recipes()),
+        ChangeNotifierProvider<RecipeItems>(create: (_) => RecipeItems()),
       ],
       child: MaterialApp(
           title: 'Smaklökarnas Frestelser',
