@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/data/recipes.dart';
+import 'package:tastebudsdelightfront/pages/detailed_recipe.dart';
 
 import 'data/images.dart';
 import 'data/ingredients.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),
             AddImage.PATH: (context) => AddImage(),
+            // DetailedRecipe.PATH: (context) => DetailedRecipe(),
           }),
     );
   }

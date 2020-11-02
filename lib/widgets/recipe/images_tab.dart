@@ -66,7 +66,7 @@ class _ImagesTabState extends State<ImagesTab> {
     print('_imageFile = $_imageFile');
     String extention = _imageFile.path.split(".").last;
     
-    ImageData image = ImageData(_imageFile, extention);
+    ImageData image = ImageData(_imageFile, extention, null);
     images.addImage(image);
 
     images.imageList.forEach((image) {
