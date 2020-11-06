@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/step_item.dart';
-import '../../data/step_info.dart';
-import '../../data/steps.dart';
+import 'package:tastebudsdelightfront/widgets/recipe/instruction_item.dart';
+import '../../data/instruction.dart';
+import '../../data/instructions.dart';
 
-import '../../widgets/styles.dart';
+import '../styles.dart';
 
-class StepsTab extends StatefulWidget {
+class InstructionTab extends StatefulWidget {
   
   @override
-  _StepsTabState createState() => _StepsTabState();
+  _InstructionTabState createState() => _InstructionTabState();
 }
 
-class _StepsTabState extends State<StepsTab> {
+class _InstructionTabState extends State<InstructionTab> {
   int itemSelected = -1;
 
   delete(index) {
-    Steps steps =
-        Provider.of<Steps>(context,listen: false);
-     steps.deleteStep(index);
+    Instructions instructions =
+        Provider.of<Instructions>(context,listen: false);
+     instructions.deleteInstruction(index);
   }
 
   select(index) {
@@ -36,9 +36,9 @@ class _StepsTabState extends State<StepsTab> {
 
   @override
   Widget build(BuildContext context) {
-    Steps steps =
-        Provider.of<Steps>(context);
-    List<StepInfo> stepList = steps.stepList;
+    Instructions steps =
+        Provider.of<Instructions>(context);
+    List<Instruction> stepList = steps.instructionList;
     return Column(
       children: <Widget>[
         Padding(
@@ -51,7 +51,7 @@ class _StepsTabState extends State<StepsTab> {
               padding: const EdgeInsets.all(8),
               itemCount: stepList.length,
               itemBuilder: (BuildContext context, int index) {
-                return StepItem(
+                return InstructionItem(
                     itemSelected, index, stepList[index], delete, select);
               },
             ),
@@ -65,8 +65,8 @@ class _StepsTabState extends State<StepsTab> {
             child: FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                StepInfo step =
-                    StepInfo(1, 'Nytt steg');
+                Instruction step =
+                    Instruction(1, 'Nytt steg');
                 setState(() {
                   stepList.add(step);
                 });
@@ -84,7 +84,7 @@ class _StepsTabState extends State<StepsTab> {
                   ? null
                   : () {
                       print('Move step up');
-                      steps.moveStepUp(itemSelected);
+                      steps.moveInstructionUp(itemSelected);
                       setState(() {
                         itemSelected = itemSelected - 1;
                       });
@@ -99,7 +99,7 @@ class _StepsTabState extends State<StepsTab> {
                   ? null
                   : () {
                       print('Move step down');
-                      steps.moveStepDown(itemSelected);
+                      steps.moveInstructionDown(itemSelected);
                       setState(() {
                         itemSelected = itemSelected + 1;
                       });

@@ -12,10 +12,10 @@ import 'package:tastebudsdelightfront/data/ingredients.dart';
 import 'package:tastebudsdelightfront/data/overview.dart';
 import 'package:tastebudsdelightfront/data/recipe.dart';
 import 'package:tastebudsdelightfront/data/recipes.dart';
-import 'package:tastebudsdelightfront/data/steps.dart';
+import 'package:tastebudsdelightfront/data/instructions.dart';
 
 import '../widgets/recipe/images_tab.dart';
-import '../widgets/recipe/steps_tab.dart';
+import '../widgets/recipe/instruction_tab.dart';
 import '../widgets/recipe/ingredients_tab.dart';
 import '../widgets/recipe/overview_tab.dart';
 
@@ -32,7 +32,7 @@ class _AddRecipeState extends State<AddRecipe> {
   static List<Widget> _widgetOptions = <Widget>[
     OverviewTab(),
     IngredientsTab(),
-    StepsTab(),
+    InstructionTab(),
     ImagesTab(),
   ];
 
@@ -46,7 +46,7 @@ class _AddRecipeState extends State<AddRecipe> {
     // Create post-data structure
     Overview overview = Provider.of<Overview>(context, listen: false);
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
-    Steps steps = Provider.of<Steps>(context, listen: false);
+    Instructions steps = Provider.of<Instructions>(context, listen: false);
     Images images = Provider.of<Images>(context, listen: false);
 
     final newRecipeData = {
@@ -137,7 +137,7 @@ class _AddRecipeState extends State<AddRecipe> {
   _clearProviderData() {
     Overview overview = Provider.of<Overview>(context, listen: false);
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
-    Steps steps = Provider.of<Steps>(context, listen: false);
+    Instructions steps = Provider.of<Instructions>(context, listen: false);
     Images images = Provider.of<Images>(context, listen: false);
 
     overview.clear();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/step_info.dart';
-import '../data/steps.dart';
+import '../data/instruction.dart';
+import '../data/instructions.dart';
 
 class EditStep extends StatefulWidget {
   final int index;
@@ -29,15 +29,15 @@ class _EditStepState extends State<EditStep> {
 
     if (!_isInitialized) {
       _isInitialized = true;
-      Steps steps = Provider.of<Steps>(context, listen: false);
-      _nameController.text = steps.stepList[widget.index].description;
+      Instructions steps = Provider.of<Instructions>(context, listen: false);
+      _nameController.text = steps.instructionList[widget.index].description;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Steps steps = Provider.of<Steps>(context);
-    StepInfo step = steps.stepList[widget.index];
+    Instructions steps = Provider.of<Instructions>(context);
+    Instruction step = steps.instructionList[widget.index];
 
     return Scaffold(
       appBar: AppBar(title: Text('Modifiera beskrivningen')),

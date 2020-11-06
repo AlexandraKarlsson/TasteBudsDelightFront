@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../pages/edit_step.dart';
-import '../../data/step_info.dart';
+import '../../data/instruction.dart';
 
-class StepItem extends StatelessWidget {
-  final StepInfo step;
+class InstructionItem extends StatelessWidget {
+  final Instruction step;
   final index;
   final itemSelected;
   final Function delete;
   final Function select;
 
-  StepItem(this.itemSelected, this.index, this.step, this.delete, this.select);
+  InstructionItem(this.itemSelected, this.index, this.step, this.delete, this.select);
 
   @override
   Widget build(BuildContext context) {

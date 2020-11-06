@@ -1,15 +1,15 @@
 import 'images.dart';
-import 'steps.dart';
+import 'instructions.dart';
 import 'ingredients.dart';
 import 'overview.dart';
 
 class Recipe {
   Overview overview;
   Ingredients ingredients;
-  Steps steps;
+  Instructions instructions;
   Images images;
 
-  Recipe(this.overview,this.ingredients,this.steps, this.images);
+  Recipe(this.overview,this.ingredients,this.instructions, this.images);
 
   factory Recipe.parse(Map<String,dynamic> recipeData) {
     // Not implmeented yet ...
@@ -31,7 +31,7 @@ class Recipe {
       ingredients.add(ingredient['amount'].toDouble() , ingredient['unit'], ingredient['name']);
     });
 
-    Steps instructions = Steps();
+    Instructions instructions = Instructions();
     recipeData['instructions'].forEach((instruction) {
       instructions.add(instruction['ordernumber'], instruction['description']);
     });

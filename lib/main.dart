@@ -7,13 +7,16 @@ import 'data/images.dart';
 import 'data/ingredients.dart';
 import 'data/overview.dart';
 import 'data/recipe_items.dart';
-import 'data/steps.dart';
+import 'data/instructions.dart';
 import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
 import 'pages/add_image.dart';
 
 // Starting the emulator
 // emulator.exe -avd Pixel_2_API_28
+
+// Activate dev tools
+// pub global activate devtools
 /******************************************/
 
 void main() {
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Overview>(create: (_) => Overview()),
         ChangeNotifierProvider<Ingredients>(create: (_) => Ingredients()),
-        ChangeNotifierProvider<Steps>(create: (_) => Steps()),
+        ChangeNotifierProvider<Instructions>(create: (_) => Instructions()),
         ChangeNotifierProvider<Images>(create: (_) => Images()),
         ChangeNotifierProvider<RecipeItems>(create: (_) => RecipeItems()),
       ],
