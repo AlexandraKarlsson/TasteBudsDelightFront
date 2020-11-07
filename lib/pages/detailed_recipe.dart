@@ -168,6 +168,9 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
                           height: 10,
                         ),
                         InstructionTable(recipe.instructions),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),
