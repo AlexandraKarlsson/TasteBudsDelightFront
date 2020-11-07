@@ -78,6 +78,7 @@ class _RecipeListState extends State<RecipeList> {
             Container(
               child: Expanded(
                 child: GridView.builder(
+                  padding: EdgeInsets.all(6),
                   itemCount: recipeItems.recipeItemList.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
@@ -90,11 +91,12 @@ class _RecipeListState extends State<RecipeList> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.red[300],
           onPressed: () {
             Navigator.pushNamed(context, AddRecipe.PATH);
           },
           tooltip: 'Lägg till nytt recept!',
-          child: Icon(Icons.add),
+          child: Icon(Icons.add,),
         ),
       );
     }
