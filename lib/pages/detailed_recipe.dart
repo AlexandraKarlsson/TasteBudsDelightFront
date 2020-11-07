@@ -94,35 +94,6 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
         : '$amount portion';
   }
 
-  Table _getAllIngredientTableRows() {
-    List<TableRow> tableRowList = [];
-    recipe.ingredients.ingredientList.forEach((ingredient) {
-      TableRow row = TableRow(children: <Widget>[
-        TableCell(
-            child: Align(
-                alignment: Alignment.topRight,
-                child: Text('${ingredient.amount.toInt()}'))),
-        TableCell(child: Text(ingredient.unit)),
-        TableCell(child: Text(ingredient.name)),
-      ]);
-      tableRowList.add(row);
-    });
-    Table table = Table(columnWidths: {
-      0: FractionColumnWidth(.2),
-      1: FractionColumnWidth(.2)
-    }, children: <TableRow>[
-      ...tableRowList,
-    ]);
-    return table;
-
-    // List<Widget> ingredients = [];
-    // recipe.ingredients.ingredientList.forEach((ingredient) {
-    //   Widget ingredientText = Text('${ingredient.amount.toInt() } ${}  ${ingredient.name}');
-    //   ingredients.add(ingredientText);
-    // });
-    // return ingredients;
-  }
-
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -136,40 +107,47 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
                     child: Column(
                       children: <Widget>[
                         ImageViewer(_getListOfImageNames()),
-                        ..._createChipList(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Icon(Icons.timer),
-                                Text('${recipe.overview.time} min'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(Icons.people),
-                                Text(_getAmountOfPortions()),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        IngredientTable(recipe.ingredients),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        InstructionTable(recipe.instructions),
-                        SizedBox(
-                          height: 10,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[..._createChipList()],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.timer),
+                                      Text('${recipe.overview.time} min'),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.people),
+                                      Text(_getAmountOfPortions()),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              IngredientTable(recipe.ingredients),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InstructionTable(recipe.instructions),
+                            ],
+                          ),
                         ),
                       ],
                     ),
