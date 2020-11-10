@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_read_more_text/flutter_read_more_text.dart';
 import 'package:http/http.dart' as http;
 import 'package:tastebudsdelightfront/widgets/recipe/image_viewer.dart';
 import 'package:tastebudsdelightfront/widgets/recipe/ingredient_table.dart';
@@ -107,6 +108,12 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
                     child: Column(
                       children: <Widget>[
                         ImageViewer(_getListOfImageNames()),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(4),
+                          child: ReadMoreText(recipe.overview.description),
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
