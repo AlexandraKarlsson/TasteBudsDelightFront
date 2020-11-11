@@ -63,11 +63,14 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
   }
 
   Widget _createChip(String name) {
-    return Chip(
-      avatar: CircleAvatar(
-          backgroundColor: Colors.grey.shade800, child: Icon(Icons.check)),
-      backgroundColor: Colors.green,
-      label: Text(name),
+    return Padding(
+      padding: const EdgeInsets.only(left: 2, right: 2),
+      child: Chip(
+        avatar: CircleAvatar(
+            backgroundColor: Colors.black, child: Icon(Icons.check)),
+        backgroundColor: Colors.red[400],
+        label: Text(name),
+      ),
     );
   }
 
