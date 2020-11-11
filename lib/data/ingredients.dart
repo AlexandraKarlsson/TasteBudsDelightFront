@@ -24,12 +24,12 @@ class Ingredients extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteIngredient(index) {
+  delete(index) {
     ingredientList.removeAt(index);
     notifyListeners();
   }
 
-  moveIngredientDown(itemSelected) {
+  moveDown(itemSelected) {
     Ingredient selectedIngredient = ingredientList.elementAt(itemSelected);
     Ingredient belowIngredient = ingredientList.elementAt(itemSelected + 1);
     ingredientList[itemSelected] = belowIngredient;
@@ -37,7 +37,7 @@ class Ingredients extends ChangeNotifier {
     notifyListeners();
   }
 
-  moveIngredientUp(itemSelected) {
+  moveUp(itemSelected) {
     Ingredient selectedIngredient = ingredientList.elementAt(itemSelected);
     Ingredient aboveIngredient = ingredientList.elementAt(itemSelected - 1);
     ingredientList[itemSelected] = aboveIngredient;

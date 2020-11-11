@@ -12,8 +12,7 @@ class Recipe {
   Recipe(this.overview,this.ingredients,this.instructions, this.images);
 
   factory Recipe.parse(Map<String,dynamic> recipeData) {
-    // Not implmeented yet ...
-    
+ 
     final overviewData = recipeData['overview'];
     Overview overview = Overview();
     overview.setTitle(overviewData['title']);
@@ -24,7 +23,6 @@ class Recipe {
     overview.setIsVegetarian(overviewData['isvegetarian'] == 0 ? false : true);
     overview.setIsGlutenFree(overviewData['isglutenfree'] == 0 ? false : true);
     overview.setIsLactoseFree(overviewData['islactosefree'] == 0 ? false : true);
-
 
     Ingredients ingredients = Ingredients();
     recipeData['ingredients'].forEach((ingredient) {

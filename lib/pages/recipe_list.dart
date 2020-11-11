@@ -1,15 +1,15 @@
 // import 'dart:io';
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-import 'package:tastebudsdelightfront/data/recipe_items.dart';
 
-import 'package:tastebudsdelightfront/pages/add_recipe.dart';
-import '../widgets/styles.dart';
+import '../data/recipe_items.dart';
+import 'add_recipe.dart';
 import '../widgets/recipe/recipe_list_item.dart';
 
+// Move to style.dart file?
 const textStyle = TextStyle(fontSize: 25);
 
 class RecipeList extends StatefulWidget {
@@ -71,10 +71,6 @@ class _RecipeListState extends State<RecipeList> {
         ),
         body: Column(
           children: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text('Bilder', style: optionStyle),
-            // ),
             Container(
               child: Expanded(
                 child: GridView.builder(
@@ -91,7 +87,7 @@ class _RecipeListState extends State<RecipeList> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.red[300],
+          backgroundColor: Colors.red[600],
           onPressed: () {
             Navigator.pushNamed(context, AddRecipe.PATH);
           },

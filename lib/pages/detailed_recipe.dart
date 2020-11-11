@@ -1,15 +1,15 @@
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_read_more_text/flutter_read_more_text.dart';
-import 'package:http/http.dart' as http;
-import 'package:tastebudsdelightfront/widgets/recipe/image_viewer.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/ingredient_table.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/instruction_table.dart';
-import 'dart:convert' as convert;
+
+import '../widgets/recipe/image_viewer.dart';
+import '../widgets/recipe/ingredient_table.dart';
+import '../widgets/recipe/instruction_table.dart';
 
 import '../data/recipe.dart';
 
 class DetailedRecipe extends StatefulWidget {
-  // static const PATH = '/detailed_recipe';
 
   final id;
   DetailedRecipe(this.id);

@@ -2,42 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:tastebudsdelightfront/data/ingredients.dart';
 
 class IngredientTable extends StatelessWidget {
-  Ingredients ingredients;
+  final Ingredients ingredients;
 
   IngredientTable(this.ingredients);
 
   Table _getAllIngredientTableRows() {
     List<TableRow> tableRowList = [];
     ingredients.ingredientList.forEach((ingredient) {
-      TableRow row = TableRow(children: <Widget>[
-        TableCell(
+      TableRow row = TableRow(
+        children: <Widget>[
+          TableCell(
             child: Padding(
-              padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
+              padding:
+                  const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
               child: Align(
                 alignment: Alignment.bottomRight,
-                              child: Text('${ingredient.amount.toInt()}',
-                    style: TextStyle(
-                      fontSize: 16,
-                    )),
+                child: Text(
+                  '${ingredient.amount.toInt()}',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
               ),
-            )),
-        TableCell(
+            ),
+          ),
+          TableCell(
             child: Padding(
-              padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
-              child: Text(ingredient.unit,
-                  style: TextStyle(
-                    fontSize: 16,
-                  )),
-            )),
-        TableCell(
+              padding:
+                  const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
+              child: Text(
+                ingredient.unit,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+          TableCell(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8, top: 2, bottom: 2, right: 2),
-              child: Text(ingredient.name,
-                  style: TextStyle(
-                    fontSize: 16,
-                  )),
-            )),
-      ]);
+              padding:
+                  const EdgeInsets.only(left: 8, top: 2, bottom: 2, right: 2),
+              child: Text(
+                ingredient.name,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
       tableRowList.add(row);
     });
     Table table = Table(columnWidths: {
@@ -52,32 +66,14 @@ class IngredientTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<TableRow> tableRowList = [];
-    // instructions.instructionList.asMap().forEach(
-    //   (index,instruction) {
-    //     TableRow row = TableRow(
-    //       children: <Widget>[
-    //         TableCell(
-    //           child: _createCircleWithNumber(index+1),
-    //         ),
-    //         TableCell(
-    //               verticalAlignment: TableCellVerticalAlignment.middle,
-    //               child: Padding(
-    //                 padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
-    //                 child: Text(instruction.description,style: TextStyle(fontSize: 16,)),
-    //               )),
-    //       ],
-    //     );
-    //     tableRowList.add(row);
-    //   },
-    // );
-
-    return Column(children: <Widget>[
-      Text(
-        'Ingredienser',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      ),
-      _getAllIngredientTableRows(),
-    ]);
+    return Column(
+      children: <Widget>[
+        Text(
+          'Ingredienser',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        _getAllIngredientTableRows(),
+      ],
+    );
   }
 }

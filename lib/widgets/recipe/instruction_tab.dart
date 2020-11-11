@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/instruction_item.dart';
+
+import 'instruction_item.dart';
+import '../styles.dart';
 import '../../data/instruction.dart';
 import '../../data/instructions.dart';
 
-import '../styles.dart';
-
-class InstructionTab extends StatefulWidget {
-  
+class InstructionTab extends StatefulWidget {  
   @override
   _InstructionTabState createState() => _InstructionTabState();
 }
@@ -18,7 +17,7 @@ class _InstructionTabState extends State<InstructionTab> {
   delete(index) {
     Instructions instructions =
         Provider.of<Instructions>(context,listen: false);
-     instructions.deleteInstruction(index);
+     instructions.delete(index);
   }
 
   select(index) {
@@ -84,7 +83,7 @@ class _InstructionTabState extends State<InstructionTab> {
                   ? null
                   : () {
                       print('Move step up');
-                      steps.moveInstructionUp(itemSelected);
+                      steps.moveUp(itemSelected);
                       setState(() {
                         itemSelected = itemSelected - 1;
                       });
@@ -99,7 +98,7 @@ class _InstructionTabState extends State<InstructionTab> {
                   ? null
                   : () {
                       print('Move step down');
-                      steps.moveInstructionDown(itemSelected);
+                      steps.moveDown(itemSelected);
                       setState(() {
                         itemSelected = itemSelected + 1;
                       });

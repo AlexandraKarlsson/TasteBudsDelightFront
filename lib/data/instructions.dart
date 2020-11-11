@@ -23,7 +23,7 @@ class Instructions extends ChangeNotifier {
     notifyListeners();
   }
 
-  moveInstructionDown(itemSelected) {
+  moveDown(itemSelected) {
     Instruction selectedStep = instructionList.elementAt(itemSelected);
     Instruction belowStep = instructionList.elementAt(itemSelected + 1);
     instructionList[itemSelected] = belowStep;
@@ -31,7 +31,7 @@ class Instructions extends ChangeNotifier {
     notifyListeners();
   }
 
-    moveInstructionUp(itemSelected) {
+    moveUp(itemSelected) {
     Instruction selectedStep = instructionList.elementAt(itemSelected);
     Instruction aboveStep = instructionList.elementAt(itemSelected - 1);
     instructionList[itemSelected] = aboveStep;
@@ -39,7 +39,7 @@ class Instructions extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteInstruction(index) {
+  delete(index) {
     instructionList.removeAt(index);
     notifyListeners();
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tastebudsdelightfront/data/instructions.dart';
 
 class InstructionTable extends StatelessWidget {
-  Instructions instructions;
+  final Instructions instructions;
 
   InstructionTable(this.instructions);
 
@@ -31,18 +31,23 @@ class InstructionTable extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TableRow> tableRowList = [];
     instructions.instructionList.asMap().forEach(
-      (index,instruction) {
+      (index, instruction) {
         TableRow row = TableRow(
           children: <Widget>[
             TableCell(
-              child: _createCircleWithNumber(index+1),
+              child: _createCircleWithNumber(index + 1),
             ),
             TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
-                    child: Text(instruction.description,style: TextStyle(fontSize: 16,)),
-                  )),
+              verticalAlignment: TableCellVerticalAlignment.middle,
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
+                child: Text(instruction.description,
+                    style: TextStyle(
+                      fontSize: 16,
+                    )),
+              ),
+            ),
           ],
         );
         tableRowList.add(row);
@@ -57,7 +62,6 @@ class InstructionTable extends StatelessWidget {
         ),
         Table(
           columnWidths: {
-            // 0: FractionColumnWidth(.1)
             0: IntrinsicColumnWidth(),
             1: IntrinsicColumnWidth()
           },

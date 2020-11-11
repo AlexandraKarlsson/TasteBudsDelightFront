@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../pages/edit_step.dart';
 import '../../data/instruction.dart';
+import '../../pages/edit_step.dart';
 
 class InstructionItem extends StatelessWidget {
-  final Instruction step;
+  final Instruction instruction;
   final index;
   final itemSelected;
   final Function delete;
   final Function select;
 
-  InstructionItem(this.itemSelected, this.index, this.step, this.delete, this.select);
+  InstructionItem(this.itemSelected, this.index, this.instruction, this.delete, this.select);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class InstructionItem extends StatelessWidget {
           },
         ),
         title: Text((index+1).toString()),
-        subtitle: Text(step.description),
+        subtitle: Text(instruction.description),
         trailing: InkWell(
           child: Icon(Icons.delete),
           onTap: () {

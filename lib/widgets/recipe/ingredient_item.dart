@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../pages/edit_ingredient.dart';
+
 import '../../data/ingredient.dart';
+import '../../pages/edit_ingredient.dart';
 
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;
@@ -20,7 +21,7 @@ class IngredientItem extends StatelessWidget {
         leading: InkWell(
           child: Icon(Icons.edit),
           onTap: () {
-            print('Edit ingredient ...');
+            // print('Edit ingredient ...');
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => EditIngredient(index)));
           },
@@ -30,7 +31,7 @@ class IngredientItem extends StatelessWidget {
         trailing: InkWell(
           child: Icon(Icons.delete),
           onTap: () {
-            print('Delete ingredient ...');
+            // print('Delete ingredient ...');
             delete(index);
           },
         ),

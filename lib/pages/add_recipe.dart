@@ -1,18 +1,14 @@
 import 'dart:io';
+import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-import 'package:tastebudsdelightfront/data/images.dart';
-import 'package:tastebudsdelightfront/data/ingredient.dart';
-import 'package:tastebudsdelightfront/data/ingredients.dart';
-import 'package:tastebudsdelightfront/data/overview.dart';
-import 'package:tastebudsdelightfront/data/recipe.dart';
-import 'package:tastebudsdelightfront/data/recipes.dart';
-import 'package:tastebudsdelightfront/data/instructions.dart';
+import '../data/images.dart';
+import '../data/ingredients.dart';
+import '../data/overview.dart';
+import '../data/instructions.dart';
 
 import '../widgets/recipe/images_tab.dart';
 import '../widgets/recipe/instruction_tab.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/data/recipes.dart';
-import 'package:tastebudsdelightfront/pages/detailed_recipe.dart';
 
 import 'data/images.dart';
 import 'data/ingredients.dart';
@@ -12,19 +10,19 @@ import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
 import 'pages/add_image.dart';
 
+//----------------------------------
 // Starting the emulator
 // emulator.exe -avd Pixel_2_API_28
 
 // Activate dev tools
 // pub global activate devtools
-/******************************************/
+//----------------------------------
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,19 +34,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RecipeItems>(create: (_) => RecipeItems()),
       ],
       child: MaterialApp(
-          title: 'Smaklökarnas Frestelser',
+          title: 'Frestelser',
           theme: ThemeData(
-           //  primarySwatch: Colors.red,
-           primaryColor: Colors.red[400],
-           //floatingActionButtonTheme: ,
+            brightness: Brightness.light,
+            primaryColor: Colors.red[400],
+            //accentColor: Colors.cyan[600],
+            fontFamily: 'Georgia',
+            //  primarySwatch: Colors.red,
+            //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: RecipeList(title: 'Marinas Recept'),
+          home: RecipeList(title: 'Smaklökarnas Frestelser'),
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),
             AddImage.PATH: (context) => AddImage(),
-            // DetailedRecipe.PATH: (context) => DetailedRecipe(),
           }),
     );
   }

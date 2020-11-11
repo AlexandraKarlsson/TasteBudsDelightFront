@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'ingredient_item.dart';
+import '../styles.dart';
 import '../../data/ingredient.dart';
 import '../../data/ingredient_unit.dart';
 import '../../data/ingredients.dart';
-import '../styles.dart';
-import 'ingredient_item.dart';
 
 class IngredientsTab extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
 
   delete(index) {
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
-    ingredients.deleteIngredient(index);
+    ingredients.delete(index);
   }
 
   select(index) {
@@ -81,7 +82,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                   ? null
                   : () {
                       print('Move ingredient up');
-                      ingredients.moveIngredientUp(itemSelected);
+                      ingredients.moveUp(itemSelected);
                       setState(() {
                         itemSelected = itemSelected - 1;
                       });
@@ -96,7 +97,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                   ? null
                   : () {
                       print('Move ingredient down');
-                      ingredients.moveIngredientDown(itemSelected);
+                      ingredients.moveDown(itemSelected);
                       setState(() {
                         itemSelected = itemSelected + 1;
                       });

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../data/ingredient_unit.dart';
 import 'package:provider/provider.dart';
 
+import '../data/ingredient_unit.dart';
 import '../data/ingredients.dart';
-
 import '../data/ingredient.dart';
 
 class EditIngredient extends StatefulWidget {
@@ -93,7 +92,6 @@ class _EditIngredientState extends State<EditIngredient> {
                     ingredients.setUnit(widget.index, unit);
                   },
                   items: IngredientUnit.unitList
-                      // items: <String>['One', 'Two', 'Free', 'Four']
                       .map<DropdownMenuItem<String>>((String unit) {
                     return DropdownMenuItem<String>(
                       value: unit,

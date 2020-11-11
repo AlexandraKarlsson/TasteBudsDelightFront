@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/pages/detailed_recipe.dart';
+
 import '../../data/recipe_item.dart';
+import '../../pages/detailed_recipe.dart';
 
 class RecipeListItem extends StatelessWidget {
   final RecipeItem recipeItem;
@@ -56,13 +57,6 @@ class RecipeListItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     Text('${recipeItem.time.toString()} min'),
-
-                //     Text('${recipeItem.portions.toString()} portioner'),
-                //   ],
-                // ),
               ],
             ),
           ),

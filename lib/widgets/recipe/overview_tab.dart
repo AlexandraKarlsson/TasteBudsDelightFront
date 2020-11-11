@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../data/overview.dart';
+
 import '../styles.dart';
+import '../../data/overview.dart';
 
 class OverviewTab extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _OverviewTabState extends State<OverviewTab> {
   TextEditingController _timeController;
   TextEditingController _portionsController;
   List<TextInputFormatter> inputFormat = <TextInputFormatter>[
+    //FilteringTextInputFormatter.allow()
     WhitelistingTextInputFormatter.digitsOnly,
   ];
   bool _isInitialized = false;
@@ -56,122 +58,117 @@ class _OverviewTabState extends State<OverviewTab> {
       children: <Widget>[
         Expanded(
           child: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Översikt', style: optionStyle),
-              ),
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Rubrik',
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Översikt', style: optionStyle),
                 ),
-                onChanged: (title) {
-                  _overviewData.title = title;
-                  print('_recipeOverviewData.title = ${_overviewData.title}');
-                },
-              ),
-              SizedBox(height: 10,),
-              TextField(
-                maxLines: 3,
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Beskrivning',
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Rubrik',
+                  ),
+                  onChanged: (title) {
+                    _overviewData.title = title;
+                  },
                 ),
-                onChanged: (description) {
-                  _overviewData.description = description;
-                  print(
-                      '_recipeOverviewData.description = ${_overviewData.description}');
-                },
-              ),
-              SizedBox(height: 10,),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(                      
-                      controller: _timeController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: inputFormat,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Tillagningstid',
-                      ),
-                      onChanged: (time) {
-                        _overviewData.time = int.parse(time);
-                        print(
-                            '_recipeOverviewData.time = ${_overviewData.time}');
-                      },
-                    ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  maxLines: 3,
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Beskrivning',
                   ),
-                  SizedBox(width: 15),
-                  Text('minuter'),
-                  SizedBox(width: 50),
-                ],
-              ),
-              SizedBox(height: 10,),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: _portionsController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: inputFormat,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Portioner',                  
+                  onChanged: (description) {
+                    _overviewData.description = description;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        controller: _timeController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: inputFormat,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Tillagningstid',
+                        ),
+                        onChanged: (time) {
+                          _overviewData.time = int.parse(time);
+                        },
                       ),
-                      onChanged: (portions) {
-                        _overviewData.portions = int.parse(portions);
-                        print(
-                            '_recipeOverviewData.portions = ${_overviewData.portions}');
-                      },
                     ),
-                  ),
-                  SizedBox(width: 15),
-                  Text('portioner'),
-                  SizedBox(width: 40),
-                ],
-              ),
-              SizedBox(height: 10,),
-              CheckboxListTile(
-                title: Text('Veganskt'),
-                value: _overviewData.isVegan,
-                onChanged: (isVegan) {
-                  _overviewData.setIsVegan(isVegan);
-                  print(
-                      '_recipeOverviewData.isVegan = ${_overviewData.isVegan}');
-                },
-              ),
-              CheckboxListTile(
-                title: Text('vegetariskt'),
-                value: _overviewData.isVegetarian,
-                onChanged: (isVegetarian) {
-                  _overviewData.setIsVegetarian(isVegetarian);
-                  print(
-                      '_recipeOverviewData.isVegetarian = ${_overviewData.isVegetarian}');
-                },
-              ),
-              CheckboxListTile(
-                title: Text('Glutenfri'),
-                value: _overviewData.isGlutenFree,
-                onChanged: (isGlutenFree) {
-                  _overviewData.setIsGlutenFree(isGlutenFree);
-                  print(
-                      '_recipeOverviewData.isGlutenFree = ${_overviewData.isGlutenFree}');
-                },
-              ),
-              CheckboxListTile(
-                title: Text('Laktosfri'),
-                value: _overviewData.isLactoseFree,
-                onChanged: (isLactoseFree) {
-                  _overviewData.setIsLactoseFree(isLactoseFree);
-                  print(
-                      '_recipeOverviewData.isLactoseFree = ${_overviewData.isLactoseFree}');
-                },
-              ),
-            ]),
+                    SizedBox(width: 15),
+                    Text('minuter'),
+                    SizedBox(width: 50),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        controller: _portionsController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: inputFormat,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Portioner',
+                        ),
+                        onChanged: (portions) {
+                          _overviewData.portions = int.parse(portions);
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Text('portioner'),
+                    SizedBox(width: 40),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CheckboxListTile(
+                  title: Text('Veganskt'),
+                  value: _overviewData.isVegan,
+                  onChanged: (isVegan) {
+                    _overviewData.setIsVegan(isVegan);
+                  },
+                ),
+                CheckboxListTile(
+                  title: Text('vegetariskt'),
+                  value: _overviewData.isVegetarian,
+                  onChanged: (isVegetarian) {
+                    _overviewData.setIsVegetarian(isVegetarian);
+                  },
+                ),
+                CheckboxListTile(
+                  title: Text('Glutenfri'),
+                  value: _overviewData.isGlutenFree,
+                  onChanged: (isGlutenFree) {
+                    _overviewData.setIsGlutenFree(isGlutenFree);
+                  },
+                ),
+                CheckboxListTile(
+                  title: Text('Laktosfri'),
+                  value: _overviewData.isLactoseFree,
+                  onChanged: (isLactoseFree) {
+                    _overviewData.setIsLactoseFree(isLactoseFree);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ],
