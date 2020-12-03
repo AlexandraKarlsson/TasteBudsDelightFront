@@ -50,6 +50,17 @@ TableRow createIngredientCookingRow(Ingredient ingredient) {
       TableCell(
         child: Padding(
           padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
+          child: Text(
+            ingredient.unit,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+      TableCell(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 6, top: 2, bottom: 2, right: 2),
           child: Align(
             alignment: Alignment.bottomRight,
             child: Text(

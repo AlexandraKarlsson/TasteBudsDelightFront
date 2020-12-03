@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/view/ingredient_table.dart';
 import 'package:tastebudsdelightfront/widgets/recipe/view/instruction_table.dart';
 import '../../../data/recipe.dart';
+import 'cooking_ingredient_table.dart';
 
 class RecipeCookingMode extends StatelessWidget {
   final Recipe recipe;
@@ -32,7 +32,7 @@ class RecipeCookingMode extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: IngredientTable(recipe.ingredients),
+                      child: CookingIngredientTable(recipe.ingredients),
                     ),
                   ],
                 ),
