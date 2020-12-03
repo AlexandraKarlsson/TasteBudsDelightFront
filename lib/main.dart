@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'data/images.dart';
 import 'data/ingredients.dart';
@@ -36,15 +37,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           title: 'Frestelser',
           theme: ThemeData(
-            brightness: Brightness.light,
+            brightness: Brightness.dark,
             primaryColor: Colors.red[400],
-            //accentColor: Colors.cyan[600],
-            fontFamily: 'Georgia',
+            accentColor: Colors.red[600],
+            fontFamily: 'Nunito',
+            
             //  primarySwatch: Colors.red,
             //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: RecipeList(title: 'Smaklökarnas Frestelser'),
+
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/image_data.dart';
+import '../../../data/image_data.dart';
 
 class ImageItem extends StatelessWidget {
   final ImageData image;

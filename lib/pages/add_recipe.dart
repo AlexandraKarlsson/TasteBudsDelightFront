@@ -10,10 +10,10 @@ import '../data/ingredients.dart';
 import '../data/overview.dart';
 import '../data/instructions.dart';
 
-import '../widgets/recipe/images_tab.dart';
-import '../widgets/recipe/instruction_tab.dart';
-import '../widgets/recipe/ingredients_tab.dart';
-import '../widgets/recipe/overview_tab.dart';
+import '../widgets/recipe/create/images_tab.dart';
+import '../widgets/recipe/create/instruction_tab.dart';
+import '../widgets/recipe/create/ingredients_tab.dart';
+import '../widgets/recipe/create/overview_tab.dart';
 
 class AddRecipe extends StatefulWidget {
   static const PATH = '/add_recipe';
@@ -118,16 +118,15 @@ class _AddRecipeState extends State<AddRecipe> {
   void _saveRecipe() async {
     // Post recipe to backend and recive list of imagenames and recipeid.
     final recipeResponse = await _saveRecipeData();
-    if(recipeResponse != null) {
-        // Post image/s to imagestorage.
+    if (recipeResponse != null) {
+      // Post image/s to imagestorage.
       _uploadImages(recipeResponse['imageFileNames']);
       // Clear all provider objects used for adding a recipe.
-    _clearProviderData();
-    Navigator.pop(context);
+      _clearProviderData();
+      Navigator.pop(context);
     } else {
       print('Save recipe failed!');
     }
-    
   }
 
   _clearProviderData() {
@@ -164,7 +163,7 @@ class _AddRecipeState extends State<AddRecipe> {
               backgroundColor: Colors.black),
           BottomNavigationBarItem(
               title: Text('Ingredienser'),
-              icon: Icon(Icons.add_shopping_cart),
+              icon: Icon(Icons.fastfood),
               backgroundColor: Colors.black),
           BottomNavigationBarItem(
               title: Text('Beskrivnig'),

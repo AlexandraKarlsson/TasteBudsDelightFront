@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../data/ingredient.dart';
-import '../../pages/edit_ingredient.dart';
+import '../../../data/instruction.dart';
+import '../../../pages/edit_step.dart';
 
-class IngredientItem extends StatelessWidget {
-  final Ingredient ingredient;
+class InstructionItem extends StatelessWidget {
+  final Instruction instruction;
   final index;
   final itemSelected;
   final Function delete;
   final Function select;
 
-  IngredientItem(this.itemSelected, this.index, this.ingredient,this.select, this.delete);
+  InstructionItem(this.itemSelected, this.index, this.instruction, this.delete, this.select);
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +21,15 @@ class IngredientItem extends StatelessWidget {
         leading: InkWell(
           child: Icon(Icons.edit),
           onTap: () {
-            // print('Edit ingredient ...');
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditIngredient(index)));
+                MaterialPageRoute(builder: (context) => EditStep(index)));
           },
         ),
-        title: Text(ingredient.name),
-        subtitle: Text(ingredient.amount.toString() + ' ' + ingredient.unit),
+        title: Text((index+1).toString()),
+        subtitle: Text(instruction.description),
         trailing: InkWell(
           child: Icon(Icons.delete),
           onTap: () {
-            // print('Delete ingredient ...');
             delete(index);
           },
         ),

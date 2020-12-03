@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'instruction_item.dart';
-import '../styles.dart';
-import '../../data/instruction.dart';
-import '../../data/instructions.dart';
+import '../../styles.dart';
+import '../../../data/instruction.dart';
+import '../../../data/instructions.dart';
 
 class InstructionTab extends StatefulWidget {  
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../data/recipe_item.dart';
-import '../../pages/detailed_recipe.dart';
+import '../../../data/recipe_item.dart';
+import '../../../pages/detailed_recipe.dart';
 
 class RecipeListItem extends StatelessWidget {
   final RecipeItem recipeItem;

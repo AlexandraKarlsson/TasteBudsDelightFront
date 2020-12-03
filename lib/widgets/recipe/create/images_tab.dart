@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'image_item.dart';
-import '../styles.dart';
+import '../../styles.dart';
 // import '../../data/user.dart';
-import '../../data/images.dart';
-import '../../data/image_data.dart';
-import '../../pages/add_image.dart';
+import '../../../data/images.dart';
+import '../../../data/image_data.dart';
+import '../../../pages/add_image.dart';
 
 class ImagesTab extends StatefulWidget {
   @override

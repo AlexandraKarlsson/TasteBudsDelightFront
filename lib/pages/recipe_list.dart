@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../data/recipe_items.dart';
 import 'add_recipe.dart';
-import '../widgets/recipe/recipe_list_item.dart';
+import '../widgets/recipe/view/recipe_list_item.dart';
 
 // Move to style.dart file?
 const textStyle = TextStyle(fontSize: 25);
@@ -87,7 +87,6 @@ class _RecipeListState extends State<RecipeList> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.red[600],
           onPressed: () {
             Navigator.pushNamed(context, AddRecipe.PATH);
           },
