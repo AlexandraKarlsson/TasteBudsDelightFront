@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/view/instruction_table.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/cooking/cooking_ingredients.dart';
+import '../../../data/cooking/cooking_instructions.dart';
+import '../../../data/cooking/cooking_recipe.dart';
 import '../../../data/recipe.dart';
+import '../../../widgets/recipe/view/instruction_table.dart';
+
 import 'cooking_ingredient_table.dart';
 
 class RecipeCookingMode extends StatelessWidget {
   final Recipe recipe;
+  final int id;
 
-  RecipeCookingMode(this.recipe);
+  RecipeCookingMode(this.recipe, this.id);
 
   @override
   Widget build(BuildContext context) {
+    CookingRecipe cookingRecipe = Provider.of<CookingRecipe>(context);
+    if (cookingRecipe.isNewId(id)) {
+      cookingRecipe.newRecipe(id);
+      CookingIngredients cookingIngrediets =
+          Provider.of<CookingIngredients>(context);
+      cookingIngrediets.add(recipe.ingredients);
+      CookingInstructions cookingInstructions =
+          Provider.of<CookingInstructions>(context);
+      cookingInstructions.add(recipe.instructions);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Tillagning av ${recipe.overview.title}'),

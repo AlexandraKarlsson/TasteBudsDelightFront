@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:tastebudsdelightfront/data/cooking/cooking_ingredients.dart';
+import 'package:tastebudsdelightfront/data/cooking/cooking_instructions.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
+import 'data/cooking/cooking_recipe.dart';
 import 'data/images.dart';
 import 'data/ingredients.dart';
 import 'data/overview.dart';
@@ -33,6 +36,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Instructions>(create: (_) => Instructions()),
         ChangeNotifierProvider<Images>(create: (_) => Images()),
         ChangeNotifierProvider<RecipeItems>(create: (_) => RecipeItems()),
+        ChangeNotifierProvider<CookingRecipe>(create: (_) => CookingRecipe()),
+        ChangeNotifierProvider<CookingIngredients>(create: (_) => CookingIngredients()),
+        ChangeNotifierProvider<CookingInstructions>(create: (_) => CookingInstructions()),
       ],
       child: MaterialApp(
           title: 'Frestelser',

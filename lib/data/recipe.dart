@@ -26,7 +26,7 @@ class Recipe {
 
     Ingredients ingredients = Ingredients();
     recipeData['ingredients'].forEach((ingredient) {
-      ingredients.add(ingredient['amount'].toDouble() , ingredient['unit'], ingredient['name']);
+      ingredients.add(ingredient['amount'].toDouble(), ingredient['unit'], ingredient['name']);
     });
 
     Instructions instructions = Instructions();

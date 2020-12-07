@@ -59,7 +59,7 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
   Widget build(BuildContext context) {
     Widget page;
     if(MediaQuery.of(context).orientation == Orientation.landscape) {
-      page = RecipeCookingMode(recipe);
+      page = RecipeCookingMode(recipe, widget.id);
     } else {
       page = RecipeDetailedView(recipe);
     }

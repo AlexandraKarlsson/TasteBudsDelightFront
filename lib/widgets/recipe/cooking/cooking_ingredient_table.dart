@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/ingredients.dart';
+import 'package:provider/provider.dart';
 
 import 'cooking_ingredient_row.dart';
+import '../../../data/cooking/cooking_ingredients.dart';
+import '../../../data/ingredients.dart';
 
 class CookingIngredientTable extends StatelessWidget {
   final Ingredients ingredients;
@@ -9,11 +11,19 @@ class CookingIngredientTable extends StatelessWidget {
   CookingIngredientTable(this.ingredients);
 
   Table _getAllIngredientTableRows(BuildContext context) {
+    CookingIngredients cookingIngredients =
+        Provider.of<CookingIngredients>(context);
     List<TableRow> tableRowList = [];
-    ingredients.ingredientList.forEach((ingredient) {
-      TableRow row = createCookingIngredientRow(ingredient);
+
+    ingredients.ingredientList.asMap().forEach((index, ingredient) {
+      TableRow row = createCookingIngredientRow(
+          ingredient,
+          cookingIngredients.cookingIngredientList[index],
+          index,
+          cookingIngredients);
       tableRowList.add(row);
     });
+
     Table table = Table(columnWidths: {
       0: IntrinsicColumnWidth(),
       1: IntrinsicColumnWidth(),
