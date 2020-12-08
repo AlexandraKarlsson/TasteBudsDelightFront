@@ -4,6 +4,10 @@ import '../instructions.dart';
 
 class CookingInstruction {
   bool isDone = false;
+
+  void toggleIsDone() {
+    isDone = !isDone;
+  }
 }
 
 class CookingInstructions extends ChangeNotifier {
@@ -16,8 +20,8 @@ class CookingInstructions extends ChangeNotifier {
     }
   }
 
-  void setIsDone(int index, bool value) {
-    cookingInstructionList[index].isDone = value;
+  void toggleIsDone(int index) {   
+    cookingInstructionList[index].toggleIsDone();
     notifyListeners();
   }
 }

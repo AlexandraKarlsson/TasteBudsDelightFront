@@ -9,7 +9,7 @@ class CookingRecipe extends ChangeNotifier {
     _id = recipeId;
     timerOn = false;
     // TODO: update timer
-    notifyListeners();
+    // notifyListeners();
   }
 
   bool isNewId(int newId) { return newId != _id ? true : false; }

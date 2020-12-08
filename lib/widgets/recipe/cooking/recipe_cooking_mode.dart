@@ -5,9 +5,9 @@ import '../../../data/cooking/cooking_ingredients.dart';
 import '../../../data/cooking/cooking_instructions.dart';
 import '../../../data/cooking/cooking_recipe.dart';
 import '../../../data/recipe.dart';
-import '../../../widgets/recipe/view/instruction_table.dart';
 
 import 'cooking_ingredient_table.dart';
+import 'cooking_instruction_table.dart';
 
 class RecipeCookingMode extends StatelessWidget {
   final Recipe recipe;
@@ -18,7 +18,8 @@ class RecipeCookingMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CookingRecipe cookingRecipe = Provider.of<CookingRecipe>(context);
-    if (cookingRecipe.isNewId(id)) {
+    if (cookingRecipe.isNewId(id)) { 
+      //Ask user not clear or not
       cookingRecipe.newRecipe(id);
       CookingIngredients cookingIngrediets =
           Provider.of<CookingIngredients>(context);
@@ -62,7 +63,7 @@ class RecipeCookingMode extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: InstructionTable(recipe.instructions),
+                      child: CookingInstructionTable(recipe.instructions),
                     ),
                   ],
                 ),
