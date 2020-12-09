@@ -15,6 +15,7 @@ TableRow createCookingIngredientRow(
           height: 27,
           width: 30,
           child: Checkbox(
+            activeColor: Colors.green,
             value: cookingIngredient.isUsed,
             onChanged: (value) {
               print('Ingredient - toggle checkbox!');
