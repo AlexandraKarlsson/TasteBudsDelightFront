@@ -4,6 +4,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/widgets/recipe/view/search.dart';
 
 import '../data/recipe_items.dart';
 import 'add_recipe.dart';
@@ -26,6 +27,7 @@ class RecipeList extends StatefulWidget {
 class _RecipeListState extends State<RecipeList> {
   bool _isInit = true;
   bool _isLoading = false;
+  bool _showSearchBar = false;
 
   @override
   void initState() {
@@ -68,9 +70,17 @@ class _RecipeListState extends State<RecipeList> {
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: <Widget> [
+            IconButton(icon: Icon(Icons.search), onPressed: () {
+              setState(() {
+                _showSearchBar = !_showSearchBar;
+              });
+            },),
+          ],
         ),
         body: Column(
           children: <Widget>[
+            _showSearchBar ? Search() : Container(),
             Container(
               child: Expanded(
                 child: GridView.builder(
