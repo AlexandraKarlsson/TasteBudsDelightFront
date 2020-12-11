@@ -15,7 +15,7 @@ class IngredientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: index == itemSelected ? Colors.red[400] : Colors.white,
+      color: index == itemSelected ? Colors.red[400] : Theme.of(context).cardColor,
       elevation: 5,
       child: ListTile(
         leading: InkWell(

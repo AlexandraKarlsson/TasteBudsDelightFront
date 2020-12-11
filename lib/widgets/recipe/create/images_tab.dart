@@ -58,7 +58,7 @@ class _ImagesTabState extends State<ImagesTab> {
               onPressed: () {
                 _addImage(context, images);
               },
-              child: Icon(Icons.add),
+              child: Icon(Icons.add,color: Colors.green[400],),
             ),
           ),
         ),
