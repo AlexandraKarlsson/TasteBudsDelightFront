@@ -92,7 +92,7 @@ class _RecipeListState extends State<RecipeList> {
                   padding: EdgeInsets.all(6),
                   itemCount: recipeItemList.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                      crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 3 : 2),
                   itemBuilder: (BuildContext context, int index) {
                     return RecipeListItem(recipeItemList[index]);
                   },
