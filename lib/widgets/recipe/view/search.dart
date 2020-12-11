@@ -1,10 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/search_data.dart';
 
-class Search extends StatelessWidget {
+class Search extends StatefulWidget {
+  // String searchText;
+  @override
+  _SearchState createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  TextEditingController _searchController;
+  bool _isInitialized = false;
+  SearchData _searchData;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_isInitialized) {
+      _isInitialized = true;
+      _searchData = Provider.of<SearchData>(context);
+      _searchController.text = _searchData.title;
+    }
+  }
+
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Dags att leta recept'),
+      padding: EdgeInsets.all(5),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Rubrik',
+              ),
+              onChanged: (title) {
+                _searchData.setTitle(title);
+              },
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.search_sharp),
+            onPressed: () {
+              print('Pressed search button.');
+              // Call update method
+            },
+          ),
+        ],
+      ),
     );
   }
 }

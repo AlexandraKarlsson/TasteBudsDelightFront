@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastebudsdelightfront/data/search_data.dart';
 
 import 'recipe_item.dart';
 
@@ -40,4 +41,8 @@ class RecipeItems extends ChangeNotifier {
       },
     );
   }
+
+   List<RecipeItem> filter(SearchData searchData) {
+     
+   }
 }

@@ -10,6 +10,7 @@ import 'data/ingredients.dart';
 import 'data/overview.dart';
 import 'data/recipe_items.dart';
 import 'data/instructions.dart';
+import 'data/search_data.dart';
 import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
 import 'pages/add_image.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CookingRecipe>(create: (_) => CookingRecipe()),
         ChangeNotifierProvider<CookingIngredients>(create: (_) => CookingIngredients()),
         ChangeNotifierProvider<CookingInstructions>(create: (_) => CookingInstructions()),
+        ChangeNotifierProvider<SearchData>(create: (_) => SearchData()),
       ],
       child: MaterialApp(
           title: 'Frestelser',

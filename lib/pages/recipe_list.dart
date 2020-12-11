@@ -4,6 +4,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/data/recipe_item.dart';
+import 'package:tastebudsdelightfront/data/search_data.dart';
 import 'package:tastebudsdelightfront/widgets/recipe/view/search.dart';
 
 import '../data/recipe_items.dart';
@@ -66,6 +68,9 @@ class _RecipeListState extends State<RecipeList> {
       return Center(child: CircularProgressIndicator());
     } else {
       RecipeItems recipeItems = Provider.of<RecipeItems>(context);
+      SearchData searchData = Provider.of<SearchData>(context);
+      List<RecipeItem> recipeItemList =  searchData.filter(recipeItems.recipeItemList);
+    
 
       return Scaffold(
         appBar: AppBar(
@@ -80,16 +85,16 @@ class _RecipeListState extends State<RecipeList> {
         ),
         body: Column(
           children: <Widget>[
-            _showSearchBar ? Search() : Container(),
+            _showSearchBar ? Search(/* searchText*/) : Container(),
             Container(
               child: Expanded(
                 child: GridView.builder(
                   padding: EdgeInsets.all(6),
-                  itemCount: recipeItems.recipeItemList.length,
+                  itemCount: recipeItemList.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) {
-                    return RecipeListItem(recipeItems.recipeItemList[index]);
+                    return RecipeListItem(recipeItemList[index]);
                   },
                 ),
               ),
