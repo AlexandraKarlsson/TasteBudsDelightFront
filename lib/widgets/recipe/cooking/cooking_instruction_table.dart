@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/data/cooking/cooking_instructions.dart';
-import 'package:tastebudsdelightfront/data/instructions.dart';
 
 import 'cooking_instruction_row.dart';
+import '../../../data/cooking/cooking_instructions.dart';
+import '../../../data/instructions.dart';
 
 class CookingInstructionTable extends StatelessWidget {
   final Instructions instructions;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/instructions.dart';
 
 import 'instruction_row.dart';
+import '../../../data/instructions.dart';
 
 class InstructionTable extends StatelessWidget {
   final Instructions instructions;

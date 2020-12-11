@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_read_more_text/flutter_read_more_text.dart';
-import 'package:tastebudsdelightfront/data/recipe.dart';
-import 'package:tastebudsdelightfront/widgets/image_viewer.dart';
 
 import 'ingredient_table.dart';
 import 'instruction_table.dart';
+import '../../../data/recipe.dart';
+import '../../../widgets/image_viewer.dart';
 
 class RecipeDetailedView extends StatelessWidget {
   final Recipe recipe;

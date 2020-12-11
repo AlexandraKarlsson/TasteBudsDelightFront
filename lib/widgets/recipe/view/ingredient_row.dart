@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/ingredient.dart';
+
+import '../../../data/ingredient.dart';
 
 TableRow createIngredientRow(Ingredient ingredient) {
   return TableRow(

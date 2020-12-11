@@ -1,15 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:flutter_read_more_text/flutter_read_more_text.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/view/recipe_detailed_view.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/cooking/recipe_cooking_mode.dart';
-
-import '../widgets/image_viewer.dart';
-import '../widgets/recipe/view/ingredient_table.dart';
-import '../widgets/recipe/view/instruction_table.dart';
 
 import '../data/recipe.dart';
+import '../widgets/recipe/view/recipe_detailed_view.dart';
+import '../widgets/recipe/cooking/recipe_cooking_mode.dart';
 
 class DetailedRecipe extends StatefulWidget {
   final id;

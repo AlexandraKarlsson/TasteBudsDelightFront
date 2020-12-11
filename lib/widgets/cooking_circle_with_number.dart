@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/cooking/cooking_instructions.dart';
+
+import '../data/cooking/cooking_instructions.dart';
 
 Widget createCookingCircleWithNumber(
     BuildContext context, int number, CookingInstructions cookingInstructions) {

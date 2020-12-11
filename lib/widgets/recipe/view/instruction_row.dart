@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/instruction.dart';
 import '../../circle_with_number.dart';
+import '../../../data/instruction.dart';
 
 TableRow createInstructionRow(
     Instruction instruction, int index, BuildContext context) {

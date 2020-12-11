@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../cooking_circle_with_number.dart';
 import '../../../data/cooking/cooking_instructions.dart';
 import '../../../data/instruction.dart';
-import '../../cooking_circle_with_number.dart';
 
 TableRow createCookingInstructionRow(
     Instruction instruction,

@@ -1,15 +1,14 @@
-// import 'dart:io';
-import 'dart:convert' as convert;
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:tastebudsdelightfront/data/recipe_item.dart';
-import 'package:tastebudsdelightfront/data/search_data.dart';
-import 'package:tastebudsdelightfront/widgets/recipe/view/search.dart';
 
-import '../data/recipe_items.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+
 import 'add_recipe.dart';
+import '../data/recipe_item.dart';
+import '../data/search_data.dart';
+import '../data/recipe_items.dart';
+import '../widgets/recipe/view/search.dart';
 import '../widgets/recipe/view/recipe_list_item.dart';
 
 // Move to style.dart file?

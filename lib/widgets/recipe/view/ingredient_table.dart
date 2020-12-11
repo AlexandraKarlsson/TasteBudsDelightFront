@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tastebudsdelightfront/data/ingredients.dart';
 
 import 'ingredient_row.dart';
+
+import '../../../data/ingredients.dart';
 
 class IngredientTable extends StatelessWidget {
   final Ingredients ingredients;

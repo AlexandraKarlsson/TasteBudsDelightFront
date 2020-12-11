@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/data/search_data.dart';
+
+import '../../../data/search_data.dart';
 
 class Search extends StatefulWidget {
   // String searchText;

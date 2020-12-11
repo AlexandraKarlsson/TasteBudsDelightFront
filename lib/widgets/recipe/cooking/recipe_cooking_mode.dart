@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'cooking_ingredient_table.dart';
+import 'cooking_instruction_table.dart';
+
 import '../../../data/cooking/cooking_ingredients.dart';
 import '../../../data/cooking/cooking_instructions.dart';
 import '../../../data/cooking/cooking_recipe.dart';
 import '../../../data/recipe.dart';
 
-import 'cooking_ingredient_table.dart';
-import 'cooking_instruction_table.dart';
 
 class RecipeCookingMode extends StatelessWidget {
   final Recipe recipe;
