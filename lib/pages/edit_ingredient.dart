@@ -65,6 +65,8 @@ class _EditIngredientState extends State<EditIngredient> {
                 Expanded(
                   child: Slider(
                     value: ingredient.amount,
+                    activeColor: Theme.of(context).accentColor,
+                    inactiveColor: Colors.white,
                     min: 0,
                     max: 100,
                     divisions: 100,
@@ -74,7 +76,8 @@ class _EditIngredientState extends State<EditIngredient> {
                     },
                   ),
                 ),
-                Text(ingredient.amount.round().toString()),
+                Text(ingredient.amount.round().toString(),
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
                 SizedBox(
                   width: 15,
                 ),
@@ -83,10 +86,10 @@ class _EditIngredientState extends State<EditIngredient> {
                   icon: Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 16,
-                  style: TextStyle(color: Colors.deepPurple),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                   underline: Container(
                     height: 2,
-                    color: Colors.deepPurpleAccent,
+                    color: Theme.of(context).accentColor,
                   ),
                   onChanged: (String unit) {
                     ingredients.setUnit(widget.index, unit);
