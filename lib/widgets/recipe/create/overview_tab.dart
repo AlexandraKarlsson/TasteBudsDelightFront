@@ -140,6 +140,7 @@ class _OverviewTabState extends State<OverviewTab> {
                   height: 10,
                 ),
                 CheckboxListTile(
+                  activeColor: Colors.green,
                   title: Text('Veganskt'),
                   value: _overviewData.isVegan,
                   onChanged: (isVegan) {
@@ -147,6 +148,7 @@ class _OverviewTabState extends State<OverviewTab> {
                   },
                 ),
                 CheckboxListTile(
+                  activeColor: Colors.green,
                   title: Text('vegetariskt'),
                   value: _overviewData.isVegetarian,
                   onChanged: (isVegetarian) {
@@ -154,6 +156,7 @@ class _OverviewTabState extends State<OverviewTab> {
                   },
                 ),
                 CheckboxListTile(
+                  activeColor: Colors.green,
                   title: Text('Glutenfri'),
                   value: _overviewData.isGlutenFree,
                   onChanged: (isGlutenFree) {
@@ -161,6 +164,7 @@ class _OverviewTabState extends State<OverviewTab> {
                   },
                 ),
                 CheckboxListTile(
+                  activeColor: Colors.green,
                   title: Text('Laktosfri'),
                   value: _overviewData.isLactoseFree,
                   onChanged: (isLactoseFree) {
