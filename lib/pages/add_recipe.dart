@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../data/setting_data.dart';
 import '../data/images.dart';
 import '../data/ingredients.dart';
 import '../data/overview.dart';
@@ -62,7 +63,9 @@ class _AddRecipeState extends State<AddRecipe> {
 
     // print('newRecipeData: $newRecipeData.');
 
-    const url = 'http://10.0.2.2:8000/tastebuds/recipe';
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+
+    String url = 'http://${setting.serverAddress}:8000/tastebuds/recipe';
     const headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'
     };
@@ -89,8 +92,9 @@ class _AddRecipeState extends State<AddRecipe> {
 
   Future<void> _uploadImages(List<dynamic> imageNames) async {
     Images images = Provider.of<Images>(context, listen: false);
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final String url = 'http://10.0.2.2:8010/image';
+    final String url = 'http://${setting.serverAddress}:8010/image';
     for (int i = 0; i < images.imageList.length; i++) {
       File file = images.imageList[i].file;
       String fileName = imageNames[i];

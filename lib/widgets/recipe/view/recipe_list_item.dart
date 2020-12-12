@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../data/setting_data.dart';
 import '../../../data/recipe_item.dart';
 import '../../../pages/detailed_recipe.dart';
 
@@ -10,6 +12,8 @@ class RecipeListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  SettingData setting = Provider.of<SettingData>(context);
+
     return Padding(
       padding: const EdgeInsets.all(4),
       child: Card(
@@ -28,7 +32,7 @@ class RecipeListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Image.network(
-                      'http://10.0.2.2:8010/images/${recipeItem.imageFileName}'),
+                      'http://${setting.serverAddress}:8010/images/${recipeItem.imageFileName}'),
                 ),
                 SizedBox(
                   height: 3

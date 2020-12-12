@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'add_recipe.dart';
+import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
 import '../data/search_data.dart';
 import '../data/recipe_items.dart';
@@ -47,7 +48,9 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Future<void> _fetchRecipes() async {
-    const url = 'http://10.0.2.2:8000/tastebuds/recipe';
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+
+    String url = 'http://${setting.serverAddress}:8000/tastebuds/recipe';
 
     final response = await http.get(url);
     print(response);

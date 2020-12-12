@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/setting_data.dart';
 
 import '../data/recipe.dart';
 import '../widgets/recipe/view/recipe_detailed_view.dart';
@@ -34,7 +36,9 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
 
   Future<void> _fetchRecipe() async {
     print('_fetchRecipe(): Enter ...');
-    final url = 'http://10.0.2.2:8000/tastebuds/recipe/${widget.id}';
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+
+    final url = 'http://${setting.serverAddress}:8000/tastebuds/recipe/${widget.id}';
 
     final response = await http.get(url);
     print(response);

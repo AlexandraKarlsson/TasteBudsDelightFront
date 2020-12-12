@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/setting_data.dart';
 
 class ImageViewer extends StatefulWidget {
   final List<String> images;
@@ -45,12 +47,14 @@ class _ImageViewerState extends State<ImageViewer> {
 
   @override
   Widget build(BuildContext context) {
+    SettingData setting = Provider.of<SettingData>(context);
+
     return Column(
       children: <Widget>[
         Container(
           child: GestureDetector(
             child: Image.network(
-              'http://10.0.2.2:8010/images/${widget.images[index]}',
+              'http://${setting.serverAddress}:8010/images/${widget.images[index]}',
             ),
             onPanDown: (details) {
               // print('onPanDown called with $details');

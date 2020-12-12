@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/setting_data.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 import 'data/images.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CookingIngredients>(create: (_) => CookingIngredients()),
         ChangeNotifierProvider<CookingInstructions>(create: (_) => CookingInstructions()),
         ChangeNotifierProvider<SearchData>(create: (_) => SearchData()),
+        ChangeNotifierProvider<SettingData>(create: (_) => SettingData()),
       ],
       child: MaterialApp(
           title: 'Frestelser',
