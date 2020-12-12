@@ -50,7 +50,7 @@ class _ImagesTabState extends State<ImagesTab> {
                   })),
         ),
         Container(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.only(right: 10, bottom: 20),
           alignment: Alignment.centerRight,
           child: SizedBox(
             height: 50,
@@ -58,7 +58,7 @@ class _ImagesTabState extends State<ImagesTab> {
               onPressed: () {
                 _addImage(context, images);
               },
-              child: Icon(Icons.add,color: Colors.green[400],),
+              child: Icon(Icons.add),
             ),
           ),
         ),

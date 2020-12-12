@@ -52,7 +52,7 @@ class _AddImageState extends State<AddImage> {
           _imageFile != null
               ? IconButton(
                   icon: Icon(Icons.check),
-                  color: Colors.lightBlue[300],
+                  color: Theme.of(context).accentColor,
                   onPressed: () {
                     Navigator.pop(context, _imageFile);
                   })
