@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
+import 'package:tastebudsdelightfront/pages/settings_page.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 import 'data/images.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),
             AddImage.PATH: (context) => AddImage(),
+            SettingsPage.PATH: (context) => SettingsPage(),
           }),
     );
   }

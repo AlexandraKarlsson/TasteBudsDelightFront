@@ -49,6 +49,9 @@ class _OverviewTabState extends State<OverviewTab> {
 
   void dispose() {
     _titleController.dispose();
+    _descriptionController.dispose();
+    _timeController.dispose();
+    _portionsController.dispose();
     super.dispose();
   }
 

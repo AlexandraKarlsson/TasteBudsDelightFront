@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/pages/settings_page.dart';
 import 'dart:convert' as convert;
 
 import 'add_recipe.dart';
@@ -90,7 +91,7 @@ class _RecipeListState extends State<RecipeList> {
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                print('Open settings page.');
+                Navigator.pushNamed(context, SettingsPage.PATH);
               },
             ),
           ],
