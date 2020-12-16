@@ -55,7 +55,8 @@ class _RecipeListState extends State<RecipeList> {
     final response = await http.get(url);
     print(response);
     if (response.statusCode == 200) {
-      final responseData = convert.jsonDecode(response.body) as Map<String, dynamic>;
+      final responseData =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
       RecipeItems recipeItems =
           Provider.of<RecipeItems>(context, listen: false);
       recipeItems.parseAndAdd(responseData);
@@ -71,18 +72,27 @@ class _RecipeListState extends State<RecipeList> {
     } else {
       RecipeItems recipeItems = Provider.of<RecipeItems>(context);
       SearchData searchData = Provider.of<SearchData>(context);
-      List<RecipeItem> recipeItemList =  searchData.filter(recipeItems.recipeItemList);
-    
+      List<RecipeItem> recipeItemList =
+          searchData.filter(recipeItems.recipeItemList);
 
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: <Widget> [
-            IconButton(icon: Icon(Icons.search), onPressed: () {
-              setState(() {
-                _showSearchBar = !_showSearchBar;
-              });
-            },),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  _showSearchBar = !_showSearchBar;
+                });
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                print('Open settings page.');
+              },
+            ),
           ],
         ),
         body: Column(
@@ -94,7 +104,10 @@ class _RecipeListState extends State<RecipeList> {
                   padding: EdgeInsets.all(6),
                   itemCount: recipeItemList.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 3 : 2),
+                      crossAxisCount: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? 3
+                          : 2),
                   itemBuilder: (BuildContext context, int index) {
                     return RecipeListItem(recipeItemList[index]);
                   },
@@ -108,7 +121,9 @@ class _RecipeListState extends State<RecipeList> {
             Navigator.pushNamed(context, AddRecipe.PATH);
           },
           tooltip: 'Lägg till nytt recept!',
-          child: Icon(Icons.add,),
+          child: Icon(
+            Icons.add,
+          ),
         ),
       );
     }
