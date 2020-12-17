@@ -54,7 +54,7 @@ class _ImageViewerState extends State<ImageViewer> {
         Container(
           child: GestureDetector(
             child: Image.network(
-              'http://${setting.serverAddress}:8010/images/${widget.images[index]}',
+              'http://${setting.imageAddress}:${setting.imagePort}/images/${widget.images[index]}',
             ),
             onPanDown: (details) {
               // print('onPanDown called with $details');

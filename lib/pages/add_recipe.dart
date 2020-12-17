@@ -65,7 +65,7 @@ class _AddRecipeState extends State<AddRecipe> {
 
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    String url = 'http://${setting.serverAddress}:8000/tastebuds/recipe';
+    String url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
     const headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'
     };
@@ -94,7 +94,7 @@ class _AddRecipeState extends State<AddRecipe> {
     Images images = Provider.of<Images>(context, listen: false);
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final String url = 'http://${setting.serverAddress}:8010/image';
+    final String url = 'http://${setting.imageAddress}:${setting.imagePort}/image';
     for (int i = 0; i < images.imageList.length; i++) {
       File file = images.imageList[i].file;
       String fileName = imageNames[i];

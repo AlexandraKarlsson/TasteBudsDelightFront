@@ -51,7 +51,7 @@ class _RecipeListState extends State<RecipeList> {
   Future<void> _fetchRecipes() async {
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    String url = 'http://${setting.serverAddress}:8000/tastebuds/recipe';
+    String url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
 
     final response = await http.get(url);
     print(response);

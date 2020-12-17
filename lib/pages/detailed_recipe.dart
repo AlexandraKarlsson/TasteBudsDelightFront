@@ -38,7 +38,7 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
     print('_fetchRecipe(): Enter ...');
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final url = 'http://${setting.serverAddress}:8000/tastebuds/recipe/${widget.id}';
+    final url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe/${widget.id}';
 
     final response = await http.get(url);
     print(response);

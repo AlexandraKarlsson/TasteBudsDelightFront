@@ -32,7 +32,7 @@ class RecipeListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Image.network(
-                      'http://${setting.serverAddress}:8010/images/${recipeItem.imageFileName}'),
+                      'http://${setting.imageAddress}:${setting.imagePort}/images/${recipeItem.imageFileName}'),
                 ),
                 SizedBox(
                   height: 3
