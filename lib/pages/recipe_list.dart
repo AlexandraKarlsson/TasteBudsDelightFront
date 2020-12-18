@@ -49,6 +49,7 @@ class _RecipeListState extends State<RecipeList> {
   }
 
   Future<void> _fetchRecipes() async {
+    print('running _fetchRecipe');
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
     String url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
@@ -96,26 +97,28 @@ class _RecipeListState extends State<RecipeList> {
             ),
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            _showSearchBar ? Search(/* searchText*/) : Container(),
-            Container(
-              child: Expanded(
-                child: GridView.builder(
-                  padding: EdgeInsets.all(6),
-                  itemCount: recipeItemList.length,
-                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).orientation ==
-                              Orientation.landscape
-                          ? 3
-                          : 2),
-                  itemBuilder: (BuildContext context, int index) {
-                    return RecipeListItem(recipeItemList[index]);
-                  },
+        body: RefreshIndicator(onRefresh: _fetchRecipes,
+                  child: Column(
+            children: <Widget>[
+              _showSearchBar ? Search(/* searchText*/) : Container(),
+              Container(
+                child: Expanded(
+                  child: GridView.builder(
+                    padding: EdgeInsets.all(6),
+                    itemCount: recipeItemList.length,
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? 3
+                            : 2),
+                    itemBuilder: (BuildContext context, int index) {
+                      return RecipeListItem(recipeItemList[index]);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

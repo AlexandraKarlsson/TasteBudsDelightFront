@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'recipe_item.dart';
-import '../data/search_data.dart';
 
 class RecipeItems extends ChangeNotifier {
   List<RecipeItem> recipeItemList = [];
 
-  add(RecipeItem recipeItem) {
-    recipeItemList.add(recipeItem);
-    notifyListeners();
-  }
+  // add(RecipeItem recipeItem) {
+  //   recipeItemList.add(recipeItem);
+  //   notifyListeners();
+  // }
 
   parseAndAdd(Map<String, dynamic> responseData) {
+    recipeItemList = [];
     responseData['recipes'].forEach(
       (recipe) {
         int id = recipe['recipeid'];
@@ -38,11 +38,8 @@ class RecipeItems extends ChangeNotifier {
           isLactoseFree,
         );
         recipeItemList.add(newRecipeItem);
+        notifyListeners();
       },
     );
   }
-
-   List<RecipeItem> filter(SearchData searchData) {
-     
-   }
 }
