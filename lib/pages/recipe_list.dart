@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:tastebudsdelightfront/pages/settings_page.dart';
 import 'dart:convert' as convert;
 
 import 'add_recipe.dart';
@@ -10,6 +9,7 @@ import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
 import '../data/search_data.dart';
 import '../data/recipe_items.dart';
+import '../pages/settings_page.dart';
 import '../widgets/recipe/view/search.dart';
 import '../widgets/recipe/view/recipe_list_item.dart';
 
@@ -36,11 +36,13 @@ class _RecipeListState extends State<RecipeList> {
   void initState() {
     super.initState();
     if (_isInit) {
+      print('Set _isLoading = true');
       setState(() {
         _isLoading = true;
       });
     }
     _fetchRecipes().then((_) {
+      print('Set _isLoading = false');
       setState(() {
         _isInit = false;
         _isLoading = false;
@@ -52,18 +54,23 @@ class _RecipeListState extends State<RecipeList> {
     print('running _fetchRecipe');
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    String url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
+    String url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
 
-    final response = await http.get(url);
-    print(response);
-    if (response.statusCode == 200) {
-      final responseData =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      RecipeItems recipeItems =
-          Provider.of<RecipeItems>(context, listen: false);
-      recipeItems.parseAndAdd(responseData);
-    } else {
-      print('_fetchingRecipes() status code = ${response.statusCode}!');
+    try {
+      final response = await http.get(url);
+      print(response);
+      if (response.statusCode == 200) {
+        final responseData =
+            convert.jsonDecode(response.body) as Map<String, dynamic>;
+        RecipeItems recipeItems =
+            Provider.of<RecipeItems>(context, listen: false);
+        recipeItems.parseAndAdd(responseData);
+      } else {
+        print('_fetchingRecipes() status code = ${response.statusCode}!');
+      }
+    } on Exception catch (error) {
+          print('_fetchRecipes : Exception catch $error');
     }
   }
 
@@ -97,8 +104,9 @@ class _RecipeListState extends State<RecipeList> {
             ),
           ],
         ),
-        body: RefreshIndicator(onRefresh: _fetchRecipes,
-                  child: Column(
+        body: RefreshIndicator(
+          onRefresh: _fetchRecipes,
+          child: Column(
             children: <Widget>[
               _showSearchBar ? Search(/* searchText*/) : Container(),
               Container(
