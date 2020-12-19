@@ -55,7 +55,7 @@ class _SearchState extends State<Search> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.search_sharp),
+            icon: Icon(Icons.search),
             onPressed: () {
               print('Pressed search button.');
               // Call update method
