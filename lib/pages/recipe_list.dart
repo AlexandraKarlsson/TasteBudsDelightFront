@@ -106,11 +106,11 @@ class _RecipeListState extends State<RecipeList> {
         ),
         body: RefreshIndicator(
           onRefresh: _fetchRecipes,
-          child: Column(
-            children: <Widget>[
-              _showSearchBar ? Search(/* searchText*/) : Container(),
-              Container(
-                child: Expanded(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                _showSearchBar ? Search() : Container(),
+                Flexible(
                   child: GridView.builder(
                     padding: EdgeInsets.all(6),
                     itemCount: recipeItemList.length,
@@ -124,8 +124,8 @@ class _RecipeListState extends State<RecipeList> {
                     },
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

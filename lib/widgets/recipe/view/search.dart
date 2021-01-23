@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/widgets/recipe/view/search_option.dart';
 
 import '../../../data/search_data.dart';
 
@@ -12,7 +13,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController _searchController;
   bool _isInitialized = false;
-  SearchData _searchData;
 
   @override
   void initState() {
@@ -26,8 +26,8 @@ class _SearchState extends State<Search> {
 
     if (!_isInitialized) {
       _isInitialized = true;
-      _searchData = Provider.of<SearchData>(context);
-      _searchController.text = _searchData.title;
+      SearchData searchData = Provider.of<SearchData>(context, listen: false);
+      _searchController.text = searchData.title;
     }
   }
 
@@ -36,33 +36,49 @@ class _SearchState extends State<Search> {
     super.dispose();
   }
 
+  void setFoodOption(int index, bool newValue) {
+    SearchData searchData = Provider.of<SearchData>(context, listen: false);
+    searchData.setFoodOption(index, newValue);
+  }
+
   @override
   Widget build(BuildContext context) {
+    SearchData searchData = Provider.of<SearchData>(context);
     return Container(
-      padding: EdgeInsets.all(5),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Rubrik',
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Rubrik',
+                  ),
+                  onChanged: (title) {
+                    searchData.setTitle(title);
+                  },
+                ),
               ),
-              onChanged: (title) {
-                _searchData.setTitle(title);
-              },
-            ),
+            ],
           ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              print('Pressed search button.');
-              // Call update method
-            },
+          Row(
+            children: [
+              SearchOption(0, searchData.optionList[0], setFoodOption),
+              SearchOption(1, searchData.optionList[1], setFoodOption),
+            ],
+          ),
+          Row(
+            children: [
+              SearchOption(2, searchData.optionList[2], setFoodOption),
+              SearchOption(3, searchData.optionList[3], setFoodOption),
+            ],
           ),
         ],
       ),
     );
   }
 }
+

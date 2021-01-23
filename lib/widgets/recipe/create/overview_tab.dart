@@ -152,7 +152,7 @@ class _OverviewTabState extends State<OverviewTab> {
                 ),
                 CheckboxListTile(
                   activeColor: Colors.green,
-                  title: Text('vegetariskt'),
+                  title: Text('Vegetariskt'),
                   value: _overviewData.isVegetarian,
                   onChanged: (isVegetarian) {
                     _overviewData.setIsVegetarian(isVegetarian);
