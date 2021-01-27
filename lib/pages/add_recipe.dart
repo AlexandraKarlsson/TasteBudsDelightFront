@@ -157,6 +157,21 @@ class _AddRecipeState extends State<AddRecipe> {
     images.clear();
   }
 
+  _checkMinimalCriteria() {
+    Overview overview = Provider.of<Overview>(context, listen: true);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: true);
+    Instructions steps = Provider.of<Instructions>(context, listen: true);
+    Images images = Provider.of<Images>(context, listen: true);
+
+    if(overview.title != "" && overview.time > 0 && overview.portions > 0 && ingredients.ingredientList.length > 0 && 
+    steps.instructionList.length > 0 && images.imageList.length > 0) {
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (state == AddingState.saving) {
@@ -205,9 +220,9 @@ class _AddRecipeState extends State<AddRecipe> {
         appBar: AppBar(
           title: Text('Skapa recept'),
           actions: <Widget>[
-            IconButton(
-                icon: Hero(tag: 'success', child: Icon(Icons.check)),
-                onPressed: _saveRecipe)
+            _checkMinimalCriteria() ? IconButton(
+                icon: Icon(Icons.check),
+                onPressed: _saveRecipe) : Container()
           ],
         ),
         body: Container(
