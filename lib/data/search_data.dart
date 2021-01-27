@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../data/recipe_item.dart';
 import 'food_option.dart';
+import '../data/recipe_item.dart';
 
 class SearchData extends ChangeNotifier {
   String title = "";

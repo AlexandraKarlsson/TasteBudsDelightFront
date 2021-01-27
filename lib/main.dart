@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/data/setting_data.dart';
-import 'package:tastebudsdelightfront/pages/settings_page.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
+import 'data/setting_data.dart';
 import 'data/images.dart';
 import 'data/ingredients.dart';
 import 'data/overview.dart';
@@ -13,6 +12,7 @@ import 'data/search_data.dart';
 import 'data/cooking/cooking_recipe.dart';
 import 'data/cooking/cooking_ingredients.dart';
 import 'data/cooking/cooking_instructions.dart';
+import 'pages/settings_page.dart';
 import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
 import 'pages/add_image.dart';
@@ -40,8 +40,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Images>(create: (_) => Images()),
         ChangeNotifierProvider<RecipeItems>(create: (_) => RecipeItems()),
         ChangeNotifierProvider<CookingRecipe>(create: (_) => CookingRecipe()),
-        ChangeNotifierProvider<CookingIngredients>(create: (_) => CookingIngredients()),
-        ChangeNotifierProvider<CookingInstructions>(create: (_) => CookingInstructions()),
+        ChangeNotifierProvider<CookingIngredients>(
+            create: (_) => CookingIngredients()),
+        ChangeNotifierProvider<CookingInstructions>(
+            create: (_) => CookingInstructions()),
         ChangeNotifierProvider<SearchData>(create: (_) => SearchData()),
         ChangeNotifierProvider<SettingData>(create: (_) => SettingData()),
       ],
@@ -57,7 +59,6 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: RecipeList(title: 'Smaklökarnas Frestelser'),
-
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),

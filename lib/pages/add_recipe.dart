@@ -10,10 +10,13 @@ import '../data/images.dart';
 import '../data/ingredients.dart';
 import '../data/overview.dart';
 import '../data/instructions.dart';
+import '../widgets/animation_success.dart';
 import '../widgets/recipe/create/images_tab.dart';
 import '../widgets/recipe/create/instruction_tab.dart';
 import '../widgets/recipe/create/ingredients_tab.dart';
 import '../widgets/recipe/create/overview_tab.dart';
+
+enum AddingState { normal, saving, successful, failure }
 
 class AddRecipe extends StatefulWidget {
   static const PATH = '/add_recipe';
@@ -24,6 +27,7 @@ class AddRecipe extends StatefulWidget {
 
 class _AddRecipeState extends State<AddRecipe> {
   int _selectedIndex = 0;
+  AddingState state = AddingState.normal;
 
   static List<Widget> _widgetOptions = <Widget>[
     OverviewTab(),
@@ -60,12 +64,12 @@ class _AddRecipeState extends State<AddRecipe> {
       "steps": steps.listOfDescriptions(),
       "images": images.listOfExtentions(),
     };
-
     // print('newRecipeData: $newRecipeData.');
 
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    String url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
+    String url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
     const headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'
     };
@@ -94,7 +98,8 @@ class _AddRecipeState extends State<AddRecipe> {
     Images images = Provider.of<Images>(context, listen: false);
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final String url = 'http://${setting.imageAddress}:${setting.imagePort}/image';
+    final String url =
+        'http://${setting.imageAddress}:${setting.imagePort}/image';
     for (int i = 0; i < images.imageList.length; i++) {
       File file = images.imageList[i].file;
       String fileName = imageNames[i];
@@ -119,6 +124,9 @@ class _AddRecipeState extends State<AddRecipe> {
   }
 
   void _saveRecipe() async {
+    setState(() {
+      state = AddingState.saving;
+    });
     // Post recipe to backend and recive list of imagenames and recipeid.
     final recipeResponse = await _saveRecipeData();
     if (recipeResponse != null) {
@@ -126,9 +134,14 @@ class _AddRecipeState extends State<AddRecipe> {
       _uploadImages(recipeResponse['imageFileNames']);
       // Clear all provider objects used for adding a recipe.
       _clearProviderData();
-      Navigator.pop(context);
+      setState(() {
+        state = AddingState.successful;
+      });
     } else {
       print('Save recipe failed!');
+      setState(() {
+        state = AddingState.failure;
+      });
     }
   }
 
@@ -146,39 +159,84 @@ class _AddRecipeState extends State<AddRecipe> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Skapa recept'),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.check), onPressed: _saveRecipe)
-        ],
-      ),
-      body: Container(
-        child: _widgetOptions[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red[400],
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              title: Text('Översikt'),
-              icon: Icon(Icons.border_color),
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              title: Text('Ingredienser'),
-              icon: Icon(Icons.fastfood),
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              title: Text('Beskrivnig'),
-              icon: Icon(Icons.format_list_bulleted),
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              title: Text('Bild'),
-              icon: Icon(Icons.add_photo_alternate),
-              backgroundColor: Colors.black),
-        ],
-        onTap: _onItemTapped,
-      ),
-    );
+    if (state == AddingState.saving) {
+      return Center(child: CircularProgressIndicator());
+    } else if (state == AddingState.successful) {
+      return AnimationSuccess('Receptet skapades!');
+    } else if (state == AddingState.failure) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Skapa recept'),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: Colors.redAccent,
+              size: 75,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Vi är ledsna, men någonting gick fel. Var vänlig försök igen!',
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RaisedButton(
+              child: const Text('Fortsätt'),
+              color: Colors.redAccent,
+              onPressed: () {
+                setState(() {
+                  state = AddingState.normal;
+                });
+              },
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Skapa recept'),
+          actions: <Widget>[
+            IconButton(
+                icon: Hero(tag: 'success', child: Icon(Icons.check)),
+                onPressed: _saveRecipe)
+          ],
+        ),
+        body: Container(
+          child: _widgetOptions[_selectedIndex],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.red[400],
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                title: Text('Översikt'),
+                icon: Icon(Icons.border_color),
+                backgroundColor: Colors.black),
+            BottomNavigationBarItem(
+                title: Text('Ingredienser'),
+                icon: Icon(Icons.fastfood),
+                backgroundColor: Colors.black),
+            BottomNavigationBarItem(
+                title: Text('Beskrivnig'),
+                icon: Icon(Icons.format_list_bulleted),
+                backgroundColor: Colors.black),
+            BottomNavigationBarItem(
+                title: Text('Bild'),
+                icon: Icon(Icons.add_photo_alternate),
+                backgroundColor: Colors.black),
+          ],
+          onTap: _onItemTapped,
+        ),
+      );
+    }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class SettingData extends ChangeNotifier {
   String backendAddress = "10.0.2.2";
   String backendPort = "8000";
