@@ -20,6 +20,11 @@ class Images extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteImage(int index) {
+    imageList.removeAt(index);
+    notifyListeners();
+  }
+
   List listOfExtentions() {
     List extentionList = [];
     imageList.forEach((image) {

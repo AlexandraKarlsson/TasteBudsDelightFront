@@ -46,7 +46,7 @@ class _ImagesTabState extends State<ImagesTab> {
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) {
-                    return ImageItem(images.imageList[index]);
+                    return ImageItem(images.imageList[index], index);
                   })),
         ),
         Container(
