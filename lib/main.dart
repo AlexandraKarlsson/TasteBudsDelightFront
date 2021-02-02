@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           title: 'Frestelser',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             brightness: Brightness.dark,
             primaryColor: Colors.red[400],

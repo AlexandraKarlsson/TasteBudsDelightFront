@@ -11,6 +11,9 @@ import '../data/ingredients.dart';
 import '../data/overview.dart';
 import '../data/instructions.dart';
 import '../widgets/animation_success.dart';
+import '../widgets/animation_failure.dart';
+import '../widgets/recipe/create/animation_save.dart';
+import '../widgets/recipe/create/check_minimal_criteria.dart';
 import '../widgets/recipe/create/images_tab.dart';
 import '../widgets/recipe/create/instruction_tab.dart';
 import '../widgets/recipe/create/ingredients_tab.dart';
@@ -29,7 +32,7 @@ class _AddRecipeState extends State<AddRecipe> {
   int _selectedIndex = 0;
   AddingState state = AddingState.normal;
 
-  static List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = [
     OverviewTab(),
     IngredientsTab(),
     InstructionTab(),
@@ -157,19 +160,10 @@ class _AddRecipeState extends State<AddRecipe> {
     images.clear();
   }
 
-  _checkMinimalCriteria() {
-    Overview overview = Provider.of<Overview>(context, listen: true);
-    Ingredients ingredients = Provider.of<Ingredients>(context, listen: true);
-    Instructions steps = Provider.of<Instructions>(context, listen: true);
-    Images images = Provider.of<Images>(context, listen: true);
-
-    if(overview.title != "" && overview.time > 0 && overview.portions > 0 && ingredients.ingredientList.length > 0 && 
-    steps.instructionList.length > 0 && images.imageList.length > 0) {
-
-      return true;
-    } else {
-      return false;
-    }
+  setNormalState() {
+    setState(() {
+      state = AddingState.normal;
+    });
   }
 
   @override
@@ -179,59 +173,31 @@ class _AddRecipeState extends State<AddRecipe> {
     } else if (state == AddingState.successful) {
       return AnimationSuccess('Receptet skapades!');
     } else if (state == AddingState.failure) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Skapa recept'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Colors.redAccent,
-              size: 75,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Vi är ledsna, men någonting gick fel. Var vänlig försök igen!',
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            RaisedButton(
-              child: const Text('Fortsätt'),
-              color: Colors.redAccent,
-              onPressed: () {
-                setState(() {
-                  state = AddingState.normal;
-                });
-              },
-            ),
-          ],
-        ),
-      );
+      return AnimationFailure('Receptet gick inte att spara!', setNormalState);
     } else {
       return Scaffold(
         appBar: AppBar(
           title: Text('Skapa recept'),
-          actions: <Widget>[
-            _checkMinimalCriteria() ? IconButton(
-                icon: Icon(Icons.check),
-                onPressed: _saveRecipe) : Container()
-          ],
         ),
         body: Container(
-          child: _widgetOptions[_selectedIndex],
+          child: Column(
+            children: [
+              checkMinimalCriteria(context) ?
+              Expanded(
+                flex: 1,
+                child: InkWell(child: AnimationSave(), onTap: _saveRecipe),
+              ) : Container(),
+              Expanded(
+                flex: 8,
+                child: _widgetOptions[_selectedIndex],
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.red[400],
-          items: const <BottomNavigationBarItem>[
+          items: [
             BottomNavigationBarItem(
                 title: Text('Översikt'),
                 icon: Icon(Icons.border_color),

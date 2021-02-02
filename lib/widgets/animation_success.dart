@@ -36,6 +36,12 @@ class _AnimationSuccessState extends State<AnimationSuccess>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    successController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),

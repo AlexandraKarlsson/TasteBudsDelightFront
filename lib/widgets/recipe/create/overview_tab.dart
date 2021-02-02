@@ -6,6 +6,7 @@ import '../../styles.dart';
 import '../../../data/overview.dart';
 
 class OverviewTab extends StatefulWidget {
+
   @override
   _OverviewTabState createState() => _OverviewTabState();
 }
@@ -55,6 +56,8 @@ class _OverviewTabState extends State<OverviewTab> {
     super.dispose();
   }
 
+    
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,7 +77,7 @@ class _OverviewTabState extends State<OverviewTab> {
                     labelText: 'Rubrik',
                   ),
                   onChanged: (title) {
-                    _overviewData.title = title;
+                    _overviewData.setTitle(title);
                   },
                 ),
                 SizedBox(
@@ -88,7 +91,7 @@ class _OverviewTabState extends State<OverviewTab> {
                     labelText: 'Beskrivning',
                   ),
                   onChanged: (description) {
-                    _overviewData.description = description;
+                    _overviewData.setDescription(description);
                   },
                 ),
                 SizedBox(
@@ -106,7 +109,7 @@ class _OverviewTabState extends State<OverviewTab> {
                           labelText: 'Tillagningstid',
                         ),
                         onChanged: (time) {
-                          _overviewData.time = int.parse(time);
+                          _overviewData.setTime(int.parse(time));
                         },
                       ),
                     ),
@@ -130,7 +133,7 @@ class _OverviewTabState extends State<OverviewTab> {
                           labelText: 'Portioner',
                         ),
                         onChanged: (portions) {
-                          _overviewData.portions = int.parse(portions);
+                          _overviewData.setPortions(int.parse(portions));
                         },
                       ),
                     ),
