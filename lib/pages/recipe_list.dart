@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'account_login.dart';
 import 'add_recipe.dart';
 import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
@@ -70,7 +71,7 @@ class _RecipeListState extends State<RecipeList> {
         print('_fetchingRecipes() status code = ${response.statusCode}!');
       }
     } on Exception catch (error) {
-          print('_fetchRecipes : Exception catch $error');
+      print('_fetchRecipes : Exception catch $error');
     }
   }
 
@@ -100,6 +101,22 @@ class _RecipeListState extends State<RecipeList> {
               icon: Icon(Icons.settings),
               onPressed: () {
                 Navigator.pushNamed(context, SettingsPage.PATH);
+              },
+            ),
+            IconButton(
+              icon: Hero(
+                tag: 'account',
+                child: Icon(Icons.account_circle),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, AccountLogin.PATH);
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     transitionDuration: Duration(seconds: 2),
+                //     pageBuilder: (_, __, ___) => AccountLogin(),
+                //   ),
+                // );
               },
             ),
           ],

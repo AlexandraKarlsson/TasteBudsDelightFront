@@ -109,7 +109,7 @@ class _AddRecipeState extends State<AddRecipe> {
       String base64Image = convert.base64Encode(file.readAsBytesSync());
       //var headers = <String, String>{'x-auth': user.token};
 
-      http.post(
+      await http.post(
         url,
         //headers: headers,
         body: {

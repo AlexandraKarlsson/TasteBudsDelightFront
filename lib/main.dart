@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/user_data.dart';
+import 'package:tastebudsdelightfront/pages/account_create.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 import 'data/setting_data.dart';
@@ -12,6 +14,7 @@ import 'data/search_data.dart';
 import 'data/cooking/cooking_recipe.dart';
 import 'data/cooking/cooking_ingredients.dart';
 import 'data/cooking/cooking_instructions.dart';
+import 'pages/account_login.dart';
 import 'pages/settings_page.dart';
 import 'pages/recipe_list.dart';
 import 'pages/add_recipe.dart';
@@ -46,6 +49,7 @@ class MyApp extends StatelessWidget {
             create: (_) => CookingInstructions()),
         ChangeNotifierProvider<SearchData>(create: (_) => SearchData()),
         ChangeNotifierProvider<SettingData>(create: (_) => SettingData()),
+        ChangeNotifierProvider<UserData>(create: (_) => UserData()),
       ],
       child: MaterialApp(
           title: 'Frestelser',
@@ -65,6 +69,8 @@ class MyApp extends StatelessWidget {
             AddRecipe.PATH: (context) => AddRecipe(),
             AddImage.PATH: (context) => AddImage(),
             SettingsPage.PATH: (context) => SettingsPage(),
+            AccountCreate.PATH: (context) => AccountCreate(),
+            AccountLogin.PATH: (context) => AccountLogin(),
           }),
     );
   }
