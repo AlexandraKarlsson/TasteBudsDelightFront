@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'dart:convert' as convert;
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 
@@ -73,8 +72,7 @@ class _AccountCreateState extends State<AccountCreate> {
     super.dispose();
   }
 
-
-  bool isValid() {
+  bool _isValid() {
     return (_isValidEmail &&
             _isValidUsername &&
             _isValidPassword &&
@@ -98,7 +96,7 @@ class _AccountCreateState extends State<AccountCreate> {
     };
 
     var newUserJson = convert.jsonEncode(newUser);
-    print('loginJson = $newUserJson');
+    print('newUserJson = $newUserJson');
 
     try {
       final response = await http.post(
@@ -111,7 +109,7 @@ class _AccountCreateState extends State<AccountCreate> {
         var responseData =
             convert.jsonDecode(response.body) as Map<String, dynamic>;
         print('responseData $responseData');
-        // Success : show sucessfull animation
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -177,19 +175,6 @@ class _AccountCreateState extends State<AccountCreate> {
                                       });
                                     },
                                   ),
-                                  // FlatButton(
-                                  //   child: const Text('Show more info ...'),
-                                  //   onPressed: () {
-                                  //     showDialog(
-                                  //       context: context,
-                                  //       builder: (_) => AlertDialog(
-                                  //         title: Text(
-                                  //             'This is the more info you requested ...'),
-                                  //         actions: [],
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  // ),
                                 ],
                               )
                             : Container(),
@@ -284,7 +269,7 @@ class _AccountCreateState extends State<AccountCreate> {
                         ButtonWidget(
                           title: 'Bli medlem',
                           hasBorder: false,
-                          onTap: !isValid()
+                          onTap: !_isValid()
                               ? null
                               : () {
                                   print('email=$_email, username=$_username');

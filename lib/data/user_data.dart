@@ -4,13 +4,11 @@ class UserData extends ChangeNotifier {
   int _id;
   String _username;
   String _email;
-  String _password;
   String _token;
 
   get id => _id;
   get username => _username;
   get email => _email;
-  get password => _password;
   get token => _token;
 
   set id(value) {
@@ -25,12 +23,16 @@ class UserData extends ChangeNotifier {
     _email = value;
     notifyListeners();
   }
-  set password(value) {
-    _password = value;
-    notifyListeners();
-  }
   set token(value) {
     _token = value;
+    notifyListeners();
+  }
+
+  void update(int id,String username,String email,String token) {
+    _id = id;
+    _username = username;
+    _email = email;
+    _token = token;
     notifyListeners();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'dart:convert' as convert;
 
 import 'account_login.dart';
@@ -80,13 +81,14 @@ class _RecipeListState extends State<RecipeList> {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
     } else {
+      UserData userData = Provider.of<UserData>(context);
       RecipeItems recipeItems = Provider.of<RecipeItems>(context);
       SearchData searchData = Provider.of<SearchData>(context);
       List<RecipeItem> recipeItemList =
           searchData.filter(recipeItems.recipeItemList);
 
       return Scaffold(
-        appBar: AppBar(
+        appBar: AppBar(          
           title: Text(widget.title),
           actions: <Widget>[
             IconButton(
@@ -98,7 +100,7 @@ class _RecipeListState extends State<RecipeList> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings,color: Colors.grey[700],),
               onPressed: () {
                 Navigator.pushNamed(context, SettingsPage.PATH);
               },
@@ -106,7 +108,9 @@ class _RecipeListState extends State<RecipeList> {
             IconButton(
               icon: Hero(
                 tag: 'account',
-                child: Icon(Icons.account_circle),
+                child: userData.token == null
+                    ? Icon(Icons.account_circle,color: Colors.white)
+                    : Icon(Icons.account_circle_outlined,color: Colors.greenAccent,),
               ),
               onPressed: () {
                 Navigator.pushNamed(context, AccountLogin.PATH);
@@ -117,6 +121,7 @@ class _RecipeListState extends State<RecipeList> {
                 //     pageBuilder: (_, __, ___) => AccountLogin(),
                 //   ),
                 // );
+                // TODO: Add loout menuitem ...
               },
             ),
           ],

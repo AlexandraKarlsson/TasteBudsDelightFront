@@ -134,7 +134,7 @@ class _AddRecipeState extends State<AddRecipe> {
     final recipeResponse = await _saveRecipeData();
     if (recipeResponse != null) {
       // Post image/s to imagestorage.
-      _uploadImages(recipeResponse['imageFileNames']);
+      await _uploadImages(recipeResponse['imageFileNames']);
       // Clear all provider objects used for adding a recipe.
       _clearProviderData();
       setState(() {

@@ -31,7 +31,6 @@ class _AnimationSuccessState extends State<AnimationSuccess>
     successController.forward();
     successController.addListener(() {
       setState(() {});
-      print(animation.value);
     });
   }
 

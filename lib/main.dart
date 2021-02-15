@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserData>(create: (_) => UserData()),
       ],
       child: MaterialApp(
-          title: 'Frestelser',
+          title: 'Frestelse',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             brightness: Brightness.dark,
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
             //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: RecipeList(title: 'Smaklökarnas Frestelser'),
+          home: RecipeList(title: 'Smaklökarnas Frestelse'),
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
             AddRecipe.PATH: (context) => AddRecipe(),
