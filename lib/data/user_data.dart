@@ -15,24 +15,35 @@ class UserData extends ChangeNotifier {
     _id = value;
     notifyListeners();
   }
+
   set username(value) {
     _username = value;
     notifyListeners();
   }
+
   set email(value) {
     _email = value;
     notifyListeners();
   }
+
   set token(value) {
     _token = value;
     notifyListeners();
   }
 
-  void update(int id,String username,String email,String token) {
+  void update(int id, String username, String email, String token) {
     _id = id;
     _username = username;
     _email = email;
     _token = token;
+    notifyListeners();
+  }
+
+  void clear() {
+    _id = -1;
+    _username = "";
+    _email = "";
+    _token = null;
     notifyListeners();
   }
 }

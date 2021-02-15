@@ -76,6 +76,31 @@ class _RecipeListState extends State<RecipeList> {
     }
   }
 
+  Future<void> _logout() async {
+    print('running _logout');
+
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+    UserData userData = Provider.of<UserData>(context, listen: false);
+
+    String url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/me/token';
+    var headers = <String, String>{'x-auth': userData.token};
+
+    try {
+      final response = await http.delete(url, headers: headers);
+      // TODO: Check response
+      if (response.statusCode == 200) {
+        userData.clear();
+        print('User logged out');
+      } else {
+        throw "Recived status code ${response.statusCode}";
+      }
+    } on Exception catch (error) {
+      // TODO: How to show error? or just keep silent?
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -88,7 +113,7 @@ class _RecipeListState extends State<RecipeList> {
           searchData.filter(recipeItems.recipeItemList);
 
       return Scaffold(
-        appBar: AppBar(          
+        appBar: AppBar(
           title: Text(widget.title),
           actions: <Widget>[
             IconButton(
@@ -100,30 +125,89 @@ class _RecipeListState extends State<RecipeList> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.settings,color: Colors.grey[700],),
+              icon: Icon(
+                Icons.settings,
+                color: Colors.grey[700],
+              ),
               onPressed: () {
                 Navigator.pushNamed(context, SettingsPage.PATH);
               },
             ),
-            IconButton(
+            PopupMenuButton<int>(
+              offset: const Offset(0, 60),
               icon: Hero(
                 tag: 'account',
                 child: userData.token == null
-                    ? Icon(Icons.account_circle,color: Colors.white)
-                    : Icon(Icons.account_circle_outlined,color: Colors.greenAccent,),
+                    ? Icon(Icons.account_circle, color: Colors.white)
+                    : Icon(
+                        Icons.account_circle_outlined,
+                        color: Colors.greenAccent,
+                      ),
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, AccountLogin.PATH);
-                // Navigator.push(
-                //   context,
-                //   PageRouteBuilder(
-                //     transitionDuration: Duration(seconds: 2),
-                //     pageBuilder: (_, __, ___) => AccountLogin(),
-                //   ),
-                // );
-                // TODO: Add loout menuitem ...
+              itemBuilder: (context) => [
+                userData.token == null
+                    ? PopupMenuItem(
+                        value: 1,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.account_circle,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                            Text("Logga in"),
+                          ],
+                        ),
+                      )
+                    : null,
+                userData.token != null
+                    ? PopupMenuItem(
+                        value: 2,
+                        child: Text("Profil"),
+                      )
+                    : null,
+                userData.token != null
+                    ? PopupMenuItem(
+                        value: 3,
+                        child: Text("Logga ut"),
+                      )
+                    : null,
+              ],
+              onSelected: (value) => {
+                print('Value = $value'),
+                if (value == 1)
+                  {
+                    // navigera till login/signup sidan
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: Duration(seconds: 3),
+                        pageBuilder: (_, __, ___) => AccountLogin(),
+                      ),
+                    )
+                  }
+                else if (value == 2)
+                  {print('Om mig NOT IMPLEMENTED')}
+                else if (value == 3)
+                  {_logout()}
+                else
+                  {print('Unknown selection = $value')}
               },
             ),
+            // IconButton(
+            //   icon: Hero(
+            //     tag: 'account',
+            //     child: userData.token == null
+            //         ? Icon(Icons.account_circle, color: Colors.white)
+            //         : Icon(
+            //             Icons.account_circle_outlined,
+            //             color: Colors.greenAccent,
+            //           ),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, AccountLogin.PATH);
+            //   },
+            // ),
           ],
         ),
         body: RefreshIndicator(
