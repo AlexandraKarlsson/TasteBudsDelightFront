@@ -181,7 +181,7 @@ class _RecipeListState extends State<RecipeList> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        transitionDuration: Duration(seconds: 3),
+                        transitionDuration: Duration(seconds: 2),
                         pageBuilder: (_, __, ___) => AccountLogin(),
                       ),
                     )
@@ -194,20 +194,6 @@ class _RecipeListState extends State<RecipeList> {
                   {print('Unknown selection = $value')}
               },
             ),
-            // IconButton(
-            //   icon: Hero(
-            //     tag: 'account',
-            //     child: userData.token == null
-            //         ? Icon(Icons.account_circle, color: Colors.white)
-            //         : Icon(
-            //             Icons.account_circle_outlined,
-            //             color: Colors.greenAccent,
-            //           ),
-            //   ),
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, AccountLogin.PATH);
-            //   },
-            // ),
           ],
         ),
         body: RefreshIndicator(
@@ -234,13 +220,16 @@ class _RecipeListState extends State<RecipeList> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, AddRecipe.PATH);
-          },
-          tooltip: 'Lägg till nytt recept!',
-          child: Icon(
-            Icons.add,
+        floatingActionButton: Visibility(
+          visible: userData.token != null ? true : false,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AddRecipe.PATH);
+            },
+            tooltip: 'Lägg till nytt recept!',
+            child: Icon(
+              Icons.add,
+            ),
           ),
         ),
       );
