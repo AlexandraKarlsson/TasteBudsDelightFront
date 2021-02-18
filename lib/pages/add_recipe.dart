@@ -4,6 +4,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/data/user_data.dart';
 
 import '../data/setting_data.dart';
 import '../data/images.dart';
@@ -47,6 +48,7 @@ class _AddRecipeState extends State<AddRecipe> {
 
   Future<Map<String, dynamic>> _saveRecipeData() async {
     // Create post-data structure
+    UserData userData = Provider.of<UserData>(context, listen: false);
     Overview overview = Provider.of<Overview>(context, listen: false);
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
     Instructions steps = Provider.of<Instructions>(context, listen: false);
@@ -73,8 +75,9 @@ class _AddRecipeState extends State<AddRecipe> {
 
     String url =
         'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
-    const headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8'
+    var headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth': userData.token
     };
 
     var newRecipeDataJson = convert.jsonEncode(newRecipeData);
@@ -107,11 +110,9 @@ class _AddRecipeState extends State<AddRecipe> {
       File file = images.imageList[i].file;
       String fileName = imageNames[i];
       String base64Image = convert.base64Encode(file.readAsBytesSync());
-      //var headers = <String, String>{'x-auth': user.token};
 
       await http.post(
         url,
-        //headers: headers,
         body: {
           "image": base64Image,
           "name": fileName,
