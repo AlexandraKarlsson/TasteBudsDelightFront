@@ -61,6 +61,13 @@ class RecipeListItem extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 3
+                ),
+                Text(
+                  'Av: ${recipeItem.username}',
+                  style: TextStyle(fontSize: 13),
+                ),
               ],
             ),
           ),
