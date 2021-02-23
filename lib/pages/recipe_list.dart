@@ -34,6 +34,10 @@ class _RecipeListState extends State<RecipeList> {
   bool _isLoading = false;
   bool _showSearchBar = false;
 
+  static const int LOGIN = 1;
+  static const int PROFILE = 2;
+  static const int LOGOUT = 3;
+
   @override
   void initState() {
     super.initState();
@@ -110,7 +114,7 @@ class _RecipeListState extends State<RecipeList> {
       RecipeItems recipeItems = Provider.of<RecipeItems>(context);
       SearchData searchData = Provider.of<SearchData>(context);
       List<RecipeItem> recipeItemList =
-          searchData.filter(recipeItems.recipeItemList);
+          searchData.filter(recipeItems.recipeItemList, userData.id);
 
       return Scaffold(
         appBar: AppBar(
@@ -147,7 +151,7 @@ class _RecipeListState extends State<RecipeList> {
               itemBuilder: (context) => [
                 userData.token == null
                     ? PopupMenuItem(
-                        value: 1,
+                        value: LOGIN,
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -162,20 +166,20 @@ class _RecipeListState extends State<RecipeList> {
                     : null,
                 userData.token != null
                     ? PopupMenuItem(
-                        value: 2,
+                        value: PROFILE,
                         child: Text("Profil"),
                       )
                     : null,
                 userData.token != null
                     ? PopupMenuItem(
-                        value: 3,
+                        value: LOGOUT,
                         child: Text("Logga ut"),
                       )
                     : null,
               ],
               onSelected: (value) => {
                 print('Value = $value'),
-                if (value == 1)
+                if (value == LOGIN)
                   {
                     // navigera till login/signup sidan
                     Navigator.push(
@@ -186,9 +190,9 @@ class _RecipeListState extends State<RecipeList> {
                       ),
                     )
                   }
-                else if (value == 2)
+                else if (value == PROFILE)
                   {print('Om mig NOT IMPLEMENTED')}
-                else if (value == 3)
+                else if (value == LOGOUT)
                   {_logout()}
                 else
                   {print('Unknown selection = $value')}

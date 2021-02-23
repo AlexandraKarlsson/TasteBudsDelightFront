@@ -58,7 +58,10 @@ class RecipeDetailedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(title: Text(recipe.overview.title)),
+            appBar: AppBar(title: Text(recipe.overview.title),
+            actions: [
+
+            ],),
             body: Column(
               children: <Widget>[
                 Expanded(

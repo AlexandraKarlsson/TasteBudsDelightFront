@@ -25,6 +25,7 @@ class RecipeItems extends ChangeNotifier {
         bool isGlutenFree = recipe['isglutenfree'] == 0 ? false : true;
         bool isLactoseFree = recipe['islactosefree'] == 0 ? false : true;
         String username = recipe['username'];
+        int userId = recipe['userid'];
 
         RecipeItem newRecipeItem = RecipeItem(
           id,
@@ -37,7 +38,8 @@ class RecipeItems extends ChangeNotifier {
           isVegetarian,
           isGlutenFree,
           isLactoseFree,
-          username
+          username,
+          userId
         );
         recipeItemList.add(newRecipeItem);
         notifyListeners();

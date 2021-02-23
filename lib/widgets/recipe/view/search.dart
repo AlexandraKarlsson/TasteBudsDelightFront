@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/widgets/recipe/view/search_option.dart';
 
 import '../../../data/search_data.dart';
@@ -36,14 +37,20 @@ class _SearchState extends State<Search> {
     super.dispose();
   }
 
-  void setFoodOption(int index, bool newValue) {
+  void setFilterOption(int index, bool newValue) {
     SearchData searchData = Provider.of<SearchData>(context, listen: false);
-    searchData.setFoodOption(index, newValue);
+    searchData.setFilterOption(index, newValue);
   }
+
+  //   void setOnlyOwnRecipeOption(int index,bool newValue) {
+  //   SearchData searchData = Provider.of<SearchData>(context, listen: false);
+  //   searchData.setOnlyOwnRecipe(newValue);
+  // }
 
   @override
   Widget build(BuildContext context) {
     SearchData searchData = Provider.of<SearchData>(context);
+    UserData userData = Provider.of<UserData>(context);
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -62,18 +69,36 @@ class _SearchState extends State<Search> {
                   },
                 ),
               ),
+              userData.token != null
+                  ? SearchOption(
+                      SearchData.ONLYOWNRECIPE_INDEX,
+                      searchData.optionList[SearchData.ONLYOWNRECIPE_INDEX],
+                      setFilterOption)
+                  : Container(),
             ],
           ),
           Row(
             children: [
-              SearchOption(0, searchData.optionList[0], setFoodOption),
-              SearchOption(1, searchData.optionList[1], setFoodOption),
+              SearchOption(
+                  SearchData.VEGAN_INDEX,
+                  searchData.optionList[SearchData.VEGAN_INDEX],
+                  setFilterOption),
+              SearchOption(
+                  SearchData.VEGETARIAN_INDEX,
+                  searchData.optionList[SearchData.VEGETARIAN_INDEX],
+                  setFilterOption),
             ],
           ),
           Row(
             children: [
-              SearchOption(2, searchData.optionList[2], setFoodOption),
-              SearchOption(3, searchData.optionList[3], setFoodOption),
+              SearchOption(
+                  SearchData.LACTOSEFREE_INDEX,
+                  searchData.optionList[SearchData.LACTOSEFREE_INDEX],
+                  setFilterOption),
+              SearchOption(
+                  SearchData.GLUTENFREE_INDEX,
+                  searchData.optionList[SearchData.GLUTENFREE_INDEX],
+                  setFilterOption),
             ],
           ),
         ],
@@ -81,4 +106,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-

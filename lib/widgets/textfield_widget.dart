@@ -6,6 +6,7 @@ class TextFieldWidget extends StatelessWidget {
   final IconData prefixIconData;
   final IconData suffixIconData;
   final bool obscureText;
+  final bool readonly;
   final Function onChanged;
   final Function onChangedVisibility;
 
@@ -15,6 +16,7 @@ class TextFieldWidget extends StatelessWidget {
       this.prefixIconData,
       this.suffixIconData,
       this.obscureText,
+      this.readonly = false,
       this.onChanged,
       this.onChangedVisibility
       });
@@ -23,6 +25,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return TextField(
+      readOnly: readonly,
       controller: controller,
       onChanged: onChanged,
       obscureText: obscureText,

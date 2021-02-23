@@ -289,11 +289,9 @@ class _AccountCreateState extends State<AccountCreate> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        InkWell(
-                          child: ButtonWidget(
-                            title: 'Gå tillbaka',
-                            hasBorder: true,
-                          ),
+                        ButtonWidget(
+                          title: 'Gå tillbaka',
+                          hasBorder: true,
                           onTap: () {
                             Navigator.pop(context);
                           },

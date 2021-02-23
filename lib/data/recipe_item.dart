@@ -10,6 +10,7 @@ class RecipeItem {
   final bool isGlutenFree;
   final bool isLactoseFree;
   final String username;
+  final int userId;
 
   RecipeItem(
     this.id,
@@ -23,5 +24,6 @@ class RecipeItem {
     this.isGlutenFree,
     this.isLactoseFree,
     this.username,
+    this.userId,
   );
 }
