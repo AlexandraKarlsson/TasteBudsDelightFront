@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final String title;
   final bool hasBorder;
+  final double height;
   final Function onTap;
 
   ButtonWidget({
     this.title,
     this.hasBorder,
+    this.height = 60.0,
     this.onTap,
   });
 
@@ -27,7 +29,7 @@ class ButtonWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            height: 60.0,
+            height: height,
             child: Center(
               child: Text(
                 title,

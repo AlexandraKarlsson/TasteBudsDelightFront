@@ -306,30 +306,3 @@ class _AccountCreateState extends State<AccountCreate> {
   }
 }
 
-// import 'package:flutter/material.dart';
-
-// class AccountCreate extends StatelessWidget {
-//   static const String PATH = '/account_create';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Skapa konto'),
-//       ),
-//       body: Container(
-//         child: Column(
-//           children: [
-//             Text('Skapa konto sida...'),
-//             RaisedButton(
-//               child: Text('Skapa'),
-//               onPressed: () {
-//                 // Navigator.pushNamed(context, AccountCreate.PATH);
-//               },
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

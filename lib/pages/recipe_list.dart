@@ -6,6 +6,7 @@ import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'dart:convert' as convert;
 
 import 'account_login.dart';
+import 'account_profile.dart';
 import 'add_recipe.dart';
 import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
@@ -188,10 +189,15 @@ class _RecipeListState extends State<RecipeList> {
                         transitionDuration: Duration(seconds: 2),
                         pageBuilder: (_, __, ___) => AccountLogin(),
                       ),
-                    )
+                    )                                   
                   }
                 else if (value == PROFILE)
-                  {print('Om mig NOT IMPLEMENTED')}
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AccountProfile()),
+                    ),
+                  }
                 else if (value == LOGOUT)
                   {_logout()}
                 else
