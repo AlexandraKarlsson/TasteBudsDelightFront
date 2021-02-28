@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AnimationFailure extends StatefulWidget {
-final String title;
+
+final String failureText;
 final Function setNormalState;
 
-  AnimationFailure(this.title, this.setNormalState);
+  AnimationFailure(this.failureText, this.setNormalState);
 
   @override
   _AnimationFailureState createState() => _AnimationFailureState();
@@ -26,7 +27,6 @@ class _AnimationFailureState extends State<AnimationFailure> with SingleTickerPr
     failureController.forward();
     failureController.addListener(() {
       setState(() {});
-      print(animation.value);
     });
   }
 
@@ -40,7 +40,7 @@ class _AnimationFailureState extends State<AnimationFailure> with SingleTickerPr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Felmeddelande'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +58,7 @@ class _AnimationFailureState extends State<AnimationFailure> with SingleTickerPr
             height: 20,
           ),
           Text(
-            'Vi är ledsna, men någonting gick fel. Var vänlig försök igen!',
+            widget.failureText,
             style: TextStyle(fontSize: 20),
             textAlign: TextAlign.center,
           ),

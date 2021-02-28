@@ -9,15 +9,16 @@ import '../data/recipe.dart';
 import '../widgets/recipe/view/recipe_detailed_view.dart';
 import '../widgets/recipe/cooking/recipe_cooking_mode.dart';
 
-class DetailedRecipe extends StatefulWidget {
+class RecipeDetailed extends StatefulWidget {
   final id;
-  DetailedRecipe(this.id);
+  final userId;
+  RecipeDetailed(this.id, this.userId);
 
   @override
-  _DetailedRecipeState createState() => _DetailedRecipeState();
+  _RecipeDetailedState createState() => _RecipeDetailedState();
 }
 
-class _DetailedRecipeState extends State<DetailedRecipe> {
+class _RecipeDetailedState extends State<RecipeDetailed> {
   bool _isLoading = false;
   Recipe recipe;
 
@@ -61,7 +62,7 @@ class _DetailedRecipeState extends State<DetailedRecipe> {
     if(MediaQuery.of(context).orientation == Orientation.landscape) {
       page = RecipeCookingMode(recipe, widget.id);
     } else {
-      page = RecipeDetailedView(recipe);
+      page = RecipeDetailedView(recipe, widget.userId, widget.id);
     }
     return _isLoading
         ? Center(child: CircularProgressIndicator())

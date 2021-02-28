@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../data/setting_data.dart';
 import '../../../data/recipe_item.dart';
-import '../../../pages/detailed_recipe.dart';
+import '../../../pages/recipe_detailed.dart';
 
 class RecipeListItem extends StatelessWidget {
   final RecipeItem recipeItem;
@@ -24,7 +24,7 @@ class RecipeListItem extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        DetailedRecipe(recipeItem.id)));
+                        RecipeDetailed(recipeItem.id, recipeItem.userId)));
           },
           child: Padding(
             padding: const EdgeInsets.all(4),

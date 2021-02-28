@@ -10,7 +10,7 @@ import 'package:tastebudsdelightfront/widgets/animation_success.dart';
 import 'package:tastebudsdelightfront/widgets/button_widget.dart';
 import 'package:tastebudsdelightfront/widgets/textfield_widget.dart';
 
-enum AddingState { normal, saving, successful, failure }
+enum AddingState { normal, busy, successful, failure }
 
 class AccountProfile extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class _AccountProfileState extends State<AccountProfile> {
 
   Future<void> changeUsername() async {
     setState(() {
-      state = AddingState.saving;
+      state = AddingState.busy;
     });
     SettingData setting = Provider.of<SettingData>(context, listen: false);
     UserData userData = Provider.of<UserData>(context, listen: false);
@@ -114,7 +114,7 @@ class _AccountProfileState extends State<AccountProfile> {
         print('Username was successfully updated to $_username');
         setState(() {
           state = AddingState.successful;
-          successfulText = 'Ditt nya användarnamn är $_username';
+          successfulText = 'Användarnamn uppdaterat';
         });
       }
       if (response.statusCode == 400) {
@@ -140,7 +140,7 @@ class _AccountProfileState extends State<AccountProfile> {
 
   @override
   Widget build(BuildContext context) {
-    if (state == AddingState.saving) {
+    if (state == AddingState.busy) {
       return Center(child: CircularProgressIndicator());
     } else if (state == AddingState.successful) {
       return AnimationSuccess(successfulText);

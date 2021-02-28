@@ -5,11 +5,6 @@ import 'recipe_item.dart';
 class RecipeItems extends ChangeNotifier {
   List<RecipeItem> recipeItemList = [];
 
-  // add(RecipeItem recipeItem) {
-  //   recipeItemList.add(recipeItem);
-  //   notifyListeners();
-  // }
-
   parseAndAdd(Map<String, dynamic> responseData) {
     recipeItemList = [];
     responseData['recipes'].forEach(
@@ -28,22 +23,26 @@ class RecipeItems extends ChangeNotifier {
         int userId = recipe['userid'];
 
         RecipeItem newRecipeItem = RecipeItem(
-          id,
-          imageFileName,
-          title,
-          description,
-          time,
-          portions,
-          isVegan,
-          isVegetarian,
-          isGlutenFree,
-          isLactoseFree,
-          username,
-          userId
-        );
+            id,
+            imageFileName,
+            title,
+            description,
+            time,
+            portions,
+            isVegan,
+            isVegetarian,
+            isGlutenFree,
+            isLactoseFree,
+            username,
+            userId);
         recipeItemList.add(newRecipeItem);
         notifyListeners();
       },
     );
+  }
+
+  deleteRecipe(int recipeId) {
+    recipeItemList.removeWhere((recipeItem) => recipeItem.id ==recipeId);
+    notifyListeners();
   }
 }
