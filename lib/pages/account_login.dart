@@ -70,8 +70,8 @@ class _AccountLoginState extends State<AccountLogin> {
         String token = response.headers['x-auth'];
         print('id=$id, username=$username, email=$email,token=$token');
 
-        UserData userData = Provider.of<UserData>(context,listen: false);
-        userData.update(id,username,email,token);
+        UserData userData = Provider.of<UserData>(context, listen: false);
+        userData.update(id, username, email, token);
 
         Navigator.push(
           context,
@@ -84,7 +84,8 @@ class _AccountLoginState extends State<AccountLogin> {
       } else {
         print('Request failed with status: ${response.statusCode}.');
         setState(() {
-          _errorMessage = "Kunde inte logga in, email och/eller lösenord är felaktiga!";
+          _errorMessage =
+              "Kunde inte logga in, email och/eller lösenord är felaktiga!";
           _isError = true;
         });
       }

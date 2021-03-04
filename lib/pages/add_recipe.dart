@@ -47,6 +47,8 @@ class _AddRecipeState extends State<AddRecipe> {
   }
 
   Future<Map<String, dynamic>> _saveRecipeData() async {
+    // TODO: Add try catch around communication
+
     // Create post-data structure
     UserData userData = Provider.of<UserData>(context, listen: false);
     Overview overview = Provider.of<Overview>(context, listen: false);
@@ -134,7 +136,9 @@ class _AddRecipeState extends State<AddRecipe> {
     // Post recipe to backend and recive list of imagenames and recipeid.
     final recipeResponse = await _saveRecipeData();
     if (recipeResponse != null) {
+
       // Post image/s to imagestorage.
+      // TODO: How to handle consistancy between database data and uploaded images
       await _uploadImages(recipeResponse['imageFileNames']);
       // Clear all provider objects used for adding a recipe.
       _clearProviderData();

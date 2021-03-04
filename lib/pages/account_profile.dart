@@ -116,8 +116,7 @@ class _AccountProfileState extends State<AccountProfile> {
           state = AddingState.successful;
           successfulText = 'Användarnamn uppdaterat';
         });
-      }
-      if (response.statusCode == 400) {
+      } else {
         setState(() {
           state = AddingState.failure;
           failureText = 'Det gick inte att ändra användarnamn, försök igen!';
@@ -128,6 +127,56 @@ class _AccountProfileState extends State<AccountProfile> {
       setState(() {
         state = AddingState.failure;
         failureText = 'Något oväntat hände, försök igen senare!';
+      });
+    }
+  }
+
+  Future<void> changePassword() async {
+    setState(() {
+      state = AddingState.busy;
+    });
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+    UserData userData = Provider.of<UserData>(context, listen: false);
+
+    String url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/password';
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth': userData.token,
+    };
+
+    var newPasswordData = {
+      'oldPassword': _currentPassword,
+      'newPassword': _password,
+      'newRePassword': _rePassword,
+    };
+
+    var newPasswordDataJson = convert.jsonEncode(newPasswordData);
+    print('newPasswordDataJson = $newPasswordDataJson');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: headers,
+        body: newPasswordDataJson,
+      );
+      if (response.statusCode == 204) {
+        print('Password was successfully updated to $_password');
+        setState(() {
+          successfulText = 'Lösenordet uppdaterat';
+          state = AddingState.successful;
+        });
+      } else {
+        setState(() {
+          failureText = 'Det gick inte att ändra lösenordet, försök igen!';
+          state = AddingState.failure;
+        });
+      }
+    } catch (error) {
+      print('Something went wrong during http call for changing password.');
+      setState(() {
+        failureText = 'Något oväntat hände, försök igen senare!';
+        state = AddingState.failure;
       });
     }
   }
@@ -222,7 +271,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       onChanged: (value) {
                         setState(() {
                           _isValidPassword = isPasswordValid(value);
-                          _password = value;
+                          _currentPassword = value;
                         });
                       },
                       onChangedVisibility: () {
@@ -236,7 +285,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       height: 10.0,
                     ),
                     TextFieldWidget(
-                      controller: _currentPasswordController,
+                      controller: _passwordController,
                       hintText: 'Nytt lösenord',
                       obscureText: _isPasswordVisible ? false : true,
                       prefixIconData: Icons.lock_outline,
@@ -283,7 +332,15 @@ class _AccountProfileState extends State<AccountProfile> {
                       hasBorder: true,
                       height: 50.0,
                       onTap: () {
-                        //TODO: Kolla gammalt lösenord stämmer överrens, annars byta
+                        if (isRePasswordValid(_password, _rePassword)) {
+                          changePassword();
+                        } else {
+                          setState(() {
+                            failureText =
+                                "Nya lösenordet matchar inte omskrivningen av lösenordet, försök igen!";
+                            state = AddingState.failure;
+                          });
+                        }
                       },
                     ),
                     Divider(
