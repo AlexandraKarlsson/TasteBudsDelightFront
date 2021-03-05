@@ -19,6 +19,7 @@ class AccountProfile extends StatefulWidget {
 
 class _AccountProfileState extends State<AccountProfile> {
   AddingState state = AddingState.normal;
+  bool _showDeleteConfirmation = false;
   String successfulText = "";
   String failureText = "";
 
@@ -181,10 +182,91 @@ class _AccountProfileState extends State<AccountProfile> {
     }
   }
 
+  Future<void> deleteUser() async {
+    setState(() {
+      state = AddingState.busy;
+    });
+
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+    UserData userData = Provider.of<UserData>(context, listen: false);
+
+    String url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user';
+    final headers = <String, String>{
+      'x-auth': userData.token,
+    };
+
+    try {
+      final response = await http.delete(
+        url,
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        print('User deleted');
+        userData.clear();
+        setState(() {
+          successfulText = 'Användarkontot raderat.';
+          state = AddingState.successful;
+        });
+      } else {
+        setState(() {
+          failureText = 'Det gick inte att radera användarkontot, försök igen!';
+          state = AddingState.failure;
+        });
+      }
+    } catch (error) {
+      print(
+          'Something went wrong during http call for deleting user, error= $error.');
+      setState(() {
+        failureText = 'Något oväntat hände, försök igen senare!';
+        state = AddingState.failure;
+      });
+    }
+  }
+
   setNormalState() {
     setState(() {
       state = AddingState.normal;
     });
+  }
+
+  MaterialBanner createDeleteConfirmation() {
+    return MaterialBanner(
+      backgroundColor: Colors.redAccent,
+      content: Text(
+        'Är du säker på att du vill ta bort ditt konto?',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      leading: Icon(
+        Icons.error,
+        size: 40,
+      ),
+      actions: [
+        FlatButton(
+          child: const Text(
+            'Avbryt',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          onPressed: () {
+            setState(() {
+              _showDeleteConfirmation = false;
+            });
+          },
+        ),
+        FlatButton(
+          child: const Text(
+            'OK',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          onPressed: () {
+            setState(() {
+              _showDeleteConfirmation = false;
+              deleteUser();
+            });
+          },
+        ),
+      ],
+    );
   }
 
   @override
@@ -327,6 +409,12 @@ class _AccountProfileState extends State<AccountProfile> {
                     SizedBox(
                       height: 10.0,
                     ),
+                    _showDeleteConfirmation
+                        ? createDeleteConfirmation()
+                        : Container(),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     ButtonWidget(
                       title: 'Ändra',
                       hasBorder: true,
@@ -358,6 +446,11 @@ class _AccountProfileState extends State<AccountProfile> {
                       height: 50.0,
                       onTap: () {
                         //TODO: Radera kontot och logga ut användaren
+                        // Show dialog to user, are you sure you want to delete your account?
+                        setState(() {
+                          _showDeleteConfirmation = true;
+                        });
+                        // If OK then call backend to delete user
                       },
                     ),
                   ],
