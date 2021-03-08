@@ -23,27 +23,30 @@ class _AccountProfileState extends State<AccountProfile> {
   String successfulText = "";
   String failureText = "";
 
-  bool _isValidEmail = false;
   bool _isValidUsername = false;
-  bool _isCurrentPassword = false;
+  bool _isValidCurrentPassword = false;
   bool _isValidPassword = false;
   bool _isValidRePassword = false;
+  bool _isValidPasswordRemove = false;
 
   String _email = "";
   String _username = "";
   String _currentPassword = "";
   String _password = "";
   String _rePassword = "";
+  String _passwordRemove = "";
 
   bool _isCurrentPasswordVisible = false;
   bool _isPasswordVisible = false;
   bool _isRePasswordVisible = false;
+  bool _isPasswordRemoveVisible = false;
 
   TextEditingController _emailController;
   TextEditingController _usernameController;
   TextEditingController _currentPasswordController;
   TextEditingController _passwordController;
   TextEditingController _rePasswordController;
+  TextEditingController _passwordRemoveController;
 
   bool _isInitialized = false;
 
@@ -55,6 +58,7 @@ class _AccountProfileState extends State<AccountProfile> {
     _currentPasswordController = TextEditingController();
     _passwordController = TextEditingController();
     _rePasswordController = TextEditingController();
+    _passwordRemoveController = TextEditingController();
   }
 
   @override
@@ -73,6 +77,7 @@ class _AccountProfileState extends State<AccountProfile> {
       _currentPasswordController.text = _currentPassword;
       _passwordController.text = _password;
       _rePasswordController.text = _rePassword;
+      _passwordRemoveController.text = _passwordRemove;
     }
   }
 
@@ -82,7 +87,17 @@ class _AccountProfileState extends State<AccountProfile> {
     _currentPasswordController.dispose();
     _passwordController.dispose();
     _rePasswordController.dispose();
+    _passwordRemoveController.dispose();
     super.dispose();
+  }
+
+  bool _isPasswordChangeValid() {
+    return (
+            _isValidCurrentPassword &&
+            _isValidPassword &&
+            _isValidRePassword)
+        ? true
+        : false;
   }
 
   Future<void> changeUsername() async {
@@ -191,7 +206,7 @@ class _AccountProfileState extends State<AccountProfile> {
     UserData userData = Provider.of<UserData>(context, listen: false);
 
     String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user';
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/$_passwordRemove';
     final headers = <String, String>{
       'x-auth': userData.token,
     };
@@ -233,9 +248,33 @@ class _AccountProfileState extends State<AccountProfile> {
   MaterialBanner createDeleteConfirmation() {
     return MaterialBanner(
       backgroundColor: Colors.redAccent,
-      content: Text(
-        'Är du säker på att du vill ta bort ditt konto?',
-        style: TextStyle(fontWeight: FontWeight.bold),
+      content: Column(
+        children: [
+          Text(
+            'Är du säker på att du vill ta bort ditt konto? Skriv in ditt lösenord:',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextFieldWidget(
+            controller: _passwordRemoveController,
+            hintText: 'Ditt lösenord',
+            obscureText: _isPasswordRemoveVisible ? false : true,
+            prefixIconData: Icons.lock_outline,
+            suffixIconData: _isPasswordRemoveVisible
+                ? Icons.visibility
+                : Icons.visibility_off,
+            onChanged: (value) {
+              setState(() {
+                _isValidPasswordRemove = isPasswordValid(value);
+                _passwordRemove = value;
+              });
+            },
+            onChangedVisibility: () {
+              setState(() {
+                _isPasswordRemoveVisible = !_isPasswordRemoveVisible;
+              });
+            },
+          ),
+        ],
       ),
       leading: Icon(
         Icons.error,
@@ -325,13 +364,12 @@ class _AccountProfileState extends State<AccountProfile> {
                       title: 'Ändra',
                       hasBorder: true,
                       height: 50.0,
-                      onTap: () {
-                        print('New username $_username');
-                        // if (_isValidUsername) {
-                        //   changeUsername();
-                        // }
-                        changeUsername();
-                      },
+                      onTap: _isValidUsername
+                          ? () {
+                              print('New username $_username');
+                              changeUsername();
+                            }
+                          : null,
                     ),
                     Divider(
                       height: 50,
@@ -420,6 +458,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       hasBorder: true,
                       height: 50.0,
                       onTap: () {
+                        //TODO: Merge new and old version of validation
                         if (isRePasswordValid(_password, _rePassword)) {
                           changePassword();
                         } else {
