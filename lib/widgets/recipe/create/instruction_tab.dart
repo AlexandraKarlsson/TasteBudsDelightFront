@@ -35,9 +35,9 @@ class _InstructionTabState extends State<InstructionTab> {
 
   @override
   Widget build(BuildContext context) {
-    Instructions steps =
+    Instructions instructions =
         Provider.of<Instructions>(context);
-    List<Instruction> stepList = steps.instructionList;
+    List<Instruction> instructionList = instructions.instructionList;
     return Column(
       children: <Widget>[
         Padding(
@@ -48,10 +48,10 @@ class _InstructionTabState extends State<InstructionTab> {
           child: Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: stepList.length,
+              itemCount: instructionList.length,
               itemBuilder: (BuildContext context, int index) {
                 return InstructionItem(
-                    itemSelected, index, stepList[index], delete, select);
+                    itemSelected, index, instructionList[index], delete, select);
               },
             ),
           ),
@@ -64,10 +64,10 @@ class _InstructionTabState extends State<InstructionTab> {
             child: FloatingActionButton(
               child: Icon(Icons.add),
               onPressed: () {
-                Instruction step =
+                Instruction instruction =
                     Instruction(1, 'Nytt steg');
                 setState(() {
-                  stepList.add(step);
+                  instructionList.add(instruction);
                 });
               },
             ),
@@ -79,11 +79,11 @@ class _InstructionTabState extends State<InstructionTab> {
             IconButton(
               icon: Icon(Icons.arrow_upward),
               iconSize: 35,
-              onPressed: (stepList.length <= 1) || (itemSelected == 0)
+              onPressed: (instructionList.length <= 1) || (itemSelected == 0)
                   ? null
                   : () {
                       print('Move step up');
-                      steps.moveUp(itemSelected);
+                      instructions.moveUp(itemSelected);
                       setState(() {
                         itemSelected = itemSelected - 1;
                       });
@@ -93,12 +93,12 @@ class _InstructionTabState extends State<InstructionTab> {
             IconButton(
               icon: Icon(Icons.arrow_downward),
               iconSize: 35,
-              onPressed: (stepList.length <= 1) ||
-                      (itemSelected == stepList.length - 1)
+              onPressed: (instructionList.length <= 1) ||
+                      (itemSelected == instructionList.length - 1)
                   ? null
                   : () {
                       print('Move step down');
-                      steps.moveDown(itemSelected);
+                      instructions.moveDown(itemSelected);
                       setState(() {
                         itemSelected = itemSelected + 1;
                       });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/instruction.dart';
-import '../../../pages/edit_step.dart';
+import '../../../pages/edit_instruction.dart';
 
 class InstructionItem extends StatelessWidget {
   final Instruction instruction;
@@ -22,7 +22,7 @@ class InstructionItem extends StatelessWidget {
           child: Icon(Icons.edit),
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditStep(index)));
+                MaterialPageRoute(builder: (context) => EditInstruction(index)));
           },
         ),
         title: Text((index+1).toString()),

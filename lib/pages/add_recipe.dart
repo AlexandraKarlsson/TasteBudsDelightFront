@@ -53,7 +53,7 @@ class _AddRecipeState extends State<AddRecipe> {
     UserData userData = Provider.of<UserData>(context, listen: false);
     Overview overview = Provider.of<Overview>(context, listen: false);
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
-    Instructions steps = Provider.of<Instructions>(context, listen: false);
+    Instructions instructions = Provider.of<Instructions>(context, listen: false);
     Images images = Provider.of<Images>(context, listen: false);
 
     final newRecipeData = {
@@ -68,7 +68,7 @@ class _AddRecipeState extends State<AddRecipe> {
         "islactosefree": overview.isLactoseFree
       },
       "ingredients": ingredients.listOfIngredients(),
-      "steps": steps.listOfDescriptions(),
+      "steps": instructions.listOfDescriptions(),
       "images": images.listOfExtentions(),
     };
     // print('newRecipeData: $newRecipeData.');

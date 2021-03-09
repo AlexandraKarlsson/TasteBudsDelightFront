@@ -4,16 +4,16 @@ import 'package:provider/provider.dart';
 import '../data/instruction.dart';
 import '../data/instructions.dart';
 
-class EditStep extends StatefulWidget {
+class EditInstruction extends StatefulWidget {
   final int index;
 
-  EditStep(this.index);
+  EditInstruction(this.index);
 
   @override
-  _EditStepState createState() => _EditStepState();
+  _EditInstructionState createState() => _EditInstructionState();
 }
 
-class _EditStepState extends State<EditStep> {
+class _EditInstructionState extends State<EditInstruction> {
   bool _isInitialized = false;
   TextEditingController _nameController;
 
@@ -29,15 +29,15 @@ class _EditStepState extends State<EditStep> {
 
     if (!_isInitialized) {
       _isInitialized = true;
-      Instructions steps = Provider.of<Instructions>(context, listen: false);
-      _nameController.text = steps.instructionList[widget.index].description;
+      Instructions instructions = Provider.of<Instructions>(context, listen: false);
+      _nameController.text = instructions.instructionList[widget.index].description;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Instructions steps = Provider.of<Instructions>(context);
-    Instruction step = steps.instructionList[widget.index];
+    Instructions instructions = Provider.of<Instructions>(context);
+    Instruction instruction = instructions.instructionList[widget.index];
 
     return Scaffold(
       appBar: AppBar(title: Text('Modifiera beskrivningen')),
@@ -45,7 +45,7 @@ class _EditStepState extends State<EditStep> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
-            Text(step.orderNumber.toString()),
+            Text(instruction.orderNumber.toString()),
             SizedBox(
               width: 15,
             ),
@@ -56,7 +56,7 @@ class _EditStepState extends State<EditStep> {
                 labelText: 'Beskrivning',
               ),
               onChanged: (description) {
-                steps.setDescription(widget.index, description);
+                instructions.setDescription(widget.index, description);
               },
             ),
             SizedBox(
