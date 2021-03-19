@@ -42,12 +42,11 @@ class _RecipeDetailedState extends State<RecipeDetailed> {
     final url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe/${widget.id}';
 
     final response = await http.get(url);
-    print(response);
+    print(response.body);
     if (response.statusCode == 200) {
       final responseData =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
       Recipe recipe = Recipe.parse(responseData);
-      print('recipe = $recipe');
       setState(() {
         this.recipe = recipe;
       });

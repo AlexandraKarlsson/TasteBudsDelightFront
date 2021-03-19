@@ -9,10 +9,9 @@ class Recipe {
   Instructions instructions;
   Images images;
 
-  Recipe(this.overview,this.ingredients,this.instructions, this.images);
+  Recipe(this.overview, this.ingredients, this.instructions, this.images);
 
-  factory Recipe.parse(Map<String,dynamic> recipeData) {
- 
+  factory Recipe.parse(Map<String, dynamic> recipeData) {
     final overviewData = recipeData['overview'];
     Overview overview = Overview();
     overview.setTitle(overviewData['title']);
@@ -22,11 +21,13 @@ class Recipe {
     overview.setIsVegan(overviewData['isvegan'] == 0 ? false : true);
     overview.setIsVegetarian(overviewData['isvegetarian'] == 0 ? false : true);
     overview.setIsGlutenFree(overviewData['isglutenfree'] == 0 ? false : true);
-    overview.setIsLactoseFree(overviewData['islactosefree'] == 0 ? false : true);
+    overview
+        .setIsLactoseFree(overviewData['islactosefree'] == 0 ? false : true);
 
     Ingredients ingredients = Ingredients();
     recipeData['ingredients'].forEach((ingredient) {
-      ingredients.add(ingredient['amount'].toDouble(), ingredient['unit'], ingredient['name']);
+      ingredients.add(ingredient['amount'].toDouble(), ingredient['unit'],
+          ingredient['name']);
     });
 
     Instructions instructions = Instructions();
@@ -36,6 +37,41 @@ class Recipe {
 
     Images images = Images.parse(recipeData['images']);
 
-    return Recipe(overview,ingredients,instructions,images);
+    return Recipe(overview, ingredients, instructions, images);
   }
+
+  void updateProvidersForEdit(int recipeId, Overview editOverview, Ingredients editIngredients,
+      Instructions editInstructions, Images editImages) {
+        editOverview.clear();
+        editIngredients.clear();
+        editInstructions.clear();
+        editImages.clear();
+
+        editOverview.recipeId = recipeId;
+        editOverview.title = overview.title;
+        editOverview.description = overview.description;
+        editOverview.time = overview.time;
+        editOverview.portions = overview.portions;
+        editOverview.isVegan = overview.isVegan;
+        editOverview.isVegetarian = overview.isVegetarian;
+        editOverview.isGlutenFree = overview.isGlutenFree;
+        editOverview.isLactoseFree = overview.isLactoseFree;
+        
+        ingredients.ingredientList.forEach((ingredient) {
+          editIngredients.add(ingredient.amount, ingredient.unit, ingredient.name);
+        });
+
+        instructions.instructionList.forEach((instruction) {
+          editInstructions.add(instruction.orderNumber, instruction.description);
+        });
+
+        images.imageList.forEach((image) {
+          editImages.addImage(image);
+         });
+
+        //TODO: how to handle images
+        // * Current pictures, identifies with <receptId>_image_<sequencenumber>.<extentions>
+        // * New pictures
+
+      }
 }

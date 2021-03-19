@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/data/images.dart';
+import 'package:tastebudsdelightfront/data/ingredients.dart';
+import 'package:tastebudsdelightfront/data/instructions.dart';
+import 'package:tastebudsdelightfront/data/overview.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'dart:convert' as convert;
 
@@ -189,7 +193,7 @@ class _RecipeListState extends State<RecipeList> {
                         transitionDuration: Duration(seconds: 2),
                         pageBuilder: (_, __, ___) => AccountLogin(),
                       ),
-                    )                                   
+                    )
                   }
                 else if (value == PROFILE)
                   {
@@ -234,6 +238,10 @@ class _RecipeListState extends State<RecipeList> {
           visible: userData.token != null ? true : false,
           child: FloatingActionButton(
             onPressed: () {
+              Provider.of<Overview>(context, listen: false).clear();
+              Provider.of<Ingredients>(context, listen: false).clear();
+              Provider.of<Instructions>(context, listen: false).clear();
+              Provider.of<Images>(context, listen: false).clear();              
               Navigator.pushNamed(context, AddRecipe.PATH);
             },
             tooltip: 'Lägg till nytt recept!',

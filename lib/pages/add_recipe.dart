@@ -46,6 +46,47 @@ class _AddRecipeState extends State<AddRecipe> {
     });
   }
 
+  void _updateRecipe() async {
+    setState(() {
+      state = AddingState.saving;
+    });
+
+    // updatera receptet till backend
+
+    // ta bort och sedan skicka bilder till imagestore?
+
+  }
+
+  Future<Map<String, dynamic>> _updateRecipeData() async {
+    // Create post-data structure
+    UserData userData = Provider.of<UserData>(context, listen: false);
+    Overview overview = Provider.of<Overview>(context, listen: false);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
+    Instructions instructions = Provider.of<Instructions>(context, listen: false);
+    Images images = Provider.of<Images>(context, listen: false);
+
+    final newRecipeData = {
+      "id": overview.recipeId,
+      "overview": {
+        "title": overview.title,
+        "description": overview.description,
+        "time": overview.time,
+        "portions": overview.portions,
+        "isvegan": overview.isVegan,
+        "isvegetarian": overview.isVegetarian,
+        "isglutenfree": overview.isGlutenFree,
+        "islactosefree": overview.isLactoseFree
+      },
+      "ingredients": ingredients.listOfIngredients(),
+      "steps": instructions.listOfDescriptions(),
+      "images": images.listOfExtentions(),
+    };
+  }
+
+  Future<void> _updateImages(List<dynamic> imageNames) async { 
+
+  }
+
   Future<Map<String, dynamic>> _saveRecipeData() async {
     // TODO: Add try catch around communication
 
@@ -173,6 +214,7 @@ class _AddRecipeState extends State<AddRecipe> {
 
   @override
   Widget build(BuildContext context) {
+    Overview overview = Provider.of<Overview>(context, listen: false);
     if (state == AddingState.saving) {
       return Center(child: CircularProgressIndicator());
     } else if (state == AddingState.successful) {
@@ -190,7 +232,7 @@ class _AddRecipeState extends State<AddRecipe> {
               checkMinimalCriteria(context) ?
               Expanded(
                 flex: 1,
-                child: InkWell(child: AnimationSave(), onTap: _saveRecipe),
+                child: InkWell(child: AnimationSave(), onTap: overview.recipeId ==-1 ? _saveRecipe : _updateRecipe),
               ) : Container(),
               Expanded(
                 flex: 8,

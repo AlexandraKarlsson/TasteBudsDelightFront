@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Overview extends ChangeNotifier {
+  int recipeId;
   String title;
   String description;
   int time;
@@ -14,21 +15,22 @@ class Overview extends ChangeNotifier {
     init();
   }
 
-  static Overview clone(Overview overview) {
-    Overview newOverview = Overview();
-    newOverview.title = overview.title;
-    newOverview.description = overview.description;
-    newOverview.time = overview.time;
-    newOverview.portions = overview.portions;
-    newOverview.isVegan = overview.isVegan;
-    newOverview.isVegetarian = overview.isVegetarian;
-    newOverview.isGlutenFree = overview.isGlutenFree;
-    newOverview.isLactoseFree = overview.isLactoseFree;
+  // static Overview clone(Overview overview) {
+  //   Overview newOverview = Overview();
+  //   newOverview.title = overview.title;
+  //   newOverview.description = overview.description;
+  //   newOverview.time = overview.time;
+  //   newOverview.portions = overview.portions;
+  //   newOverview.isVegan = overview.isVegan;
+  //   newOverview.isVegetarian = overview.isVegetarian;
+  //   newOverview.isGlutenFree = overview.isGlutenFree;
+  //   newOverview.isLactoseFree = overview.isLactoseFree;
 
-    return newOverview;
-  }
+  //   return newOverview;
+  // }
 
   init() {
+    recipeId = -1;
     title = "";
     description = "";
     time = 0;
