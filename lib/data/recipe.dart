@@ -14,6 +14,7 @@ class Recipe {
   factory Recipe.parse(Map<String, dynamic> recipeData) {
     final overviewData = recipeData['overview'];
     Overview overview = Overview();
+    // TODO: Parse id
     overview.setTitle(overviewData['title']);
     overview.setDescription(overviewData['description']);
     overview.setTime(overviewData['time']);
@@ -68,10 +69,6 @@ class Recipe {
         images.imageList.forEach((image) {
           editImages.addImage(image);
          });
-
-        //TODO: how to handle images
-        // * Current pictures, identifies with <receptId>_image_<sequencenumber>.<extentions>
-        // * New pictures
 
       }
 }

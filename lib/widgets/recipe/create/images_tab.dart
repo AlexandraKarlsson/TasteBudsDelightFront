@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-
 import 'image_item.dart';
 import '../../styles.dart';
 // import '../../data/user.dart';
@@ -16,12 +15,11 @@ class ImagesTab extends StatefulWidget {
 }
 
 class _ImagesTabState extends State<ImagesTab> {
-  
   void _addImage(BuildContext context, Images images) async {
     dynamic _imageFile = await Navigator.pushNamed(context, AddImage.PATH);
     print('_imageFile = $_imageFile');
     String extension = _imageFile.path.split(".").last;
-    
+
     ImageData image = ImageData(_imageFile, extension, null);
     images.addImage(image);
 
@@ -42,13 +40,15 @@ class _ImagesTabState extends State<ImagesTab> {
         ),
         Container(
           child: Expanded(
-              child: GridView.builder(
-                  itemCount: images.imageList.length,
-                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemBuilder: (BuildContext context, int index) {
-                    return ImageItem(images.imageList[index], index);
-                  })),
+            child: GridView.builder(
+              itemCount: images.imageList.length,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemBuilder: (BuildContext context, int index) {
+                return ImageItem(images.imageList[index], index);
+              },
+            ),
+          ),
         ),
         Container(
           padding: EdgeInsets.only(right: 10, bottom: 20),

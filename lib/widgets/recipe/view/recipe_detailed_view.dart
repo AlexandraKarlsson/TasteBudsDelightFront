@@ -125,7 +125,6 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
         print('Failed to delete image = ${imageList[index].imageFileName}');
       }
     }
-
     print('numSuccess = $numSuccess');
     print('imageList.length = ${imageList.length}');
     int successRate = ((numSuccess / imageList.length) * 100).round();

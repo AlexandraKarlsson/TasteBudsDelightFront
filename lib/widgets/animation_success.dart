@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastebudsdelightfront/pages/recipe_list.dart';
 
 class AnimationSuccess extends StatefulWidget {
   final String title;
@@ -24,7 +25,7 @@ class _AnimationSuccessState extends State<AnimationSuccess>
           ..addStatusListener((AnimationStatus status) {
             if (status == AnimationStatus.completed) {
               print('completed');
-              Navigator.pop(context);
+              Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
             }
           });
 

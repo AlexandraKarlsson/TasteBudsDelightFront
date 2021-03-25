@@ -4,6 +4,7 @@ import 'image_data.dart';
 
 class Images extends ChangeNotifier {
   List<ImageData> imageList = [];
+  List<ImageData> deletedImageList = [];
 
   Images();
 
@@ -21,6 +22,7 @@ class Images extends ChangeNotifier {
   }
 
   deleteImage(int index) {
+    deletedImageList.add(imageList[index]);
     imageList.removeAt(index);
     notifyListeners();
   }
@@ -33,7 +35,19 @@ class Images extends ChangeNotifier {
     return extentionList;
   }
 
+  List createBackendData() {
+    List backendList = [];
+    imageList.forEach((image) {
+      backendList.add(image.createBackendData());
+    });
+    deletedImageList.forEach((image) {
+      backendList.add({'operation':'delete', 'extention': '','filename': image.imageFileName});
+    });
+    return backendList;
+  }
+
   clear() {
     imageList = [];
+    deletedImageList = [];
   }
 }

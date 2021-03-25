@@ -27,7 +27,7 @@ class _AnimationSaveState extends State<AnimationSave>
     saveController.forward();
     saveController.addListener(() {
       setState(() {});
-      print(animation.value);
+      //print(animation.value);
     });
   }
 

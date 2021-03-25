@@ -15,20 +15,6 @@ class Overview extends ChangeNotifier {
     init();
   }
 
-  // static Overview clone(Overview overview) {
-  //   Overview newOverview = Overview();
-  //   newOverview.title = overview.title;
-  //   newOverview.description = overview.description;
-  //   newOverview.time = overview.time;
-  //   newOverview.portions = overview.portions;
-  //   newOverview.isVegan = overview.isVegan;
-  //   newOverview.isVegetarian = overview.isVegetarian;
-  //   newOverview.isGlutenFree = overview.isGlutenFree;
-  //   newOverview.isLactoseFree = overview.isLactoseFree;
-
-  //   return newOverview;
-  // }
-
   init() {
     recipeId = -1;
     title = "";

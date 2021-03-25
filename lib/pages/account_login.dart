@@ -78,9 +78,10 @@ class _AccountLoginState extends State<AccountLogin> {
           MaterialPageRoute(
             builder: (context) => AnimationSuccess('Du är nu inloggad!'),
           ),
-        ).then((_) {
-          Navigator.pop(context);
-        });
+        );
+        // .then((_) {
+        //   Navigator.pop(context);
+        // });
       } else {
         print('Request failed with status: ${response.statusCode}.');
         setState(() {

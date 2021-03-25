@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
             //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
+          
           home: RecipeList(title: 'Smaklökarnas Frestelse'),
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
