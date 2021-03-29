@@ -37,7 +37,6 @@ class _EditInstructionState extends State<EditInstruction> {
   @override
   Widget build(BuildContext context) {
     Instructions instructions = Provider.of<Instructions>(context);
-    Instruction instruction = instructions.instructionList[widget.index];
 
     return Scaffold(
       appBar: AppBar(title: Text('Modifiera beskrivningen')),
@@ -45,9 +44,9 @@ class _EditInstructionState extends State<EditInstruction> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
-            Text(instruction.orderNumber.toString()),
+            Text('Steg: ${(widget.index+1).toString()}', style: TextStyle(fontSize: 16),),
             SizedBox(
-              width: 15,
+              height: 15,
             ),
             TextField(
               controller: _nameController,

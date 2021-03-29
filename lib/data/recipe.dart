@@ -33,7 +33,7 @@ class Recipe {
 
     Instructions instructions = Instructions();
     recipeData['instructions'].forEach((instruction) {
-      instructions.add(instruction['ordernumber'], instruction['description']);
+      instructions.add(instruction['description']);
     });
 
     Images images = Images.parse(recipeData['images']);
@@ -63,7 +63,7 @@ class Recipe {
         });
 
         instructions.instructionList.forEach((instruction) {
-          editInstructions.add(instruction.orderNumber, instruction.description);
+          editInstructions.add(instruction.description);
         });
 
         images.imageList.forEach((image) {

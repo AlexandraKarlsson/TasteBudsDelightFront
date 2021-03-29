@@ -7,16 +7,12 @@ class Instructions extends ChangeNotifier {
   List<Instruction> instructionList = [];
 
   // TODO: orderNumber not needed when adding a new step, remove later?
-  add(orderNumber, description) {
-    Instruction step = Instruction(orderNumber, description);
+  add(description) {
+    Instruction step = Instruction(description);
     instructionList.add(step);
     notifyListeners();
   }
 
-  setNumber(index, orderNumber) {
-    instructionList[index].orderNumber = orderNumber;
-    notifyListeners();
-  }
 
   setDescription(index, description) {
     instructionList[index].description = description;
@@ -44,13 +40,13 @@ class Instructions extends ChangeNotifier {
     notifyListeners();
   }
 
-  renumberOrder() {
-    int number = 1;
-    instructionList.forEach((step) {
-      step.orderNumber = number;
-      number++;
-    });
-  }
+  // renumberOrder() {
+  //   int number = 1;
+  //   instructionList.forEach((step) {
+  //     step.orderNumber = number;
+  //     number++;
+  //   });
+  // }
 
   List listOfDescriptions() {
     List descriptionList = [];

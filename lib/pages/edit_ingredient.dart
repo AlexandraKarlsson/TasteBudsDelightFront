@@ -47,6 +47,9 @@ class _EditIngredientState extends State<EditIngredient> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 15,
+            ),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(

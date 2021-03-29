@@ -65,7 +65,7 @@ class _InstructionTabState extends State<InstructionTab> {
               child: Icon(Icons.add),
               onPressed: () {
                 Instruction instruction =
-                    Instruction(1, 'Nytt steg');
+                    Instruction('Nytt steg');
                 setState(() {
                   instructionList.add(instruction);
                 });
