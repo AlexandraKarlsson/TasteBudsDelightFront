@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.red[400],
             accentColor: Colors.red[600],
             fontFamily: 'Nunito',
+            textSelectionHandleColor: Colors.red[400],
             //  primarySwatch: Colors.red,
             //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
