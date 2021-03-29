@@ -36,13 +36,13 @@ class RecipeItems extends ChangeNotifier {
             username,
             userId);
         recipeItemList.add(newRecipeItem);
-        notifyListeners();
       },
     );
+    notifyListeners();
   }
 
   deleteRecipe(int recipeId) {
-    recipeItemList.removeWhere((recipeItem) => recipeItem.id ==recipeId);
+    recipeItemList.removeWhere((recipeItem) => recipeItem.id == recipeId);
     notifyListeners();
   }
 }

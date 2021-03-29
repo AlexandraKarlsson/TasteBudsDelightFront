@@ -211,6 +211,7 @@ class _RecipeListState extends State<RecipeList> {
           ],
         ),
         body: RefreshIndicator(
+          // TODO: handle if there is no recipe to fetch when draging and droping
           onRefresh: _fetchRecipes,
           child: Container(
             child: Column(

@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/communication/imagestore.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/utils/validation.dart';
@@ -92,10 +93,7 @@ class _AccountProfileState extends State<AccountProfile> {
   }
 
   bool _isPasswordChangeValid() {
-    return (
-            _isValidCurrentPassword &&
-            _isValidPassword &&
-            _isValidRePassword)
+    return (_isValidCurrentPassword && _isValidPassword && _isValidRePassword)
         ? true
         : false;
   }
@@ -197,6 +195,14 @@ class _AccountProfileState extends State<AccountProfile> {
     }
   }
 
+  List _parseImageResponseList(Map<String, dynamic> responseMap) {
+    List listOfImageNames = [];
+    responseMap['imageNameList'].forEach((imageName) {
+      listOfImageNames.add(imageName['name']);
+    });
+    return listOfImageNames;
+  }
+
   Future<void> deleteUser() async {
     setState(() {
       state = AddingState.busy;
@@ -219,6 +225,17 @@ class _AccountProfileState extends State<AccountProfile> {
       if (response.statusCode == 200) {
         print('User deleted');
         userData.clear();
+
+        final responseData =
+            convert.jsonDecode(response.body) as Map<String, dynamic>;
+        final imageNameList = _parseImageResponseList(responseData);
+        for (int index = 0; index < imageNameList.length; index++) {
+          bool answer = await deleteImage(context, imageNameList[index]);
+          if (!answer) {
+            print('Failed to delete image = ${imageNameList[index]}');
+          }
+        }
+
         setState(() {
           successfulText = 'Användarkontot raderat.';
           state = AddingState.successful;
