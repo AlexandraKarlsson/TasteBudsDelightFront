@@ -4,6 +4,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/communication/imagestore.dart';
 import 'package:tastebudsdelightfront/data/image_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 
@@ -114,60 +115,6 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
     }
   }
 
-  Future<bool> _deleteImage(String fileName) async {
-    bool successful = true;
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-    try {
-      final String url =
-          'http://${setting.imageAddress}:${setting.imagePort}/image/$fileName';
-      final response = await http.delete(url);
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        print('Successfully deleted image = $fileName');
-      } else {
-        print('Failed to delete image = $fileName');
-        successful = false;
-      }
-    } catch (error) {
-      print(
-          'Exception caught during deletion of image = $fileName, error = $error');
-      successful = false;
-    }
-    return successful;
-  }
-
-  Future<bool> _uploadImage(ImageData imageData) async {
-    bool successful = true;
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-    final String url =
-        'http://${setting.imageAddress}:${setting.imagePort}/image';
-
-    try {
-      File file = imageData.file;
-      String fileName = imageData.imageFileName;
-      String base64Image = convert.base64Encode(file.readAsBytesSync());
-
-      final response = await http.post(url, body: {
-        "image": base64Image,
-        "name": fileName,
-      });
-
-      if (response.statusCode == 200) {
-        // TODO: Change statuscode to 201 created
-        print(response.statusCode);
-        print('Successfully uploaded image = $fileName');
-      } else {
-        print('Failed to uploaded image = $fileName');
-        successful = false;
-      }
-    } catch (error) {
-      print(
-          'Exception caught during upload of image = ${imageData.imageFileName}, error = $error');
-      successful = false;
-    }
-    return successful;
-  }
-
   Future<void> _updateImages(List<dynamic> imageNames) async {
     Images images = Provider.of<Images>(context, listen: false);
     final imageList = images.imageList;
@@ -178,7 +125,7 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
       if (imageList[i].file != null) {
         imageList[i].imageFileName = imageNames[newNameIndex];
         newNameIndex += 1;
-        bool answer = await _uploadImage(imageList[i]);
+        bool answer = await uploadImage(context, imageList[i]);
         if (!answer) {
           print('Failed to upload image = ${imageList[i].imageFileName}');
         }
@@ -189,7 +136,8 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
     final deletedImageList = images.deletedImageList;
     for (int i = 0; i < deletedImageList.length; i++) {
       if (deletedImageList[i].imageFileName != null) {
-        bool answer = await _deleteImage(deletedImageList[i].imageFileName);
+        bool answer =
+            await deleteImage(context, deletedImageList[i].imageFileName);
         if (!answer) {
           print(
               'Failed to delete image = ${deletedImageList[i].imageFileName}');
@@ -229,8 +177,6 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
 //====================================================
 
   Future<Map<String, dynamic>> _saveRecipeData() async {
-    // TODO: Add try catch around communication
-
     // Create post-data structure
     UserData userData = Provider.of<UserData>(context, listen: false);
     Overview overview = Provider.of<Overview>(context, listen: false);
@@ -291,28 +237,10 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
 
   Future<void> _uploadImages(List<dynamic> imageNames) async {
     Images images = Provider.of<Images>(context, listen: false);
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final String url =
-        'http://${setting.imageAddress}:${setting.imagePort}/image';
-    for (int i = 0; i < images.imageList.length; i++) {
-      File file = images.imageList[i].file;
-      String fileName = imageNames[i];
-      String base64Image = convert.base64Encode(file.readAsBytesSync());
-
-      await http.post(
-        url,
-        body: {
-          "image": base64Image,
-          "name": fileName,
-        },
-      ).then((response) {
-        print(response.statusCode);
-        print('fileName = $fileName');
-      }).catchError((error) {
-        print('Upload image failed');
-        print(error);
-      });
+    for (int i = 0; i < imageNames.length; i++) {
+      images.imageList[i].imageFileName = imageNames[i];
+      await uploadImage(context, images.imageList[i]);
     }
   }
 
