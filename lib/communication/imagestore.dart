@@ -24,8 +24,7 @@ import 'package:tastebudsdelightfront/data/setting_data.dart';
         "name": fileName,
       });
 
-      if (response.statusCode == 200) {
-        // TODO: Change statuscode to 201 created
+      if (response.statusCode == 201) {
         print(response.statusCode);
         print('Successfully uploaded image = $fileName');
       } else {
