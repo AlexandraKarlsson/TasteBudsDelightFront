@@ -39,33 +39,35 @@ class _RecipeDetailedState extends State<RecipeDetailed> {
     print('_fetchRecipe(): Enter ...');
     SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final url = 'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe/${widget.id}';
+    final url =
+        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe/${widget.id}';
 
-    final response = await http.get(url);
-    print(response.body);
-    if (response.statusCode == 200) {
-      final responseData =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      Recipe recipe = Recipe.parse(responseData);
-      setState(() {
-        this.recipe = recipe;
-      });
-    } else {
-      print('_fetchRecipe(): status code = ${response.statusCode}!');
+    try {
+      final response = await http.get(url);
+      print(response.body);
+      if (response.statusCode == 200) {
+        final responseData =
+            convert.jsonDecode(response.body) as Map<String, dynamic>;
+        Recipe recipe = Recipe.parse(responseData);
+        setState(() {
+          this.recipe = recipe;
+        });
+      } else {
+        print('_fetchRecipe(): status code = ${response.statusCode}!');
+      }
+    } catch (error) {
+      print('Response throw this error: $error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     Widget page;
-    if(MediaQuery.of(context).orientation == Orientation.landscape) {
+    if (MediaQuery.of(context).orientation == Orientation.landscape) {
       page = RecipeCookingMode(recipe, widget.id);
     } else {
       page = RecipeDetailedView(recipe, widget.userId, widget.id);
     }
-    return _isLoading
-        ? Center(child: CircularProgressIndicator())
-        : page;
-
+    return _isLoading ? Center(child: CircularProgressIndicator()) : page;
   }
 }

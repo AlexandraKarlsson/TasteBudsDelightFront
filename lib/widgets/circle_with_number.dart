@@ -6,9 +6,7 @@ Widget createCircleWithNumber(BuildContext context, int number) {
     child: Container(
       height: 30,
       width: 30,
-      // color: Colors.red,
       decoration: new BoxDecoration(
-        //color: Colors.red,
         color: Theme.of(context).accentColor,
         shape: BoxShape.circle,
       ),

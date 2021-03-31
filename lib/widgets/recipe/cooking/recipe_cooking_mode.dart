@@ -20,7 +20,6 @@ class RecipeCookingMode extends StatelessWidget {
   Widget build(BuildContext context) {
     CookingRecipe cookingRecipe = Provider.of<CookingRecipe>(context);
     if (cookingRecipe.isNewId(id)) { 
-      //Ask user not clear or not
       cookingRecipe.newRecipe(id);
       CookingIngredients cookingIngrediets =
           Provider.of<CookingIngredients>(context);

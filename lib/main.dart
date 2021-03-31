@@ -17,7 +17,7 @@ import 'data/cooking/cooking_instructions.dart';
 import 'pages/account_login.dart';
 import 'pages/settings_page.dart';
 import 'pages/recipe_list.dart';
-import 'pages/add_recipe.dart';
+import 'pages/add_edit_recipe.dart';
 import 'pages/add_image.dart';
 
 //----------------------------------
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           home: RecipeList(title: 'Smaklökarnas Frestelse'),
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
-            AddRecipe.PATH: (context) => AddRecipe(),
+            AddEditRecipe.PATH: (context) => AddEditRecipe(),
             AddImage.PATH: (context) => AddImage(),
             SettingsPage.PATH: (context) => SettingsPage(),
             AccountCreate.PATH: (context) => AccountCreate(),

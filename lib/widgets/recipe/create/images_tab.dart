@@ -15,6 +15,7 @@ class ImagesTab extends StatefulWidget {
 }
 
 class _ImagesTabState extends State<ImagesTab> {
+
   void _addImage(BuildContext context, Images images) async {
     dynamic _imageFile = await Navigator.pushNamed(context, AddImage.PATH);
     print('_imageFile = $_imageFile');
@@ -30,7 +31,6 @@ class _ImagesTabState extends State<ImagesTab> {
 
   @override
   Widget build(BuildContext context) {
-    //User user = Provider.of<User>(context);
     Images images = Provider.of<Images>(context);
     return Column(
       children: <Widget>[

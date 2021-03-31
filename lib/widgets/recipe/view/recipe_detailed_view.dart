@@ -10,7 +10,7 @@ import 'package:tastebudsdelightfront/data/overview.dart';
 import 'package:tastebudsdelightfront/data/recipe_items.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
-import 'package:tastebudsdelightfront/pages/add_recipe.dart';
+import 'package:tastebudsdelightfront/pages/add_edit_recipe.dart';
 
 import '../../animation_failure.dart';
 import '../../animation_success.dart';
@@ -91,7 +91,7 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
 
     widget.recipe.updateProvidersForEdit(
         widget.recipeId, overview, ingredients, instructions, images);
-    Navigator.pushNamed(context, AddRecipe.PATH);
+    Navigator.pushNamed(context, AddEditRecipe.PATH);
   }
 
   Future<int> deleteImages(context) async {

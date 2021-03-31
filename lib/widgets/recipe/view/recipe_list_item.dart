@@ -12,7 +12,7 @@ class RecipeListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  SettingData setting = Provider.of<SettingData>(context);
+    SettingData setting = Provider.of<SettingData>(context);
 
     return Padding(
       padding: const EdgeInsets.all(4),
@@ -34,9 +34,7 @@ class RecipeListItem extends StatelessWidget {
                   child: Image.network(
                       'http://${setting.imageAddress}:${setting.imagePort}/images/${recipeItem.imageFileName}'),
                 ),
-                SizedBox(
-                  height: 3
-                ),
+                SizedBox(height: 3),
                 Text(
                   recipeItem.title,
                   style: TextStyle(fontSize: 17),
@@ -46,8 +44,14 @@ class RecipeListItem extends StatelessWidget {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Icon(Icons.timer, size: 18,),
-                        Text('${recipeItem.time.toString()} min', style: TextStyle(fontWeight: FontWeight.bold),), 
+                        Icon(
+                          Icons.timer,
+                          size: 18,
+                        ),
+                        Text(
+                          '${recipeItem.time.toString()} min',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -55,15 +59,19 @@ class RecipeListItem extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(Icons.people, size: 20,),
-                        Text('${recipeItem.portions.toString()}', style: TextStyle(fontWeight: FontWeight.bold),),
+                        Icon(
+                          Icons.people,
+                          size: 20,
+                        ),
+                        Text(
+                          '${recipeItem.portions.toString()}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 3
-                ),
+                SizedBox(height: 3),
                 Text(
                   'Av: ${recipeItem.username}',
                   style: TextStyle(fontSize: 13),

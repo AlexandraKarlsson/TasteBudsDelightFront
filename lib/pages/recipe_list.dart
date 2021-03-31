@@ -11,7 +11,7 @@ import 'dart:convert' as convert;
 
 import 'account_login.dart';
 import 'account_profile.dart';
-import 'add_recipe.dart';
+import 'add_edit_recipe.dart';
 import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
 import '../data/search_data.dart';
@@ -80,7 +80,7 @@ class _RecipeListState extends State<RecipeList> {
       } else {
         print('_fetchingRecipes() status code = ${response.statusCode}!');
       }
-    } on Exception catch (error) {
+    } catch (error) {
       print('_fetchRecipes : Exception catch $error');
     }
   }
@@ -97,14 +97,13 @@ class _RecipeListState extends State<RecipeList> {
 
     try {
       final response = await http.delete(url, headers: headers);
-      // TODO: Check response
       if (response.statusCode == 200) {
         userData.clear();
         print('User logged out');
       } else {
         throw "Recived status code ${response.statusCode}";
       }
-    } on Exception catch (error) {
+    } catch (error) {
       // TODO: How to show error? or just keep silent?
       print(error);
     }
@@ -186,7 +185,6 @@ class _RecipeListState extends State<RecipeList> {
                 print('Value = $value'),
                 if (value == LOGIN)
                   {
-                    // navigera till login/signup sidan
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -211,7 +209,6 @@ class _RecipeListState extends State<RecipeList> {
           ],
         ),
         body: RefreshIndicator(
-          // TODO: handle if there is no recipe to fetch when draging and droping
           onRefresh: _fetchRecipes,
           child: Container(
             child: Column(
@@ -243,7 +240,7 @@ class _RecipeListState extends State<RecipeList> {
               Provider.of<Ingredients>(context, listen: false).clear();
               Provider.of<Instructions>(context, listen: false).clear();
               Provider.of<Images>(context, listen: false).clear();              
-              Navigator.pushNamed(context, AddRecipe.PATH);
+              Navigator.pushNamed(context, AddEditRecipe.PATH);
             },
             tooltip: 'Lägg till nytt recept!',
             child: Icon(

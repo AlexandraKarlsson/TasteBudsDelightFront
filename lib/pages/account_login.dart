@@ -63,7 +63,7 @@ class _AccountLoginState extends State<AccountLogin> {
         var responseData =
             convert.jsonDecode(response.body) as Map<String, dynamic>;
         print('responseData $responseData');
-        // responseData {user: {id: 1, username: Alexandra, email: alexandra@gmail.com}}
+
         int id = responseData['user']['id'];
         String username = responseData['user']['username'];
         String email = responseData['user']['email'];
@@ -79,9 +79,6 @@ class _AccountLoginState extends State<AccountLogin> {
             builder: (context) => AnimationSuccess('Du är nu inloggad!'),
           ),
         );
-        // .then((_) {
-        //   Navigator.pop(context);
-        // });
       } else {
         print('Request failed with status: ${response.statusCode}.');
         setState(() {
@@ -90,7 +87,7 @@ class _AccountLoginState extends State<AccountLogin> {
           _isError = true;
         });
       }
-    } on Exception catch (error) {
+    } catch (error) {
       setState(() {
         _errorMessage = "Något gick fel vid anropet mot servern, error=$error!";
         _isError = true;
@@ -107,7 +104,6 @@ class _AccountLoginState extends State<AccountLogin> {
               title: Text('Logga in'),
               actions: <Widget>[],
             ),
-            // backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
@@ -149,7 +145,6 @@ class _AccountLoginState extends State<AccountLogin> {
                           Icons.account_circle,
                           size: 140,
                         ),
-                        // transitionOnUserGestures: true,
                       ),
                       Text('Logga in', style: TextStyle(fontSize: 30)),
                       SizedBox(
@@ -161,9 +156,10 @@ class _AccountLoginState extends State<AccountLogin> {
                         prefixIconData: Icons.mail_outline,
                         suffixIconData: _isValidEmail ? Icons.check : null,
                         onChanged: (value) {
-                          _email = value;
-                          _isValidEmail = isEmailValid(value);
-                          setState(() {});
+                          setState(() {
+                            _email = value;
+                            _isValidEmail = isEmailValid(value);
+                          });
                         },
                       ),
                       SizedBox(
@@ -180,13 +176,17 @@ class _AccountLoginState extends State<AccountLogin> {
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             onChanged: (value) {
-                              _password = value;
+                             
+                              setState(() {
+                                 _password = value;
                               _isValidPassword = isPasswordValid(value);
-                              setState(() {});
+                              });
                             },
                             onChangedVisibility: () {
-                              _isPasswordVisible = !_isPasswordVisible;
-                              setState(() {});
+                              
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
                             },
                           ),
                           SizedBox(

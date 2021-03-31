@@ -6,7 +6,7 @@ import 'package:tastebudsdelightfront/widgets/recipe/view/search_option.dart';
 import '../../../data/search_data.dart';
 
 class Search extends StatefulWidget {
-  // String searchText;
+ 
   @override
   _SearchState createState() => _SearchState();
 }
@@ -41,11 +41,6 @@ class _SearchState extends State<Search> {
     SearchData searchData = Provider.of<SearchData>(context, listen: false);
     searchData.setFilterOption(index, newValue);
   }
-
-  //   void setOnlyOwnRecipeOption(int index,bool newValue) {
-  //   SearchData searchData = Provider.of<SearchData>(context, listen: false);
-  //   searchData.setOnlyOwnRecipe(newValue);
-  // }
 
   @override
   Widget build(BuildContext context) {

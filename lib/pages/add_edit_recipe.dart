@@ -23,17 +23,17 @@ import '../widgets/recipe/create/overview_tab.dart';
 
 enum AddingState { normal, saving, successful, failure }
 
-class AddRecipe extends StatefulWidget {
-  static const PATH = '/add_recipe';
+class AddEditRecipe extends StatefulWidget {
+  static const PATH = '/add_edit_recipe';
 
   @override
-  _AddRecipeState createState() => _AddRecipeState();
+  _AddEditRecipeState createState() => _AddEditRecipeState();
 }
 
-class _AddRecipeState extends State<AddRecipe> {
+class _AddEditRecipeState extends State<AddEditRecipe> {
   int _selectedIndex = 0;
-  String successText= "";
-  String failureText= "";
+  String successText = "";
+  String failureText = "";
   AddingState state = AddingState.normal;
 
   static List<Widget> _widgetOptions = [
@@ -92,19 +92,24 @@ class _AddRecipeState extends State<AddRecipe> {
     var updateRecipeDataJson = convert.jsonEncode(updateRecipeData);
     print('updateRecipeDataJson = $updateRecipeDataJson');
 
-    final response = await http.put(
-      url,
-      headers: headers,
-      body: updateRecipeDataJson,
-    );
-    if (response.statusCode == 200) {
-      print('response ${response.body}');
-      var responseData =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      print('responseData = $responseData');
-      return responseData;
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
+    try {
+      final response = await http.put(
+        url,
+        headers: headers,
+        body: updateRecipeDataJson,
+      );
+      if (response.statusCode == 200) {
+        print('response ${response.body}');
+        var responseData =
+            convert.jsonDecode(response.body) as Map<String, dynamic>;
+        print('responseData = $responseData');
+        return responseData;
+      } else {
+        print('Request failed with status: ${response.statusCode}.');
+        return null;
+      }
+    } catch (error) {
+      print('Something went wrong, error : $error.');
       return null;
     }
   }
@@ -174,7 +179,7 @@ class _AddRecipeState extends State<AddRecipe> {
         imageList[i].imageFileName = imageNames[newNameIndex];
         newNameIndex += 1;
         bool answer = await _uploadImage(imageList[i]);
-        if(!answer) {
+        if (!answer) {
           print('Failed to upload image = ${imageList[i].imageFileName}');
         }
       }
@@ -185,8 +190,9 @@ class _AddRecipeState extends State<AddRecipe> {
     for (int i = 0; i < deletedImageList.length; i++) {
       if (deletedImageList[i].imageFileName != null) {
         bool answer = await _deleteImage(deletedImageList[i].imageFileName);
-        if(!answer) {
-          print('Failed to delete image = ${deletedImageList[i].imageFileName}');
+        if (!answer) {
+          print(
+              'Failed to delete image = ${deletedImageList[i].imageFileName}');
         }
       }
     }
@@ -261,20 +267,24 @@ class _AddRecipeState extends State<AddRecipe> {
 
     var newRecipeDataJson = convert.jsonEncode(newRecipeData);
     // print('newRecipeDataJson = $newRecipeDataJson');
-
-    final response = await http.post(
-      url,
-      headers: headers,
-      body: newRecipeDataJson,
-    );
-    if (response.statusCode == 201) {
-      print('response ${response.body}');
-      var responseData =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      print('responseData = $responseData');
-      return responseData;
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: newRecipeDataJson,
+      );
+      if (response.statusCode == 201) {
+        print('response ${response.body}');
+        var responseData =
+            convert.jsonDecode(response.body) as Map<String, dynamic>;
+        print('responseData = $responseData');
+        return responseData;
+      } else {
+        print('Request failed with status: ${response.statusCode}.');
+        return null;
+      }
+    } catch (error) {
+      print('Communication failed with error: $error.');
       return null;
     }
   }
@@ -326,7 +336,7 @@ class _AddRecipeState extends State<AddRecipe> {
       print('Save recipe failed!');
       setState(() {
         state = AddingState.failure;
-        failureText ="Receptet gick inte att spara!";
+        failureText = "Receptet gick inte att spara!";
       });
     }
   }

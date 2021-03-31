@@ -125,7 +125,7 @@ class _AccountCreateState extends State<AccountCreate> {
           _isError = true;
         });
       }
-    } on Exception catch (error) {
+    } catch (error) {
       setState(() {
         _errorMessage = "Något gick fel vid anropet mot servern, error=$error!";
         _isError = true;
@@ -142,7 +142,6 @@ class _AccountCreateState extends State<AccountCreate> {
               title: Text('Skapa konto'),
               actions: <Widget>[],
             ),
-            // backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
@@ -184,7 +183,6 @@ class _AccountCreateState extends State<AccountCreate> {
                             Icons.account_circle,
                             size: 140,
                           ),
-                          // transitionOnUserGestures: true,
                         ),
                         Text('Skapa konto', style: TextStyle(fontSize: 30)),
                         SizedBox(
@@ -197,9 +195,10 @@ class _AccountCreateState extends State<AccountCreate> {
                           prefixIconData: Icons.mail_outline,
                           suffixIconData: _isValidEmail ? Icons.check : null,
                           onChanged: (value) {
-                            _email = value;
-                            _isValidEmail = isEmailValid(value);
-                            setState(() {});
+                            setState(() {
+                              _email = value;
+                              _isValidEmail = isEmailValid(value);
+                            });
                           },
                         ),
                         SizedBox(
@@ -212,9 +211,10 @@ class _AccountCreateState extends State<AccountCreate> {
                           prefixIconData: Icons.person,
                           suffixIconData: _isValidUsername ? Icons.check : null,
                           onChanged: (value) {
-                            _username = value;
-                            _isValidUsername = isUsernameValid(value);
-                            setState(() {});
+                            setState(() {
+                              _username = value;
+                              _isValidUsername = isUsernameValid(value);
+                            });
                           },
                         ),
                         SizedBox(
@@ -229,13 +229,15 @@ class _AccountCreateState extends State<AccountCreate> {
                               ? Icons.visibility
                               : Icons.visibility_off,
                           onChanged: (value) {
-                            _password = value;
-                            _isValidPassword = isPasswordValid(value);
-                            setState(() {});
+                            setState(() {
+                              _password = value;
+                              _isValidPassword = isPasswordValid(value);
+                            });
                           },
                           onChangedVisibility: () {
-                            _isPasswordVisible = !_isPasswordVisible;
-                            setState(() {});
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
                           },
                         ),
                         SizedBox(
@@ -250,14 +252,16 @@ class _AccountCreateState extends State<AccountCreate> {
                               ? Icons.visibility
                               : Icons.visibility_off,
                           onChanged: (value) {
-                            _rePassword = value;
-                            _isValidRePassword =
-                                isRePasswordValid(_password, value);
-                            setState(() {});
+                            setState(() {
+                              _rePassword = value;
+                              _isValidRePassword =
+                                  isRePasswordValid(_password, value);
+                            });
                           },
                           onChangedVisibility: () {
-                            _isRePasswordVisible = !_isRePasswordVisible;
-                            setState(() {});
+                            setState(() {
+                              _isRePasswordVisible = !_isRePasswordVisible;
+                            });
                           },
                         ),
                         SizedBox(
@@ -305,4 +309,3 @@ class _AccountCreateState extends State<AccountCreate> {
           );
   }
 }
-
