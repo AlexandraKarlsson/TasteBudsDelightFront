@@ -7,19 +7,20 @@ import 'package:http/http.dart' as http;
 import 'package:tastebudsdelightfront/data/image_data.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 
+  String getImagestoreURL(BuildContext context) {
+    SettingData setting = Provider.of<SettingData>(context, listen: false);
+    return 'http://${setting.imageAddress}:${setting.imagePort}/image';       
+  }
 
   Future<bool> uploadImage(BuildContext context, ImageData imageData) async {
     bool successful = true;
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-    final String url =
-        'http://${setting.imageAddress}:${setting.imagePort}/image';
 
     try {
       File file = imageData.file;
       String fileName = imageData.imageFileName;
       String base64Image = convert.base64Encode(file.readAsBytesSync());
 
-      final response = await http.post(url, body: {
+      final response = await http.post(getImagestoreURL(context), body: {
         "image": base64Image,
         "name": fileName,
       });
@@ -41,11 +42,9 @@ import 'package:tastebudsdelightfront/data/setting_data.dart';
   
 Future<bool> deleteImage(BuildContext context, String fileName) async {
     bool successful = true;
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
+
     try {
-      final String url =
-          'http://${setting.imageAddress}:${setting.imagePort}/image/$fileName';
-      final response = await http.delete(url);
+      final response = await http.delete('${getImagestoreURL(context)}/$fileName');
       if (response.statusCode == 200) {
         print(response.statusCode);
         print('Successfully deleted image = $fileName');
