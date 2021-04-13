@@ -3,6 +3,8 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/utils/validation.dart';
@@ -36,14 +38,8 @@ class _AccountLoginState extends State<AccountLogin> {
   }
 
   Future<void> _login() async {
-    print('Inside function _login...');
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
+    print('Running _login()...');
 
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/login';
-    const headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8'
-    };
     var user = {
       'email': _email,
       'password': _password,
@@ -52,44 +48,37 @@ class _AccountLoginState extends State<AccountLogin> {
     var userJson = convert.jsonEncode(user);
     print('userJson = $userJson');
 
-    try {
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: userJson,
+    final responseReturned = await login(context, userJson);
+
+    if (responseReturned.state == ResponseState.successful) {
+      var responseData = convert.jsonDecode(responseReturned.response.body)
+          as Map<String, dynamic>;
+      print('responseData $responseData');
+
+      int id = responseData['user']['id'];
+      String username = responseData['user']['username'];
+      String email = responseData['user']['email'];
+      String token = responseReturned.response.headers['x-auth'];
+      print('id=$id, username=$username, email=$email,token=$token');
+
+      UserData userData = Provider.of<UserData>(context, listen: false);
+      userData.update(id, username, email, token);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnimationSuccess('Du är nu inloggad!'),
+        ),
       );
-      if (response.statusCode == 200) {
-        print('response ${response.body}');
-        var responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        print('responseData $responseData');
-
-        int id = responseData['user']['id'];
-        String username = responseData['user']['username'];
-        String email = responseData['user']['email'];
-        String token = response.headers['x-auth'];
-        print('id=$id, username=$username, email=$email,token=$token');
-
-        UserData userData = Provider.of<UserData>(context, listen: false);
-        userData.update(id, username, email, token);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AnimationSuccess('Du är nu inloggad!'),
-          ),
-        );
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-        setState(() {
-          _errorMessage =
-              "Kunde inte logga in, email och/eller lösenord är felaktiga!";
-          _isError = true;
-        });
-      }
-    } catch (error) {
+    } else if (responseReturned.state == ResponseState.failure) {
       setState(() {
-        _errorMessage = "Något gick fel vid anropet mot servern, error=$error!";
+        _errorMessage =
+            "Kunde inte logga in, email och/eller lösenord är felaktiga!";
+        _isError = true;
+      });
+    } else {
+      setState(() {
+        _errorMessage = "Något gick fel vid anropet mot servern!";
         _isError = true;
       });
     }
@@ -176,14 +165,12 @@ class _AccountLoginState extends State<AccountLogin> {
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             onChanged: (value) {
-                             
                               setState(() {
-                                 _password = value;
-                              _isValidPassword = isPasswordValid(value);
+                                _password = value;
+                                _isValidPassword = isPasswordValid(value);
                               });
                             },
                             onChangedVisibility: () {
-                              
                               setState(() {
                                 _isPasswordVisible = !_isPasswordVisible;
                               });

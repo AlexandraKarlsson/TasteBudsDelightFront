@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/data/images.dart';
 import 'package:tastebudsdelightfront/data/ingredients.dart';
 import 'package:tastebudsdelightfront/data/instructions.dart';
@@ -88,25 +90,14 @@ class _RecipeListState extends State<RecipeList> {
   Future<void> _logout() async {
     print('running _logout');
 
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
     UserData userData = Provider.of<UserData>(context, listen: false);
 
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/me/token';
-    var headers = <String, String>{'x-auth': userData.token};
-
-    try {
-      final response = await http.delete(url, headers: headers);
-      if (response.statusCode == 200) {
-        userData.clear();
-        print('User logged out');
-      } else {
-        throw "Recived status code ${response.statusCode}";
-      }
-    } catch (error) {
-      // TODO: How to show error? or just keep silent?
-      print(error);
+    final ResponseReturned response = await logout(context, userData.token);
+    if (response.state == ResponseState.successful) {
+      userData.clear();
+      print('User logged out');
     }
+    // If failure or error show something?
   }
 
   @override
@@ -239,7 +230,7 @@ class _RecipeListState extends State<RecipeList> {
               Provider.of<Overview>(context, listen: false).clear();
               Provider.of<Ingredients>(context, listen: false).clear();
               Provider.of<Instructions>(context, listen: false).clear();
-              Provider.of<Images>(context, listen: false).clear();              
+              Provider.of<Images>(context, listen: false).clear();
               Navigator.pushNamed(context, AddEditRecipe.PATH);
             },
             tooltip: 'Lägg till nytt recept!',

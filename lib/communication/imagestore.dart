@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:tastebudsdelightfront/data/image_data.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 
+
   String getImagestoreURL(BuildContext context) {
     SettingData setting = Provider.of<SettingData>(context, listen: false);
     return 'http://${setting.imageAddress}:${setting.imagePort}/image';       

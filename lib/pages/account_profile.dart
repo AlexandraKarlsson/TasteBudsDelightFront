@@ -2,6 +2,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/communication/imagestore.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
@@ -92,51 +94,39 @@ class _AccountProfileState extends State<AccountProfile> {
     super.dispose();
   }
 
-  bool _isPasswordChangeValid() {
-    return (_isValidCurrentPassword && _isValidPassword && _isValidRePassword)
-        ? true
-        : false;
-  }
+  // bool _isPasswordChangeValid() {
+  //   return (_isValidCurrentPassword && _isValidPassword && _isValidRePassword)
+  //       ? true
+  //       : false;
+  // }
 
-  Future<void> changeUsername() async {
+  Future<void> _changeUsername() async {
     setState(() {
       state = AddingState.busy;
     });
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-    UserData userData = Provider.of<UserData>(context, listen: false);
 
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/username';
-    final headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'x-auth': userData.token,
-    };
+    UserData userData = Provider.of<UserData>(context, listen: false);
 
     var newUsername = {'username': _username};
 
     var newUsernameJson = convert.jsonEncode(newUsername);
     print('newUsernameJson = $newUsernameJson');
 
-    try {
-      final response = await http.put(
-        url,
-        headers: headers,
-        body: newUsernameJson,
-      );
-      if (response.statusCode == 204) {
-        userData.username = _username;
-        print('Username was successfully updated to $_username');
-        setState(() {
-          state = AddingState.successful;
-          successfulText = 'Användarnamn uppdaterat';
-        });
-      } else {
-        setState(() {
-          state = AddingState.failure;
-          failureText = 'Det gick inte att ändra användarnamn, försök igen!';
-        });
-      }
-    } catch (error) {
+    final ResponseReturned response =
+        await changeUsername(context, newUsernameJson, userData.token);
+    if (response.state == ResponseState.successful) {
+      userData.username = _username;
+      print('Username was successfully updated to $_username');
+      setState(() {
+        state = AddingState.successful;
+        successfulText = 'Användarnamn uppdaterat';
+      });
+    } else if (response.state == ResponseState.failure) {
+      setState(() {
+        state = AddingState.failure;
+        failureText = 'Det gick inte att ändra användarnamn, försök igen!';
+      });
+    } else {
       print('Something went wrong during http call for changing username.');
       setState(() {
         state = AddingState.failure;
@@ -145,19 +135,11 @@ class _AccountProfileState extends State<AccountProfile> {
     }
   }
 
-  Future<void> changePassword() async {
+  Future<void> _changePassword() async {
     setState(() {
       state = AddingState.busy;
     });
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
     UserData userData = Provider.of<UserData>(context, listen: false);
-
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/password';
-    final headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'x-auth': userData.token,
-    };
 
     var newPasswordData = {
       'oldPassword': _currentPassword,
@@ -168,29 +150,25 @@ class _AccountProfileState extends State<AccountProfile> {
     var newPasswordDataJson = convert.jsonEncode(newPasswordData);
     print('newPasswordDataJson = $newPasswordDataJson');
 
-    try {
-      final response = await http.put(
-        url,
-        headers: headers,
-        body: newPasswordDataJson,
-      );
-      if (response.statusCode == 204) {
-        print('Password was successfully updated to $_password');
-        setState(() {
-          successfulText = 'Lösenordet uppdaterat';
-          state = AddingState.successful;
-        });
-      } else {
-        setState(() {
-          failureText = 'Det gick inte att ändra lösenordet, försök igen!';
-          state = AddingState.failure;
-        });
-      }
-    } catch (error) {
+    final ResponseReturned response =
+        await changePassword(context, newPasswordDataJson, userData.token);
+
+    if (response.state == ResponseState.successful) {
+      print('Password was successfully updated to $_password');
+      setState(() {
+        state = AddingState.successful;
+        successfulText = 'Lösenordet uppdaterat';
+      });
+    } else if (response.state == ResponseState.failure) {
+      setState(() {
+        state = AddingState.failure;
+        failureText = 'Det gick inte att ändra lösenordet, försök igen!';
+      });
+    } else {
       print('Something went wrong during http call for changing password.');
       setState(() {
-        failureText = 'Något oväntat hände, försök igen senare!';
         state = AddingState.failure;
+        failureText = 'Något oväntat hände, försök igen senare!';
       });
     }
   }
@@ -203,55 +181,44 @@ class _AccountProfileState extends State<AccountProfile> {
     return listOfImageNames;
   }
 
-  Future<void> deleteUser() async {
+  Future<void> _deleteUser() async {
     setState(() {
       state = AddingState.busy;
     });
 
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
     UserData userData = Provider.of<UserData>(context, listen: false);
 
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/user/$_passwordRemove';
-    final headers = <String, String>{
-      'x-auth': userData.token,
-    };
+    final ResponseReturned response =
+        await deleteUser(context, _passwordRemove, userData.token);
 
-    try {
-      final response = await http.delete(
-        url,
-        headers: headers,
-      );
-      if (response.statusCode == 200) {
-        print('User deleted');
-        userData.clear();
+    if (response.state == ResponseState.successful) {
+      print('User deleted');
+      userData.clear();
 
-        final responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        final imageNameList = _parseImageResponseList(responseData);
-        for (int index = 0; index < imageNameList.length; index++) {
-          bool answer = await deleteImage(context, imageNameList[index]);
-          if (!answer) {
-            print('Failed to delete image = ${imageNameList[index]}');
-          }
+      final responseData =
+          convert.jsonDecode(response.response.body) as Map<String, dynamic>;
+      final imageNameList = _parseImageResponseList(responseData);
+      for (int index = 0; index < imageNameList.length; index++) {
+        bool answer = await deleteImage(context, imageNameList[index]);
+        if (!answer) {
+          print('Failed to delete image = ${imageNameList[index]}');
         }
-
-        setState(() {
-          successfulText = 'Användarkontot raderat.';
-          state = AddingState.successful;
-        });
-      } else {
-        setState(() {
-          failureText = 'Det gick inte att radera användarkontot, försök igen!';
-          state = AddingState.failure;
-        });
       }
-    } catch (error) {
-      print(
-          'Something went wrong during http call for deleting user, error= $error.');
       setState(() {
-        failureText = 'Något oväntat hände, försök igen senare!';
+        state = AddingState.successful;
+        successfulText = 'Användarkontot raderat.';
+      });
+    } else if (response.state == ResponseState.failure) {
+      setState(() {
         state = AddingState.failure;
+        failureText = 'Det gick inte att radera användarkontot, försök igen!';
+      });
+    } else {
+      print(
+          'Something went wrong during http call for deleting user.');
+      setState(() {
+        state = AddingState.failure;
+        failureText = 'Något oväntat hände, försök igen senare!';
       });
     }
   }
@@ -317,7 +284,7 @@ class _AccountProfileState extends State<AccountProfile> {
           onPressed: () {
             setState(() {
               _showDeleteConfirmation = false;
-              deleteUser();
+              _deleteUser();
             });
           },
         ),
@@ -384,7 +351,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       onTap: _isValidUsername
                           ? () {
                               print('New username $_username');
-                              changeUsername();
+                              _changeUsername();
                             }
                           : null,
                     ),
@@ -477,7 +444,7 @@ class _AccountProfileState extends State<AccountProfile> {
                       onTap: () {
                         //TODO: Merge new and old version of validation
                         if (isRePasswordValid(_password, _rePassword)) {
-                          changePassword();
+                          _changePassword();
                         } else {
                           setState(() {
                             failureText =

@@ -35,9 +35,11 @@ class RecipeListItem extends StatelessWidget {
                       'http://${setting.imageAddress}:${setting.imagePort}/images/${recipeItem.imageFileName}'),
                 ),
                 SizedBox(height: 3),
-                Text(
-                  recipeItem.title,
-                  style: TextStyle(fontSize: 17),
+                Center(
+                  child: Text(
+                    recipeItem.title,
+                    style: TextStyle(fontSize: 15),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,8 +63,9 @@ class RecipeListItem extends StatelessWidget {
                       children: <Widget>[
                         Icon(
                           Icons.people,
-                          size: 20,
+                          size: 18,
                         ),
+                        SizedBox(width: 2,),
                         Text(
                           '${recipeItem.portions.toString()}',
                           style: TextStyle(fontWeight: FontWeight.bold),
