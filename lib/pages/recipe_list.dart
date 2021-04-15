@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/data/images.dart';
@@ -14,7 +13,6 @@ import 'dart:convert' as convert;
 import 'account_login.dart';
 import 'account_profile.dart';
 import 'add_edit_recipe.dart';
-import '../data/setting_data.dart';
 import '../data/recipe_item.dart';
 import '../data/search_data.dart';
 import '../data/recipe_items.dart';
@@ -65,26 +63,17 @@ class _RecipeListState extends State<RecipeList> {
 
   Future<void> _fetchRecipes() async {
     print('running _fetchRecipe');
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
+    final ResponseReturned response = await fetchRecipes(context);
 
-    try {
-      final response = await http.get(url);
-      print(response);
-      if (response.statusCode == 200) {
-        final responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        RecipeItems recipeItems =
-            Provider.of<RecipeItems>(context, listen: false);
-        recipeItems.parseAndAdd(responseData);
-      } else {
-        print('_fetchingRecipes() status code = ${response.statusCode}!');
-      }
-    } catch (error) {
-      print('_fetchRecipes : Exception catch $error');
-    }
+    if (response.state == ResponseState.successful) {
+      final responseData =
+          convert.jsonDecode(response.response.body) as Map<String, dynamic>;
+      RecipeItems recipeItems =
+          Provider.of<RecipeItems>(context, listen: false);
+      recipeItems.parseAndAdd(responseData);
+    } 
+    // ResponseState failure and error don't need any actions.
   }
 
   Future<void> _logout() async {

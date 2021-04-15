@@ -180,3 +180,134 @@ Future<ResponseReturned> logout(BuildContext context, String token) async {
 //---------------------------------------//
 // RECIPE METHODS
 //---------------------------------------//
+
+// Fetch recipes
+
+Future<ResponseReturned> fetchRecipes(BuildContext context) async {
+  print('Running fetchRecipe()...');
+
+  String url = '${getBackendURL(context)}/recipe';
+
+  try {
+    final response = await http.get(url);
+    //print(response);
+    if (response.statusCode == 200) {
+      print('response ${response.body}');
+      return ResponseReturned(ResponseState.successful, response);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return ResponseReturned(ResponseState.failure, null);
+    }
+  } catch (error) {
+    print('Request failed with error: $error.');
+    return ResponseReturned(ResponseState.error, null);
+  }
+}
+
+// Fetch one recipe
+
+Future<ResponseReturned> fetchRecipe(BuildContext context, int recipeId) async {
+  print('fetchRecipe(): Enter ...');
+
+  final url = '${getBackendURL(context)}/recipe/$recipeId';
+
+  try {
+    final response = await http.get(url);
+    print(response.body);
+    if (response.statusCode == 200) {
+      print('response ${response.body}');
+      return ResponseReturned(ResponseState.successful, response);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return ResponseReturned(ResponseState.failure, null);
+    }
+  } catch (error) {
+    print('Request failed with error: $error.');
+    return ResponseReturned(ResponseState.error, null);
+  }
+}
+
+// Create recipe
+
+Future<ResponseReturned> createRecipe(
+    BuildContext context, String recipeJson, String token) async {
+  String url = '${getBackendURL(context)}/recipe';
+  var headers = <String, String>{
+    'Content-Type': 'application/json; charset=UTF-8',
+    'x-auth': token
+  };
+
+  try {
+    final response = await http.post(
+      url,
+      headers: headers,
+      body: recipeJson,
+    );
+    if (response.statusCode == 201) {
+      print('response ${response.body}');
+      return ResponseReturned(ResponseState.successful, response);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return ResponseReturned(ResponseState.failure, null);
+    }
+  } catch (error) {
+    print('Request failed with error: $error.');
+    return ResponseReturned(ResponseState.error, null);
+  }
+}
+
+// Update recipe
+
+Future<ResponseReturned> updateRecipe(
+    BuildContext context, String updateRecipeJson, String token) async {
+  String url = '${getBackendURL(context)}/recipe';
+  var headers = <String, String>{
+    'Content-Type': 'application/json; charset=UTF-8',
+    'x-auth': token
+  };
+
+  try {
+    final response = await http.put(
+      url,
+      headers: headers,
+      body: updateRecipeJson,
+    );
+    if (response.statusCode == 200) {
+      print('response ${response.body}');
+      return ResponseReturned(ResponseState.successful, response);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return ResponseReturned(ResponseState.failure, null);
+    }
+  } catch (error) {
+    print('Request failed with error: $error.');
+    return ResponseReturned(ResponseState.error, null);
+  }
+}
+
+// Delete recipe
+
+Future<ResponseReturned> deleteRecipe(
+    BuildContext context, int recipeId, String token) async {
+  String url = '${getBackendURL(context)}/recipe/$recipeId';
+  final headers = <String, String>{
+    'x-auth': token,
+  };
+
+  try {
+    final response = await http.delete(
+      url,
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      print('response ${response.body}');
+      return ResponseReturned(ResponseState.successful, response);
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return ResponseReturned(ResponseState.failure, null);
+    }
+  } catch (error) {
+    print('Request failed with error: $error.');
+    return ResponseReturned(ResponseState.error, null);
+  }
+}

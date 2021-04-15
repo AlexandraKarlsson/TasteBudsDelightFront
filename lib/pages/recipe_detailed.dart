@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/data/setting_data.dart';
 
 import '../data/recipe.dart';
@@ -37,27 +40,18 @@ class _RecipeDetailedState extends State<RecipeDetailed> {
 
   Future<void> _fetchRecipe() async {
     print('_fetchRecipe(): Enter ...');
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
 
-    final url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe/${widget.id}';
+    final ResponseReturned response = await fetchRecipe(context, widget.id);
 
-    try {
-      final response = await http.get(url);
-      print(response.body);
-      if (response.statusCode == 200) {
-        final responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        Recipe recipe = Recipe.parse(responseData);
-        setState(() {
-          this.recipe = recipe;
-        });
-      } else {
-        print('_fetchRecipe(): status code = ${response.statusCode}!');
-      }
-    } catch (error) {
-      print('Response throw this error: $error');
+    if (response.state == ResponseState.successful) {
+      final responseData =
+          convert.jsonDecode(response.response.body) as Map<String, dynamic>;
+      Recipe recipe = Recipe.parse(responseData);
+      setState(() {
+        this.recipe = recipe;
+      });
     }
+    // Return state failure and error don't need actions.
   }
 
   @override

@@ -3,12 +3,11 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/communication/imagestore.dart';
-import 'package:tastebudsdelightfront/data/image_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 
-import '../data/setting_data.dart';
 import '../data/images.dart';
 import '../data/ingredients.dart';
 import '../data/overview.dart';
@@ -51,11 +50,90 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
   }
 
 //====================================================
+// SAVE NEW RECIPE
+//====================================================
+
+  Future<Map<String, dynamic>> _createRecipe() async {
+    // Create post-data structure
+    UserData userData = Provider.of<UserData>(context, listen: false);
+    Overview overview = Provider.of<Overview>(context, listen: false);
+    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
+    Instructions instructions =
+        Provider.of<Instructions>(context, listen: false);
+    Images images = Provider.of<Images>(context, listen: false);
+
+    final newRecipeData = {
+      "overview": {
+        "title": overview.title,
+        "description": overview.description,
+        "time": overview.time,
+        "portions": overview.portions,
+        "isvegan": overview.isVegan,
+        "isvegetarian": overview.isVegetarian,
+        "isglutenfree": overview.isGlutenFree,
+        "islactosefree": overview.isLactoseFree
+      },
+      "ingredients": ingredients.listOfIngredients(),
+      "steps": instructions.listOfDescriptions(),
+      "images": images.listOfExtentions(),
+    };
+    // print('newRecipeData: $newRecipeData.');
+
+    var newRecipeDataJson = convert.jsonEncode(newRecipeData);
+    // print('newRecipeDataJson = $newRecipeDataJson');
+
+    final ResponseReturned response =
+        await createRecipe(context, newRecipeDataJson, userData.token);
+
+    if (response.state == ResponseState.successful) {
+      var responseData =
+          convert.jsonDecode(response.response.body) as Map<String, dynamic>;
+      print('responseData = $responseData');
+      return responseData;
+    } else {
+      // ResponseState failure and error.
+      return null;
+    }
+  }
+
+  Future<void> _uploadImages(List<dynamic> imageNames) async {
+    Images images = Provider.of<Images>(context, listen: false);
+
+    for (int i = 0; i < imageNames.length; i++) {
+      images.imageList[i].imageFileName = imageNames[i];
+      await uploadImage(context, images.imageList[i]);
+    }
+  }
+
+  void _saveRecipe() async {
+    setState(() {
+      state = AddingState.saving;
+    });
+    final recipeResponse = await _createRecipe();
+    if (recipeResponse != null) {
+      await _uploadImages(recipeResponse['imageFileNames']);
+
+      _clearProviderData();
+      setState(() {
+        state = AddingState.successful;
+        successText = "Receptet sparat!";
+      });
+    } else {
+      print('Save recipe failed!');
+      setState(() {
+        state = AddingState.failure;
+        failureText = "Receptet gick inte att spara!";
+      });
+    }
+  }
+
+//====================================================
 // UPDATE OLD RECIPE
 //====================================================
 
   Future<Map<String, dynamic>> _updateRecipeData() async {
     // Create post-data structure
+    UserData userData = Provider.of<UserData>(context, listen: false);
     Overview overview = Provider.of<Overview>(context, listen: false);
     Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
     Instructions instructions =
@@ -80,37 +158,19 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
     };
     print('updateRecipeData = $updateRecipeData');
 
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-    UserData userData = Provider.of<UserData>(context, listen: false);
-
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
-    var headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'x-auth': userData.token
-    };
-
     var updateRecipeDataJson = convert.jsonEncode(updateRecipeData);
     print('updateRecipeDataJson = $updateRecipeDataJson');
 
-    try {
-      final response = await http.put(
-        url,
-        headers: headers,
-        body: updateRecipeDataJson,
-      );
-      if (response.statusCode == 200) {
-        print('response ${response.body}');
-        var responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        print('responseData = $responseData');
-        return responseData;
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-        return null;
-      }
-    } catch (error) {
-      print('Something went wrong, error : $error.');
+    final ResponseReturned response =
+        await updateRecipe(context, updateRecipeDataJson, userData.token);
+
+    if (response.state == ResponseState.successful) {
+      var responseData =
+          convert.jsonDecode(response.response.body) as Map<String, dynamic>;
+      print('responseData = $responseData');
+      return responseData;
+    } else {
+      // ResponseState failure and error.
       return null;
     }
   }
@@ -147,8 +207,6 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
   }
 
   void _updateRecipe() async {
-// TODO: How to handle consistancy between database data and uploaded images
-
     setState(() {
       state = AddingState.saving;
     });
@@ -168,103 +226,6 @@ class _AddEditRecipeState extends State<AddEditRecipe> {
       setState(() {
         state = AddingState.failure;
         failureText = "Receptet gick inte att uppdatera!";
-      });
-    }
-  }
-
-//====================================================
-// SAVE NEW RECIPE
-//====================================================
-
-  Future<Map<String, dynamic>> _saveRecipeData() async {
-    // Create post-data structure
-    UserData userData = Provider.of<UserData>(context, listen: false);
-    Overview overview = Provider.of<Overview>(context, listen: false);
-    Ingredients ingredients = Provider.of<Ingredients>(context, listen: false);
-    Instructions instructions =
-        Provider.of<Instructions>(context, listen: false);
-    Images images = Provider.of<Images>(context, listen: false);
-
-    final newRecipeData = {
-      "overview": {
-        "title": overview.title,
-        "description": overview.description,
-        "time": overview.time,
-        "portions": overview.portions,
-        "isvegan": overview.isVegan,
-        "isvegetarian": overview.isVegetarian,
-        "isglutenfree": overview.isGlutenFree,
-        "islactosefree": overview.isLactoseFree
-      },
-      "ingredients": ingredients.listOfIngredients(),
-      "steps": instructions.listOfDescriptions(),
-      "images": images.listOfExtentions(),
-    };
-    // print('newRecipeData: $newRecipeData.');
-
-    SettingData setting = Provider.of<SettingData>(context, listen: false);
-
-    String url =
-        'http://${setting.backendAddress}:${setting.backendPort}/tastebuds/recipe';
-    var headers = <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'x-auth': userData.token
-    };
-
-    var newRecipeDataJson = convert.jsonEncode(newRecipeData);
-    // print('newRecipeDataJson = $newRecipeDataJson');
-    try {
-      final response = await http.post(
-        url,
-        headers: headers,
-        body: newRecipeDataJson,
-      );
-      if (response.statusCode == 201) {
-        print('response ${response.body}');
-        var responseData =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-        print('responseData = $responseData');
-        return responseData;
-      } else {
-        print('Request failed with status: ${response.statusCode}.');
-        return null;
-      }
-    } catch (error) {
-      print('Communication failed with error: $error.');
-      return null;
-    }
-  }
-
-  Future<void> _uploadImages(List<dynamic> imageNames) async {
-    Images images = Provider.of<Images>(context, listen: false);
-
-    for (int i = 0; i < imageNames.length; i++) {
-      images.imageList[i].imageFileName = imageNames[i];
-      await uploadImage(context, images.imageList[i]);
-    }
-  }
-
-  void _saveRecipe() async {
-    setState(() {
-      state = AddingState.saving;
-    });
-    // Post recipe to backend and recive list of imagenames and recipeid.
-    final recipeResponse = await _saveRecipeData();
-    if (recipeResponse != null) {
-      // Post image/s to imagestorage.
-      // TODO: How to handle consistancy between database data and uploaded images
-      await _uploadImages(recipeResponse['imageFileNames']);
-      // Clear all provider objects used for adding a recipe.
-      _clearProviderData();
-      setState(() {
-        state = AddingState.successful;
-        successText = "Receptet sparat!";
-      });
-    } else {
-      print('Save recipe failed!');
-      setState(() {
-        state = AddingState.failure;
-        failureText = "Receptet gick inte att spara!";
       });
     }
   }

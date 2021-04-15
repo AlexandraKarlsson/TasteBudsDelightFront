@@ -1,14 +1,15 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_read_more_text/flutter_read_more_text.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/communication/backend.dart';
+import 'package:tastebudsdelightfront/communication/imagestore.dart';
+import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/data/image_data.dart';
 import 'package:tastebudsdelightfront/data/images.dart';
 import 'package:tastebudsdelightfront/data/ingredients.dart';
 import 'package:tastebudsdelightfront/data/instructions.dart';
 import 'package:tastebudsdelightfront/data/overview.dart';
 import 'package:tastebudsdelightfront/data/recipe_items.dart';
-import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/pages/add_edit_recipe.dart';
 
@@ -95,22 +96,14 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
   }
 
   Future<int> deleteImages(context) async {
-    SettingData settings = Provider.of<SettingData>(context, listen: false);
     List<bool> imageDeleted = [];
     List imageList = widget.recipe.images.imageList;
 
     for (ImageData image in imageList) {
-      String url =
-          'http://${settings.imageAddress}:${settings.imagePort}/image/${image.imageFileName}';
-      try {
-        final response = await http.delete(url);
-        if (response.statusCode == 200) {
-          imageDeleted.add(true);
-        } else {
-          imageDeleted.add(false);
-        }
-      } catch (error) {
-        print(error);
+      final bool result = await deleteImage(context, image.imageFileName);
+      if (result == true) {
+        imageDeleted.add(true);
+      } else {
         imageDeleted.add(false);
       }
     }
@@ -132,43 +125,30 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
     return successRate;
   }
 
-  Future<ReturnState> deleteRecipeData(context, userData) async {
-    SettingData settings = Provider.of<SettingData>(context, listen: false);
+  Future<ReturnState> _deleteRecipe(context, userData) async {
     ReturnState status = ReturnState.requestOk;
 
-    try {
-      String url =
-          'http://${settings.backendAddress}:${settings.backendPort}/tastebuds/recipe/${widget.recipeId}';
-      final headers = <String, String>{
-        'x-auth': userData.token,
-      };
+    final ResponseReturned response =
+        await deleteRecipe(context, widget.recipeId, userData.token);
 
-      final response = await http.delete(
-        url,
-        headers: headers,
-      );
-
-      if (response.statusCode == 200) {
-        RecipeItems recipeItems =
-            Provider.of<RecipeItems>(context, listen: false);
-        recipeItems.deleteRecipe(widget.recipeId);
-      }
-      if (response.statusCode == 400) {
-        status = ReturnState.requestError;
-      }
-    } catch (error) {
-      print(error);
+    if (response.state == ResponseState.successful) {
+      RecipeItems recipeItems =
+          Provider.of<RecipeItems>(context, listen: false);
+      recipeItems.deleteRecipe(widget.recipeId);
+    } else if (response.state == ResponseState.failure) {
+      status = ReturnState.requestError;
+    } else {
       status = ReturnState.exceptionError;
     }
     return status;
   }
 
-  Future<void> deleteRecipe(context, userData) async {
+  Future<void> _removeRecipe(context, userData) async {
     setState(() {
       state = AddingState.busy;
     });
 
-    ReturnState recipeStatus = await deleteRecipeData(context, userData);
+    ReturnState recipeStatus = await _deleteRecipe(context, userData);
     switch (recipeStatus) {
       case ReturnState.requestOk:
         int imageSucessRate = await deleteImages(context);
@@ -227,7 +207,7 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
                 ? IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      deleteRecipe(context, userData);
+                      _removeRecipe(context, userData);
                     },
                   )
                 : Container(),
