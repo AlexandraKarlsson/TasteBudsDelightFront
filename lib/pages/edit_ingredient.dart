@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/amount_fraction.dart';
 
 import '../data/ingredient_unit.dart';
 import '../data/ingredients.dart';
@@ -65,6 +66,8 @@ class _EditIngredientState extends State<EditIngredient> {
             ),
             Row(
               children: <Widget>[
+                Text(ingredient.amount.round().toString(),
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
                 Expanded(
                   child: Slider(
                     value: ingredient.amount,
@@ -79,11 +82,36 @@ class _EditIngredientState extends State<EditIngredient> {
                     },
                   ),
                 ),
-                Text(ingredient.amount.round().toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
+                // Text(ingredient.amount.round().toString(),
+                //     style: TextStyle(color: Colors.white, fontSize: 16)),
                 SizedBox(
-                  width: 15,
+                  width: 25,
                 ),
+                DropdownButton<String>(
+                  value: ingredient.amountFraction,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  underline: Container(
+                    height: 2,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onChanged: (String amountFraction) {
+                    ingredients.setAmountFraction(widget.index, amountFraction);
+                  },
+                  items: AmountFraction.list
+                      .map<DropdownMenuItem<String>>((String fraction) {
+                    return DropdownMenuItem<String>(
+                      value: fraction,
+                      child: Text(fraction),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
                 DropdownButton<String>(
                   value: ingredient.unit,
                   icon: Icon(Icons.arrow_downward),
@@ -106,7 +134,7 @@ class _EditIngredientState extends State<EditIngredient> {
                   }).toList(),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

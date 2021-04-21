@@ -27,7 +27,7 @@ class Recipe {
 
     Ingredients ingredients = Ingredients();
     recipeData['ingredients'].forEach((ingredient) {
-      ingredients.add(ingredient['amount'].toDouble(), ingredient['unit'],
+      ingredients.add(ingredient['amount'].toDouble(), ingredient['amountfraction'], ingredient['unit'],
           ingredient['name']);
     });
 
@@ -59,7 +59,7 @@ class Recipe {
         editOverview.isLactoseFree = overview.isLactoseFree;
         
         ingredients.ingredientList.forEach((ingredient) {
-          editIngredients.add(ingredient.amount, ingredient.unit, ingredient.name);
+          editIngredients.add(ingredient.amount, ingredient.amountFraction, ingredient.unit, ingredient.name);
         });
 
         instructions.instructionList.forEach((instruction) {

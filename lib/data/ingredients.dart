@@ -8,13 +8,13 @@ class Ingredients extends ChangeNotifier {
   static Ingredients clone(Ingredients ingredients) {
     Ingredients newIngredients = Ingredients();
     ingredients.ingredientList.forEach((ingredient) {
-      newIngredients.add(ingredient.amount, ingredient.unit, ingredient.name);
+      newIngredients.add(ingredient.amount, ingredient.amountFraction, ingredient.unit, ingredient.name);
     });
     return newIngredients;
   }
 
-  add(double amount, String unit, String name) {
-    Ingredient ingredient = Ingredient(amount, unit, name);
+  add(double amount, String amountFraction, String unit, String name) {
+    Ingredient ingredient = Ingredient(amount, amountFraction, unit, name);
     ingredientList.add(ingredient);
     notifyListeners();
   }
@@ -55,6 +55,11 @@ class Ingredients extends ChangeNotifier {
     notifyListeners();
   }
 
+  setAmountFraction(index, fraction) {
+    ingredientList[index].amountFraction = fraction;
+    notifyListeners();
+  }
+
   setUnit(index, unit) {
     print('index = $index, unit = $unit');
     ingredientList[index].unit = unit;
@@ -66,6 +71,7 @@ class Ingredients extends ChangeNotifier {
     ingredientList.forEach((ingredient) {
       newIngredientsList.add({
         'amount': ingredient.amount,
+        'amountfraction': ingredient.amountFraction,
         'unit': ingredient.unit,
         'name': ingredient.name
       });

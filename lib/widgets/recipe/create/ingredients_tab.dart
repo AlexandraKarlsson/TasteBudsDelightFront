@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tastebudsdelightfront/data/amount_fraction.dart';
 
 import 'ingredient_item.dart';
 import '../../styles.dart';
@@ -64,7 +65,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
               child: Icon(Icons.add),
               onPressed: () {
                 Ingredient ingredient =
-                    Ingredient(0, IngredientUnit.unitList[0], 'Ny ingrediens');
+                    Ingredient(0, AmountFraction.list[0], IngredientUnit.unitList[0], 'Ny ingrediens');
                 setState(() {
                   ingredientList.add(ingredient);
                 });

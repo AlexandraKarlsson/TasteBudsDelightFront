@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastebudsdelightfront/widgets/create_amount_string.dart';
 
 import '../../../data/cooking/cooking_ingredients.dart';
 import '../../../data/ingredient.dart';
@@ -31,7 +32,7 @@ TableRow createCookingIngredientRow(
           child: Align(
             alignment: Alignment.bottomRight,
             child: Text(
-              '${ingredient.amount.toInt()}',
+              createAmountString(ingredient),
               style: TextStyle(
                 fontSize: 16,
               ),

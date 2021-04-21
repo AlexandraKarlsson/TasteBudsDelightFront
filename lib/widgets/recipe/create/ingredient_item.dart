@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastebudsdelightfront/widgets/create_amount_string.dart';
 
 import '../../../data/ingredient.dart';
 import '../../../pages/edit_ingredient.dart';
@@ -27,7 +28,7 @@ class IngredientItem extends StatelessWidget {
           },
         ),
         title: Text(ingredient.name),
-        subtitle: Text(ingredient.amount.toString() + ' ' + ingredient.unit),
+        subtitle: Text(createAmountString(ingredient) + ' ' + ingredient.unit),
         trailing: InkWell(
           child: Icon(Icons.delete),
           onTap: () {
