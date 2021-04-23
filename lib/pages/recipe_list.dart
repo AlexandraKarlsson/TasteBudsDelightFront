@@ -122,7 +122,7 @@ class _RecipeListState extends State<RecipeList> {
               },
             ),
             PopupMenuButton<int>(
-              offset: const Offset(0, 60),
+              offset: const Offset(0, 30),
               icon: Hero(
                 tag: 'account',
                 child: userData.token == null

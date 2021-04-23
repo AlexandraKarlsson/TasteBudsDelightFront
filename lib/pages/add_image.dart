@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:image_cropper/image_cropper.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../widgets/styles.dart';
@@ -18,7 +18,7 @@ class _AddImageState extends State<AddImage> {
   File _imageFile;
   final picker = ImagePicker();
 
-  Future _pickImage(ImageSource source) async {
+  Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
     setState(() {
@@ -31,33 +31,71 @@ class _AddImageState extends State<AddImage> {
     });
   }
 
+  Future<void> _cropImage() async {
+    print('Inside _cropImage()...');
+    File cropped = await ImageCropper.cropImage(
+      sourcePath: _imageFile.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.ratio16x9,
+      ],
+    );
+    // print('cropped = $cropped');
+
+    setState(() {
+      _imageFile = cropped ?? _imageFile;
+    });
+  }
+
+  void _clear() {
+    setState(() => _imageFile = null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lägg till bild'),
       ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(_imageFile == null ? 'Ingen bild tillagd!' : 'Vald bild',
-                style: optionStyle),
-          ),
-          Expanded(
-            child: Center(
-              child: _imageFile != null ? Image.file(_imageFile) : Container(),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  _imageFile == null ? 'Ingen bild tillagd!' : 'Vald bild',
+                  style: optionStyle),
             ),
-          ),
-          _imageFile != null
-              ? IconButton(
-                  icon: Icon(Icons.check),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    Navigator.pop(context, _imageFile);
-                  })
-              : Container(),
-        ],
+            if (_imageFile != null) ...[
+              Expanded(child: Image.file(_imageFile)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  TextButton(
+                    child: Icon(
+                      Icons.crop,
+                      color: Colors.redAccent,
+                    ),
+                    onPressed: _cropImage,
+                  ),
+                  TextButton(
+                    child: Icon(
+                      Icons.refresh,
+                      color: Colors.redAccent,
+                    ),
+                    onPressed: _clear,
+                  ),
+                ],
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.pop(context, _imageFile);
+                },
+                child: Icon(Icons.check),
+                backgroundColor: Colors.redAccent,
+              ),
+            ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
