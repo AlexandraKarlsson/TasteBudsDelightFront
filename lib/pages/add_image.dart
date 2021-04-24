@@ -17,6 +17,7 @@ class AddImage extends StatefulWidget {
 class _AddImageState extends State<AddImage> {
   File _imageFile;
   final picker = ImagePicker();
+  var isCropped = false;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
@@ -33,6 +34,7 @@ class _AddImageState extends State<AddImage> {
 
   Future<void> _cropImage() async {
     print('Inside _cropImage()...');
+
     File cropped = await ImageCropper.cropImage(
       sourcePath: _imageFile.path,
       aspectRatioPresets: [
@@ -42,12 +44,16 @@ class _AddImageState extends State<AddImage> {
     // print('cropped = $cropped');
 
     setState(() {
+      isCropped = true;
       _imageFile = cropped ?? _imageFile;
     });
   }
 
   void _clear() {
-    setState(() => _imageFile = null);
+    setState(() {
+      isCropped = false;
+      _imageFile = null;
+    });
   }
 
   @override
@@ -87,11 +93,11 @@ class _AddImageState extends State<AddImage> {
                 ],
               ),
               FloatingActionButton(
-                onPressed: () {
+                onPressed: isCropped ? () {
                   Navigator.pop(context, _imageFile);
-                },
+                } : null,
                 child: Icon(Icons.check),
-                backgroundColor: Colors.redAccent,
+                backgroundColor: isCropped ? Colors.redAccent : Colors.grey[400],
               ),
             ],
           ],
