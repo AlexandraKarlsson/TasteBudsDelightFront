@@ -14,31 +14,26 @@ class ImageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SettingData setting = Provider.of<SettingData>(context);
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 5,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: image.file != null
-                    ? Image.file(image.file)
-                    : Image.network(
-                        'http://${setting.imageAddress}:${setting.imagePort}/images/${image.imageFileName}',
-                      ),
-              ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  print('Remove image');
-                  Images images = Provider.of<Images>(context, listen: false);
-                  images.deleteImage(index);
-                },
-              ),
-            ],
+    return Card(
+      elevation: 5,
+      child: Column(
+        children: <Widget>[
+         /* Expanded(
+            child:*/ image.file != null
+                ? Image.file(image.file)
+                : Image.network(
+                    'http://${setting.imageAddress}:${setting.imagePort}/images/${image.imageFileName}',
+                  ),
+          //),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              print('Remove image');
+              Images images = Provider.of<Images>(context, listen: false);
+              images.deleteImage(index);
+            },
           ),
-        ),
+        ],
       ),
     );
   }

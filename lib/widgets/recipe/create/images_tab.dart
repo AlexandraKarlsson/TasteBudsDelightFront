@@ -14,7 +14,6 @@ class ImagesTab extends StatefulWidget {
 }
 
 class _ImagesTabState extends State<ImagesTab> {
-
   void _addImage(BuildContext context, Images images) async {
     dynamic _imageFile = await Navigator.pushNamed(context, AddImage.PATH);
     print('_imageFile = $_imageFile');
@@ -41,8 +40,11 @@ class _ImagesTabState extends State<ImagesTab> {
           child: Expanded(
             child: GridView.builder(
               itemCount: images.imageList.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: MediaQuery.of(context).size.width /
+                    (MediaQuery.of(context).size.height/2),
+              ),
               itemBuilder: (BuildContext context, int index) {
                 return ImageItem(images.imageList[index], index);
               },
