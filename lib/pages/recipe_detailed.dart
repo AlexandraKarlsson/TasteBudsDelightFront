@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/common.dart';
-import 'package:tastebudsdelightfront/data/setting_data.dart';
 
 import '../data/recipe.dart';
 import '../widgets/recipe/view/recipe_detailed_view.dart';
@@ -34,8 +31,22 @@ class _RecipeDetailedState extends State<RecipeDetailed> {
     _fetchRecipe().then((_) {
       setState(() {
         _isLoading = false;
+        SystemChrome.setPreferredOrientations(
+          [
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.portraitDown,
+            DeviceOrientation.landscapeRight,
+            DeviceOrientation.landscapeLeft,
+          ],
+        );
       });
     });
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.dispose();
   }
 
   Future<void> _fetchRecipe() async {

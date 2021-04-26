@@ -9,7 +9,6 @@ import '../../../data/cooking/cooking_instructions.dart';
 import '../../../data/cooking/cooking_recipe.dart';
 import '../../../data/recipe.dart';
 
-
 class RecipeCookingMode extends StatelessWidget {
   final Recipe recipe;
   final int id;
@@ -19,7 +18,7 @@ class RecipeCookingMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CookingRecipe cookingRecipe = Provider.of<CookingRecipe>(context);
-    if (cookingRecipe.isNewId(id)) { 
+    if (cookingRecipe.isNewId(id)) {
       cookingRecipe.newRecipe(id);
       CookingIngredients cookingIngrediets =
           Provider.of<CookingIngredients>(context);
