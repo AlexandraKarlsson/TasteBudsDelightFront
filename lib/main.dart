@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/pages/account_create.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,11 @@ import 'pages/add_image.dart';
 //----------------------------------
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -64,7 +69,6 @@ class MyApp extends StatelessWidget {
             //floatingActionButtonTheme: ,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          
           home: RecipeList(title: 'Smaklökarnas Frestelse'),
           routes: {
             RecipeList.PATH: (context) => RecipeList(),
