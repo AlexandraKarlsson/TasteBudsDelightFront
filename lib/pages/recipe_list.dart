@@ -72,7 +72,7 @@ class _RecipeListState extends State<RecipeList> {
       RecipeItems recipeItems =
           Provider.of<RecipeItems>(context, listen: false);
       recipeItems.parseAndAdd(responseData);
-    } 
+    }
     // ResponseState failure and error don't need any actions.
   }
 
@@ -135,6 +135,7 @@ class _RecipeListState extends State<RecipeList> {
               itemBuilder: (context) => [
                 userData.token == null
                     ? PopupMenuItem(
+                        height: 12,
                         value: LOGIN,
                         child: Row(
                           children: <Widget>[
@@ -143,6 +144,9 @@ class _RecipeListState extends State<RecipeList> {
                               size: 30,
                               color: Colors.white,
                             ),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text("Logga in"),
                           ],
                         ),
@@ -150,14 +154,45 @@ class _RecipeListState extends State<RecipeList> {
                     : null,
                 userData.token != null
                     ? PopupMenuItem(
+                        height: 15,
                         value: PROFILE,
-                        child: Text("Profil"),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.manage_accounts,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Profil", style: TextStyle(fontSize: 17))
+                          ],
+                        ),
+                      )
+                    : null,
+                userData.token != null
+                    ? PopupMenuDivider(
+                        height: 10,
                       )
                     : null,
                 userData.token != null
                     ? PopupMenuItem(
+                        height: 15,
                         value: LOGOUT,
-                        child: Text("Logga ut"),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Logga ut", style: TextStyle(fontSize: 17)),
+                          ],
+                        ),
                       )
                     : null,
               ],

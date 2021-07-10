@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.red[400],
             accentColor: Colors.red[600],
             fontFamily: 'Nunito',
+            dividerTheme: DividerThemeData(color: Colors.white),
             // textSelectionHandleColor: Colors.red[400],
             //  primarySwatch: Colors.red,
             //floatingActionButtonTheme: ,
