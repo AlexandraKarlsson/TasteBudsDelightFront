@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_read_more_text/flutter_read_more_text.dart';
+// import 'package:flutter_read_more_text/flutter_read_more_text.dart';
+import 'package:readmore/readmore.dart';
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/imagestore.dart';
@@ -224,7 +225,16 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
                       width: MediaQuery.of(context).size.width * 0.9,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(4),
-                      child: ReadMoreText(widget.recipe.overview.description),
+                      child: ReadMoreText(
+                        widget.recipe.overview.description,
+                        trimLines: 1,
+                        colorClickableText: Colors.red,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: 'Show more',
+                        trimExpandedText: 'Show less',
+                        moreStyle: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -243,6 +253,9 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
                               Row(
                                 children: <Widget>[
                                   Icon(Icons.timer),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
                                   Text('${widget.recipe.overview.time} min'),
                                 ],
                               ),
@@ -252,6 +265,9 @@ class _RecipeDetailedViewState extends State<RecipeDetailedView> {
                               Row(
                                 children: <Widget>[
                                   Icon(Icons.people),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
                                   Text(_getAmountOfPortions()),
                                 ],
                               ),
