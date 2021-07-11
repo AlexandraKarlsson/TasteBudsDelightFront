@@ -1,11 +1,9 @@
 import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/common.dart';
 import 'package:tastebudsdelightfront/communication/imagestore.dart';
-import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/utils/validation.dart';
 import 'package:tastebudsdelightfront/widgets/animation_failure.dart';
@@ -231,13 +229,15 @@ class _AccountProfileState extends State<AccountProfile> {
 
   MaterialBanner createDeleteConfirmation() {
     return MaterialBanner(
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Colors.red[600],
+      contentTextStyle: TextStyle(color: Colors.white),
       content: Column(
         children: [
           Text(
             'Är du säker på att du vill ta bort ditt konto? Skriv in ditt lösenord:',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 15,),
           TextFieldWidget(
             controller: _passwordRemoveController,
             hintText: 'Ditt lösenord',
@@ -265,10 +265,10 @@ class _AccountProfileState extends State<AccountProfile> {
         size: 40,
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: const Text(
             'Avbryt',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
           onPressed: () {
             setState(() {
@@ -276,10 +276,10 @@ class _AccountProfileState extends State<AccountProfile> {
             });
           },
         ),
-        FlatButton(
+        TextButton(
           child: const Text(
             'OK',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
           onPressed: () {
             setState(() {

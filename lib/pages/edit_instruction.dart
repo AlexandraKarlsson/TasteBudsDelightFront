@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/instruction.dart';
 import '../data/instructions.dart';
+import '../widgets/styles.dart';
 
 class EditInstruction extends StatefulWidget {
   final int index;
@@ -50,10 +50,7 @@ class _EditInstructionState extends State<EditInstruction> {
             ),
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Beskrivning',
-              ),
+              decoration: defaultTextFieldDecoration('Beskrivning'),
               onChanged: (description) {
                 instructions.setDescription(widget.index, description);
               },

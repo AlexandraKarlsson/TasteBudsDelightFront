@@ -5,6 +5,7 @@ import 'package:tastebudsdelightfront/data/amount_fraction.dart';
 import '../data/ingredient_unit.dart';
 import '../data/ingredients.dart';
 import '../data/ingredient.dart';
+import '../widgets/styles.dart';
 
 class EditIngredient extends StatefulWidget {
   final int index;
@@ -53,10 +54,7 @@ class _EditIngredientState extends State<EditIngredient> {
             ),
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Rubrik',
-              ),
+              decoration: defaultTextFieldDecoration("Rubrik"),
               onChanged: (name) {
                 ingredients.setName(widget.index, name);
               },

@@ -1,11 +1,9 @@
 import 'dart:convert' as convert;
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tastebudsdelightfront/communication/backend.dart';
 import 'package:tastebudsdelightfront/communication/common.dart';
-import 'package:tastebudsdelightfront/data/setting_data.dart';
 import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/utils/validation.dart';
 import 'package:tastebudsdelightfront/widgets/animation_success.dart';
@@ -112,7 +110,7 @@ class _AccountLoginState extends State<AccountLogin> {
                                 size: 40,
                               ),
                               actions: [
-                                FlatButton(
+                                TextButton(
                                   child: const Text(
                                     'OK',
                                     style:

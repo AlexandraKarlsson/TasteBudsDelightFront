@@ -72,10 +72,7 @@ class _OverviewTabState extends State<OverviewTab> {
                 ),
                 TextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Rubrik',
-                  ),
+                  decoration: defaultTextFieldDecoration('Rubrik'),
                   onChanged: (title) {
                     _overviewData.setTitle(title);
                   },
@@ -86,10 +83,7 @@ class _OverviewTabState extends State<OverviewTab> {
                 TextField(
                   maxLines: 3,
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Beskrivning',
-                  ),
+                  decoration: defaultTextFieldDecoration('Beskrivning'),
                   onChanged: (description) {
                     _overviewData.setDescription(description);
                   },
@@ -104,10 +98,7 @@ class _OverviewTabState extends State<OverviewTab> {
                         controller: _timeController,
                         keyboardType: TextInputType.number,
                         inputFormatters: inputFormat,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Tillagningstid',
-                        ),
+                        decoration: defaultTextFieldDecoration('Tillagningstid'),
                         onChanged: (time) {
                           _overviewData.setTime(int.parse(time));
                         },
@@ -128,10 +119,7 @@ class _OverviewTabState extends State<OverviewTab> {
                         controller: _portionsController,
                         keyboardType: TextInputType.number,
                         inputFormatters: inputFormat,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Portioner',
-                        ),
+                        decoration: defaultTextFieldDecoration('Portioner'), 
                         onChanged: (portions) {
                           _overviewData.setPortions(int.parse(portions));
                         },

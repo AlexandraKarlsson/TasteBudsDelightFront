@@ -66,10 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 TextField(
                   controller: _backendAddressController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Server adress',
-                  ),
+                  decoration: defaultTextFieldDecoration('Server adress'),
                   onChanged: (address) {
                     _settingData.backendAddress = address;
                   },
@@ -79,10 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 TextField(
                   controller: _backendPortController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Server port',
-                  ),
+                  decoration: defaultTextFieldDecoration('Server port'),
                   onChanged: (port) {
                     _settingData.backendPort = port;
                   },
@@ -95,10 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     Expanded(
                       child: TextField(
                         controller: _imageAddressController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Bild server adress',
-                        ),
+                        decoration: defaultTextFieldDecoration('Bild server adress'),
                         onChanged: (server) {
                           _settingData.imageAddress = server;
                         },
@@ -114,10 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     Expanded(
                       child: TextField(
                         controller: _imagePortController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Bild server port',
-                        ),
+                        decoration: defaultTextFieldDecoration('Bild server port'),
                         onChanged: (port) {
                           _settingData.imagePort = port;
                         },
