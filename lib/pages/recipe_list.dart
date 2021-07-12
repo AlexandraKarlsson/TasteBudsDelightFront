@@ -86,7 +86,7 @@ class _RecipeListState extends State<RecipeList> {
       userData.clear();
       print('User logged out');
     }
-    // If failure or error show something?
+    // Decision: When failure/error do not show message to user.
   }
 
   @override
