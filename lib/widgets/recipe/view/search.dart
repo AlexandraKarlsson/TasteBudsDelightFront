@@ -4,6 +4,7 @@ import 'package:tastebudsdelightfront/data/user_data.dart';
 import 'package:tastebudsdelightfront/widgets/recipe/view/search_option.dart';
 
 import '../../../data/search_data.dart';
+import '../../styles.dart';
 
 class Search extends StatefulWidget {
  
@@ -55,10 +56,7 @@ class _SearchState extends State<Search> {
               Expanded(
                 child: TextField(
                   controller: _searchController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Rubrik',
-                  ),
+                  decoration: defaultTextFieldDecoration('Rubrik'),
                   onChanged: (title) {
                     searchData.setTitle(title);
                   },
