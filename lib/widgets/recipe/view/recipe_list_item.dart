@@ -55,6 +55,9 @@ class RecipeListItem extends StatelessWidget {
                           Icons.timer,
                           size: 18,
                         ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           '${recipeItem.time.toString()} min',
                           style: TextStyle(fontWeight: FontWeight.bold),
